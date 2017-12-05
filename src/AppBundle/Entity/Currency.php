@@ -98,5 +98,10 @@ class Currency
     {
         return $this->exchangeRateEUR;
     }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }
 

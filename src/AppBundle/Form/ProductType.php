@@ -18,13 +18,22 @@ class ProductType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('price')->add('currency')
-            ->add('availability')->add('quantity')
+            ->add('price')
+            ->add('currency', EntityType::class, [
+                'class' => 'AppBundle:Currency',
+                'choice_label' => 'name',
+                'placeholder' => 'choose currency'
+            ])
+            ->add('availability')
+            ->add('quantity')
             ->add('brand')->add('model')
             ->add('isInPromotion')
             ->add('categories', EntityType::class, [
         'class' => 'AppBundle:Category',
-        'choice_label' => 'name'
+        'choice_label' => 'name',
+        'placeholder' => 'choose category',
+        'multiple' => true,
+        'expanded' => true
     ]       );
     }
     

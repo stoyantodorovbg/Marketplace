@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Currencies list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Exchangerateeur</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for currency in currencies %}
+            <tr>
+                <td><a href="{{ path('currency_show', { 'id': currency.id }) }}">{{ currency.id }}</a></td>
+                <td>{{ currency.name }}</td>
+                <td>{{ currency.exchangeRateEUR }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('currency_show', { 'id': currency.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('currency_edit', { 'id': currency.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('currency_new') }}">Create a new currency</a>
+        </li>
+    </ul>
+{% endblock %}

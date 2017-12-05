@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -78,10 +79,19 @@ class Product
     private $model;
 
     /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", inversedBy="products")
-     * @ORM\JoinTable(name="products_categories",
-     *     joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")})
+     * @ORM\JoinTable(
+     *     name="products_categories",
+     *     joinColumns={
+     *          @ORM\JoinColumn(name="product_id",
+     *          referencedColumnName="id")
+     * },
+     *     inverseJoinColumns={
+     *          @ORM\JoinColumn(name="category_id",
+     *          referencedColumnName="id")
+     * })
      *
      */
     private $categories;
@@ -92,6 +102,14 @@ class Product
      * @ORM\Column(name="isInPromotion", type="boolean")
      */
     private $isInPromotion;
+
+    /**
+     * Product constructor.
+     */
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    }
 
 
     /**
@@ -311,9 +329,5 @@ class Product
     {
         $this->isInPromotion = $isInPromotion;
     }
-
-
-
-
 }
 
