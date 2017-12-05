@@ -43,9 +43,9 @@ class Product
     private $price;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="currency", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Currency", inversedBy="products")
+     * @ORM\JoinColumn(name="currency_id", referencedColumnName="id")
      */
     private $currency;
 
