@@ -18,14 +18,26 @@
 
                 <ul class="navbar navbar-light list-unstyled" style="background-color: #e3f2fd;">
                     <li class="nav-item">
-                        <a class="nav-link btn btn-primary" href="#"><button type="button" class="btn btn-primary">Marketplace</button></a>
+                        <a class="nav-link btn btn-primary" href="#">
+                            <button type="button" class="btn btn-primary">
+                                Marketplace
+                            </button>
+                        </a>
                     </li>
                     {% if app.user %}
                         <li class="nav-item">
-                            <a class="nav-link btn btn-success" href="#"><button type="button" class="btn btn-success">My profile</button></a>
+                            <a class="nav-link btn btn-success" href="#">
+                                <button type="button" class="btn btn-success">
+                                    My profile
+                                </button>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-success" href="#"><button type="button" class="btn btn-success">My cart</button></a>
+                            <a class="nav-link btn btn-success" href="#">
+                                <button type="button" class="btn btn-success">
+                                    My cart
+                                </button>
+                            </a>
                         </li>
                     {% endif %}
                     <li class="nav-item dropdown btn btn-light">
@@ -39,27 +51,83 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-warning" href="#"><button type="button" class="btn btn-warning">Guide</button></a>
+                        <a class="nav-link btn btn-warning" href="#">
+                            <button type="button" class="btn btn-warning">
+                                Guide
+                            </button>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-info" href="#"><button type="button" class="btn btn-info">Contact</button></a>
+                        <a class="nav-link btn btn-info" href="#">
+                            <button type="button" class="btn btn-info">
+                                Contact
+                            </button>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-info" href="#"><button type="button" class="btn btn-info">About</button></a>
+                        <a class="nav-link btn btn-info" href="#">
+                            <button type="button" class="btn btn-info">
+                                About
+                            </button>
+                        </a>
                     </li>
                     {% if app.user %}
                         <li class="nav-item">
-                            <a class="nav-link btn btn-secondary" href="{{ path('security_logout') }}"><button type="button" class="btn btn-secondary">Logout</button></a>
+                            <a class="nav-link btn btn-secondary" href="{{ path('security_logout') }}">
+                                <button type="button" class="btn btn-secondary">
+                                    Logout
+                                </button>
+                            </a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link btn btn-success" href="{{ path('register_user') }}"><button type="button" class="btn btn-success">Register</button></a>
+                            <a class="nav-link btn btn-success" href="{{ path('register_user') }}">
+                                <button type="button" class="btn btn-success">
+                                    Register
+                                </button>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-success" href="{{ path('security_login') }}"><button type="button" class="btn btn-success">Login</button></a>
+                            <a class="nav-link btn btn-success" href="{{ path('security_login') }}">
+                                <button type="button" class="btn btn-success">
+                                    Login
+                                </button>
+                            </a>
                         </li>
                     {% endif %}
                 </ul>
+                {% if app.getUser().isAdmin() %}
+                <ul class="navbar navbar-light list-unstyled" style="background-color: #e3f2fd;">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary" href="{{ path('category_new') }}">
+                            <button type="button" class="btn btn-primary">
+                                Add category
+                            </button>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary" href="{{ path('product_new') }}">
+                            <button type="button" class="btn btn-primary">
+                                Add product
+                            </button>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary" href="{{ path('currency_new') }}">
+                            <button type="button" class="btn btn-primary">
+                                Add currency
+                            </button>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary" href="#">
+                            <button type="button" class="btn btn-primary">
+                                Add promotion
+                            </button>
+                        </a>
+                    </li>
+                </ul>
+                {% endif %}
             </header>
         {% endblock %}
 
