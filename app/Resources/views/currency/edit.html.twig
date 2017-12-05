@@ -1,21 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Currency edit</h1>
+<div class="jumbotron">
+    <span class="btn btn-info btn-lg btn-block">
+        <h1>Edit currency</h1>
+    </span>
+    <br/>
 
     {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+    <label>Currency:</label>
+    <div class="form-group">
+        {{ form(edit_form.name) }}
+    </div>
+    <label>Exchange rate to euro:</label>
+    <div class="form-group">
+        {{ form(edit_form.exchangeRateEUR) }}
+    </div>
+    <input type="submit" class="btn btn-primary" value="Edit" />
     {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('currency_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <a href="{{ path('currency_index') }}">
+        <button type="button" class="btn btn-success">
+            Back to the list
+        </button>
+    </a>
+</div>
 {% endblock %}

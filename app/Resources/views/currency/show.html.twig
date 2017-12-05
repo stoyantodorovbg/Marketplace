@@ -1,36 +1,31 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Currency</h1>
+<div class="jumbotron">
+    <span class="btn btn-info btn-lg btn-block">
+        <h1>Currency</h1>
+    </span>
+    <br/>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ currency.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ currency.name }}</td>
-            </tr>
-            <tr>
-                <th>Exchangerateeur</th>
-                <td>{{ currency.exchangeRateEUR }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <h1>
+        <span class="badge badge-secondary">{{ currency.name }}</span> - <span class="badge badge-secondary">{{ currency.exchangeRateEUR }} EURO</span>
+    </h1>
 
-    <ul>
-        <li>
-            <a href="{{ path('currency_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('currency_edit', { 'id': currency.id }) }}">Edit</a>
-        </li>
-        <li>
+    <a href="{{ path('currency_index') }}">
+        <button type="button" class="btn btn-success">
+            Back to the list
+        </button>
+    </a>
+
+    {% if app.getUser().isAdmin() %}
+        <a href="{{ path('currency_edit', { 'id': currency.id }) }}">
+            <button type="button" class="btn btn-danger">
+                Edit
+            </button></a>
+        <br/><br/>
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+            <input type="submit" class="btn btn-danger" value="Delete">
             {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    {% endif %}
+</div>
 {% endblock %}

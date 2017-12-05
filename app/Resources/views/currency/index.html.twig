@@ -1,41 +1,43 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Currencies list</h1>
+<div class="jumbotron">
+    <span class="btn btn-info btn-lg btn-block">
+        <h1>Currencies list</h1>
+    </span>
+    <br/>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Exchangerateeur</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="container body-content">
         {% for currency in currencies %}
-            <tr>
-                <td><a href="{{ path('currency_show', { 'id': currency.id }) }}">{{ currency.id }}</a></td>
-                <td>{{ currency.name }}</td>
-                <td>{{ currency.exchangeRateEUR }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('currency_show', { 'id': currency.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('currency_edit', { 'id': currency.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <div class="row">
+                <div class="container-fluid">
+                    <div class="col-md-6">
+                        <h1>
+                            <span class="badge badge-secondary">{{ currency.name }}</span> - <span class="badge badge-secondary">{{ currency.exchangeRateEUR }} EURO</span>
+                        </h1>
+                        <a href="{{ path('currency_show', { 'id': currency.id }) }}">
+                            <button type="button" class="btn btn-success">
+                                Details
+                            </button>
+                        </a>
+                        {% if app.getUser().isAdmin() %}<a href="{{ path('currency_edit', { 'id': currency.id }) }}">
+                            <button type="button" class="btn btn-danger">
+                                Edit
+                            </button></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div><br/>{% endfor %}
 
-    <ul>
-        <li>
-            <a href="{{ path('currency_new') }}">Create a new currency</a>
-        </li>
-    </ul>
+
+    {% if app.getUser().isAdmin() %}
+        <a href="{{ path('currency_new') }}">
+            <button type="button" class="btn btn-primary">
+                Create a new currency
+            </button>
+        </a>
+    {% endif %}
+    </div>
+</div>
+
 {% endblock %}

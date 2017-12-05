@@ -456,6 +456,14 @@ class User implements UserInterface
         // TODO: Implement eraseCredentials() method.
     }
 
+    /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return in_array("ROLE_ADMIN", $this->getRoles());
+    }
+
 
 }
 
