@@ -20,7 +20,13 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class)
-            ->add('password' )
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'The passwords mismatch',
+                'required' => true,
+                'first_options' => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat password']
+            ])
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
             ->add('phone', TextType::class)

@@ -2,8 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;;
 
 /**
  * User
@@ -106,6 +107,24 @@ class User implements UserInterface
      */
     private $dateCreated;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Role", inversedBy="users")
+     * @ORM\JoinTable(name="users_roles",
+     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")})
+     */
+    private $roles;
+
+    /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+        $this->roles = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -397,9 +416,29 @@ class User implements UserInterface
         $this->dateCreated = $dateCreated;
     }
 
+    /**
+     * @return (Role|string)[]
+     */
     public function getRoles()
     {
-        // TODO: Implement getRoles() method.
+        $stringRoles = [];
+        foreach ($this->roles as $role) {
+            /** @var $role Role */
+            $stringRoles[] = $role->getRole();
+        }
+        return $stringRoles;
+    }
+
+    /**
+     * @param \AppBundle\Entity\Role $role
+     *
+     * @return User
+     */
+    public function addRole(Role $role)
+    {
+        $this->roles[] = $role;
+
+        return $this;
     }
 
     public function getSalt()
