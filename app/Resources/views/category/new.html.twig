@@ -10,11 +10,11 @@
         {{ form_start(form) }}
         <label>Category name:</label>
         <div class="form-group">
-            {{ form(form.name) }}
+            {{ form_row(form.name) }}
         </div>
         <label>Category description:</label>
         <div class="form-group">
-            {{ form(form.description) }}
+            {{ form_row(form.description) }}
         </div>
         <input type="submit" class="btn btn-primary" value="Create" />
         {{ form_end(form) }}

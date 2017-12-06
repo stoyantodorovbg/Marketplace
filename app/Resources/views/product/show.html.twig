@@ -21,7 +21,7 @@
             <span class="badge badge-secondary">{{ product.price }}</span> <span class="badge badge-secondary">{{ product.currency }}</span>
         </h2>
         {% if product.availability %}
-            <span class="badge badge-secondary">Availability: {{ product.availability }}</span>
+            <span class="badge badge-secondary">Availability: {{ product.quantity }}</span>
             {% else %}
                 <span class="badge badge-secondary">Now there is not availability of this product.</span>
         {% endif %}

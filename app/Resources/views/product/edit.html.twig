@@ -10,45 +10,45 @@
         {{ form_start(edit_form) }}
         <label>Name:</label>
         <div class="form-group">
-            {{ form(edit_form.name) }}
+            {{ form_row(edit_form.name) }}
         </div>
         <label>Description:</label>
         <div class="form-group">
-            {{ form(edit_form.description) }}
+            {{ form_row(edit_form.description) }}
         </div>
         <label>Price:</label>
         <div class="form-group">
-            {{ form(edit_form.price) }}
+            {{ form_row(edit_form.price) }}
         </div>
         <label>Currency:</label>
         <div class="form-group">
-            {{ form(edit_form.currency) }}
+            {{ form_row(edit_form.currency) }}
         </div>
         <label>Category:</label>
         <div class="form-group">
-            {{ form(edit_form.categories) }}
+            {{ form_row(edit_form.categories) }}
         </div>
         <label>Availability:</label>
         <div class="form-group">
-            {{ form(edit_form.availability) }}
+            {{ form_row(edit_form.availability) }}
         </div>
         <label>Quantity:</label>
         <div class="form-group">
-            {{ form(edit_form.quantity) }}
+            {{ form_row(edit_form.quantity) }}
         </div>
         <label>Brand:</label>
         <div class="form-group">
-            {{ form(edit_form.brand) }}
+            {{ form_row(edit_form.brand) }}
         </div>
         <label>Model:</label>
         <div class="form-group">
-            {{ form(edit_form.model) }}
+            {{ form_row(edit_form.model) }}
         </div>
         <label>Is the product in promotion:</label>
         <div class="form-group">
-            {{ form(edit_form.isInPromotion) }}
+            {{ form_row(edit_form.isInPromotion) }}
         </div>
-        <input type="submit" class="btn btn-primary" value="Save" />
+        <input type="submit" class="btn btn-primary" value="Edit" />
 
         {{ form_end(edit_form) }}
 

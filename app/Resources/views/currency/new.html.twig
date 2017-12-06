@@ -10,11 +10,11 @@
     {{ form_start(form) }}
     <label>Currency:</label>
     <div class="form-group">
-        {{ form(form.name) }}
+        {{ form_row(form.name) }}
     </div>
     <label>Exchange rate to euro:</label>
     <div class="form-group">
-        {{ form(form.exchangeRateEUR) }}
+        {{ form_row(form.exchangeRateEUR) }}
     </div>
     <input type="submit" class="btn btn-primary" value="Create" />
     {{ form_end(form) }}

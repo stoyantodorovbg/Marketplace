@@ -10,45 +10,44 @@
         {{ form_start(form) }}
         <label>Name:</label>
         <div class="form-group">
-            {{ form(form.name) }}
+            {{ form_row(form.name) }}
         </div>
         <label>Description:</label>
         <div class="form-group">
-            {{ form(form.description) }}
+            {{ form_row(form.description) }}
         </div>
         <label>Price:</label>
         <div class="form-group">
-            {{ form(form.price) }}
+            {{ form_row(form.price) }}
         </div>
         <label>Currency:</label>
         <div class="form-group">
-            {{ form(form.currency) }}
+            {{ form_row(form.currency) }}
         </div>
-        <label>Category:</label>
+        <label>Categories:</label>
         <div class="form-group">
-            {{ form(form.categories) }}
+            {{ form_row(form.categories) }}
         </div>
         <label>Availability:</label>
         <div class="form-group">
-            {{ form(form.availability) }}
+            {{ form_row(form.availability) }}
         </div>
         <label>Quantity:</label>
         <div class="form-group">
-            {{ form(form.quantity) }}
+            {{ form_row(form.quantity) }}
         </div>
         <label>Brand:</label>
         <div class="form-group">
-            {{ form(form.brand) }}
+            {{ form_row(form.brand) }}
         </div>
         <label>Model:</label>
         <div class="form-group">
-            {{ form(form.model) }}
+            {{ form_row(form.model) }}
         </div>
         <label>Is the product in promotion:</label>
         <div class="form-group">
-            {{ form(form.isInPromotion) }}
+            {{ form_row(form.isInPromotion) }}
         </div>
-        {{ form_widget(form) }}
         <input type="submit" class="btn btn-primary" value="Create" />
 
         {{ form_end(form) }}
