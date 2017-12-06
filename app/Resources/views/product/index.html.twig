@@ -1,55 +1,35 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Products list</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Currency</th>
-                <th>Availability</th>
-                <th>Quantity</th>
-                <th>Brand</th>
-                <th>Model</th>
-                <th>Isinpromotion</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+<div class="container body-content">
+    <div class="row">
         {% for product in products %}
-            <tr>
-                <td><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.description }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.currency }}</td>
-                <td>{% if product.availability %}Yes{% else %}No{% endif %}</td>
-                <td>{{ product.quantity }}</td>
-                <td>{{ product.brand }}</td>
-                <td>{{ product.model }}</td>
-                <td>{% if product.isInPromotion %}Yes{% else %}No{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('product_show', { 'id': product.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('product_edit', { 'id': product.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="col-md-6">
+            <div class="container">
+                <div class="jumbotron">
+                    <h1>{{ product.name }}</h1>
 
-    <ul>
-        <li>
-            <a href="{{ path('product_new') }}">Create a new product</a>
-        </li>
-    </ul>
+                    <h2>{{ product.price }} {{ product.currency }}</h2>
+
+
+
+                     <a href="{{ path('product_show', { 'id': product.id }) }}">
+                         <button type="button" class="btn btn-success">
+                             Details
+                         </button>
+                     </a>
+                     {% if app.getUser().isAdmin() %}<a href="{{ path('product_edit', { 'id': product.id }) }}">
+                             <button type="button" class="btn btn-danger">
+                                 Edit
+                             </button></a>
+                     {% endif %}
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
 {% endblock %}

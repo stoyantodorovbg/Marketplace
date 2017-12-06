@@ -26,15 +26,16 @@ class ProductType extends AbstractType
             ])
             ->add('availability')
             ->add('quantity')
-            ->add('brand')->add('model')
+            ->add('brand')
+            ->add('model')
             ->add('isInPromotion')
             ->add('categories', EntityType::class, [
-        'class' => 'AppBundle:Category',
-        'choice_label' => 'name',
-        'placeholder' => 'choose category',
-        'multiple' => true,
-        'expanded' => true
-    ]       );
+                'class' => 'AppBundle:Category',
+                'choice_label' => 'name',
+                'placeholder' => 'choose category',
+                'multiple' => true,
+                'expanded' => true
+            ]);
     }
     
     /**

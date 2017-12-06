@@ -1,16 +1,62 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Product creation</h1>
+    <div class="jumbotron">
+    <span class="btn btn-info btn-lg btn-block">
+        <h1>Add product</h1>
+    </span>
+        <br/>
 
-    {{ form_start(form) }}
+        {{ form_start(form) }}
+        <label>Name:</label>
+        <div class="form-group">
+            {{ form(form.name) }}
+        </div>
+        <label>Description:</label>
+        <div class="form-group">
+            {{ form(form.description) }}
+        </div>
+        <label>Price:</label>
+        <div class="form-group">
+            {{ form(form.price) }}
+        </div>
+        <label>Currency:</label>
+        <div class="form-group">
+            {{ form(form.currency) }}
+        </div>
+        <label>Category:</label>
+        <div class="form-group">
+            {{ form(form.categories) }}
+        </div>
+        <label>Availability:</label>
+        <div class="form-group">
+            {{ form(form.availability) }}
+        </div>
+        <label>Quantity:</label>
+        <div class="form-group">
+            {{ form(form.quantity) }}
+        </div>
+        <label>Brand:</label>
+        <div class="form-group">
+            {{ form(form.brand) }}
+        </div>
+        <label>Model:</label>
+        <div class="form-group">
+            {{ form(form.model) }}
+        </div>
+        <label>Is the product in promotion:</label>
+        <div class="form-group">
+            {{ form(form.isInPromotion) }}
+        </div>
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
+        <input type="submit" class="btn btn-primary" value="Create" />
 
-    <ul>
-        <li>
-            <a href="{{ path('product_index') }}">Back to the list</a>
-        </li>
-    </ul>
+        {{ form_end(form) }}
+
+        <a href="{{ path('product_index') }}">
+            <button type="button" class="btn btn-success">
+                Show the list
+            </button>
+        </a>
+    </div>
 {% endblock %}

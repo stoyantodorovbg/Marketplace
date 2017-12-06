@@ -1,64 +1,59 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Product</h1>
+    <div class="jumbotron">
+    <span class="btn btn-info btn-lg btn-block">
+        <h1>Product of category
+            {% for category in product.categories %}
+                {{ category }}
+            {% endfor %}
+        </h1>
+    </span>
+        <br/>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ product.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ product.name }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ product.description }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ product.price }}</td>
-            </tr>
-            <tr>
-                <th>Currency</th>
-                <td>{{ product.currency }}</td>
-            </tr>
-            <tr>
-                <th>Availability</th>
-                <td>{% if product.availability %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Quantity</th>
-                <td>{{ product.quantity }}</td>
-            </tr>
-            <tr>
-                <th>Brand</th>
-                <td>{{ product.brand }}</td>
-            </tr>
-            <tr>
-                <th>Model</th>
-                <td>{{ product.model }}</td>
-            </tr>
-            <tr>
-                <th>Isinpromotion</th>
-                <td>{% if product.isInPromotion %}Yes{% else %}No{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+        <h1>
+            <span class="badge badge-secondary">{{ product.name }}</span>
+        </h1>
+        <h3>
+            <span class="badge badge-secondary">{{ product.description }}</span>
+        </h3>
+        <h2>
+            <span class="badge badge-secondary">{{ product.price }}</span> <span class="badge badge-secondary">{{ product.currency }}</span>
+        </h2>
+        {% if product.availability %}
+            <span class="badge badge-secondary">Availability: {{ product.availability }}</span>
+            {% else %}
+                <span class="badge badge-secondary">Now there is not availability of this product.</span>
+        {% endif %}
 
-    <ul>
-        <li>
-            <a href="{{ path('product_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('product_edit', { 'id': product.id }) }}">Edit</a>
-        </li>
-        <li>
+        <h4>
+            {% if product.brand != null %}
+                {{ product.brand }}
+            {% endif %}
+            {% if product.model != null %}
+                {{ product.model }}
+            {% endif %}
+        </h4>
+
+        {% if product.isInPromotion %}
+
+        {% endif %}
+
+        <a href="{{ path('product_index') }}">
+            <button type="button" class="btn btn-success">
+                Back to the list
+            </button>
+        </a>
+
+        {% if app.getUser().isAdmin() %}
+            <a href="{{ path('product_edit', { 'id': product.id }) }}">
+                <button type="button" class="btn btn-danger">
+                    Edit
+                </button></a>
+            <br/><br/>
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+            <input type="submit" class="btn btn-danger" value="Delete">
             {{ form_end(delete_form) }}
-        </li>
-    </ul>
+        {% endif %}
+    </div>
 {% endblock %}

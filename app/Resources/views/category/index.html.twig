@@ -1,41 +1,42 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Categories list</h1>
+<div class="jumbotron">
+    <span class="btn btn-info btn-lg btn-block">
+        <h1>Categories list</h1>
+    </span>
+    <br/>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="container body-content">
         {% for category in categories %}
-            <tr>
-                <td><a href="{{ path('category_show', { 'id': category.id }) }}">{{ category.id }}</a></td>
-                <td>{{ category.name }}</td>
-                <td>{{ category.description }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('category_show', { 'id': category.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('category_edit', { 'id': category.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
+        <div class="row">
+            <div class="container-fluid">
+                <div class="col-md-6">
+                    <h1>
+                        <span class="badge badge-secondary">{{ category.name }}</span>
+                    </h1>
+                    <a href="{{ path('category_show', { 'id': category.id }) }}">
+                        <button type="button" class="btn btn-success">
+                            Details
+                        </button>
+                    </a>
+                    {% if app.getUser().isAdmin() %}<a href="{{ path('category_edit', { 'id': category.id }) }}">
+                        <button type="button" class="btn btn-danger">
+                            Edit
+                        </button></a>
+                    {% endif %}
+                <br/><br/>
+                </div>
+            </div>
+        </div>
         {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('category_new') }}">Create a new category</a>
-        </li>
-    </ul>
+        {% if app.getUser().isAdmin() %}
+            <a href="{{ path('category_new') }}">
+                <button type="button" class="btn btn-primary">
+                    Create a new category
+                </button>
+            </a>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

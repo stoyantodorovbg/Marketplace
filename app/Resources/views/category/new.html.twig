@@ -1,16 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Category creation</h1>
+    <div class="jumbotron">
+    <span class="btn btn-info btn-lg btn-block">
+        <h1>Add category</h1>
+    </span>
+        <br/>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
+        {{ form_start(form) }}
+        <label>Category name:</label>
+        <div class="form-group">
+            {{ form(form.name) }}
+        </div>
+        <label>Category description:</label>
+        <div class="form-group">
+            {{ form(form.description) }}
+        </div>
+        <input type="submit" class="btn btn-primary" value="Create" />
+        {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('category_index') }}">Back to the list</a>
-        </li>
-    </ul>
+        <a href="{{ path('category_index') }}">
+            <button type="button" class="btn btn-success">
+                Show the list
+            </button>
+        </a>
+    </div>
 {% endblock %}

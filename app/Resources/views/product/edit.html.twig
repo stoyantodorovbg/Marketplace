@@ -1,21 +1,61 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Product edit</h1>
+    <div class="jumbotron">
+    <span class="btn btn-info btn-lg btn-block">
+        <h1>Edit product</h1>
+    </span>
+        <br/>
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+        {{ form_start(edit_form) }}
+        <label>Name:</label>
+        <div class="form-group">
+            {{ form(edit_form.name) }}
+        </div>
+        <label>Description:</label>
+        <div class="form-group">
+            {{ form(edit_form.description) }}
+        </div>
+        <label>Price:</label>
+        <div class="form-group">
+            {{ form(edit_form.price) }}
+        </div>
+        <label>Currency:</label>
+        <div class="form-group">
+            {{ form(edit_form.currency) }}
+        </div>
+        <label>Category:</label>
+        <div class="form-group">
+            {{ form(edit_form.categories) }}
+        </div>
+        <label>Availability:</label>
+        <div class="form-group">
+            {{ form(edit_form.availability) }}
+        </div>
+        <label>Quantity:</label>
+        <div class="form-group">
+            {{ form(edit_form.quantity) }}
+        </div>
+        <label>Brand:</label>
+        <div class="form-group">
+            {{ form(edit_form.brand) }}
+        </div>
+        <label>Model:</label>
+        <div class="form-group">
+            {{ form(edit_form.model) }}
+        </div>
+        <label>Is the product in promotion:</label>
+        <div class="form-group">
+            {{ form(edit_form.isInPromotion) }}
+        </div>
+        <input type="submit" class="btn btn-primary" value="Save" />
 
-    <ul>
-        <li>
-            <a href="{{ path('product_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+        {{ form_end(edit_form) }}
+
+        <a href="{{ path('product_index') }}">
+            <button type="button" class="btn btn-success">
+                Show the list
+            </button>
+        </a>
+    </div>
 {% endblock %}
