@@ -96,7 +96,7 @@
                         </li>
                     {% endif %}
                 </ul>
-                {# {% if app.getUser().isAdmin() %}#}
+                 {% if app.getUser() and app.getUser().isAdmin() %}
                 <ul class="navbar navbar-light list-unstyled" style="background-color: #e3f2fd;">
                     <li class="nav-item">
                         <a class="nav-link btn btn-primary" href="{{ path('category_new') }}">
@@ -127,7 +127,7 @@
                         </a>
                     </li>
                 </ul>
-                {#{% endif %}#}
+                {% endif %}
             </header>
         {% endblock %}
 
