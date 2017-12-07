@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -39,6 +40,13 @@ class Currency
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Product", mappedBy="currency")
      */
     private $products;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\UserProfile", mappedBy="currencies")
+     */
+    private $userProfiles;
 
 
     /**
@@ -103,5 +111,39 @@ class Currency
     {
         return $this->getName();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    /**
+     * @param mixed $products
+     */
+    public function setProducts($products)
+    {
+        $this->products = $products;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getUserProfiles()
+    {
+        return $this->userProfiles;
+    }
+
+    /**
+     * @param ArrayCollection $userProfiles
+     */
+    public function setUserProfiles($userProfiles)
+    {
+        $this->userProfiles = $userProfiles;
+    }
+
+
 }
 

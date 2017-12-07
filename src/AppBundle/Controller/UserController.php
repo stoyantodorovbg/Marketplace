@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
+use AppBundle\Entity\UserProfile;
 use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -33,8 +34,10 @@ class UserController extends Controller
 
             $roleRepository = $this->getDoctrine()->getRepository(Role::class);
             $userRole = $roleRepository->findOneBy(['name' => 'ROLE_USER']);
+            $userProfile = new UserProfile();
 
             $user->addRole($userRole);
+            $user->addUserProfile($userProfile);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);

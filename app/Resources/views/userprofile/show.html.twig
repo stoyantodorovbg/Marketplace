@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Userprofile</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ userProfile.id }}</td>
+            </tr>
+            <tr>
+                <th>Cash</th>
+                <td>{{ userProfile.cash }}</td>
+            </tr>
+            <tr>
+                <th>Purchasecount</th>
+                <td>{{ userProfile.purchaseCount }}</td>
+            </tr>
+            <tr>
+                <th>Purchasesvalue</th>
+                <td>{{ userProfile.purchasesValue }}</td>
+            </tr>
+            <tr>
+                <th>Isseller</th>
+                <td>{% if userProfile.isSeller %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Salescount</th>
+                <td>{{ userProfile.salesCount }}</td>
+            </tr>
+            <tr>
+                <th>Salesvalue</th>
+                <td>{{ userProfile.salesValue }}</td>
+            </tr>
+            <tr>
+                <th>Rating</th>
+                <td>{{ userProfile.rating }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('userprofile_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('userprofile_edit', { 'id': userProfile.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -118,6 +118,12 @@ class User implements UserInterface
     private $roles;
 
     /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\UserProfile", inversedBy="user", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="userProfile_id", referencedColumnName="id"))
+     */
+    private $userProfile;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -430,6 +436,22 @@ class User implements UserInterface
     }
 
     /**
+     * @return mixed
+     */
+    public function getUserProfile()
+    {
+        return $this->userProfile;
+    }
+
+    /**
+     * @param mixed $userProfile
+     */
+    public function setUserProfile($userProfile)
+    {
+        $this->userProfile = $userProfile;
+    }
+
+    /**
      * @param \AppBundle\Entity\Role $role
      *
      * @return User
@@ -437,6 +459,18 @@ class User implements UserInterface
     public function addRole(Role $role)
     {
         $this->roles[] = $role;
+
+        return $this;
+    }
+
+    /**
+     * @param UserProfile $userProfile
+     *
+     * @return $this
+     */
+    public function addUserProfile(UserProfile $userProfile)
+    {
+        $this->userProfile = $userProfile;
 
         return $this;
     }
@@ -464,6 +498,10 @@ class User implements UserInterface
         return in_array("ROLE_ADMIN", $this->getRoles());
     }
 
+    public function __toString()
+    {
+        return $this->getEmail();
+    }
 
 }
 

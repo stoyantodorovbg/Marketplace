@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Userprofiles list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Cash</th>
+                <th>Purchasecount</th>
+                <th>Purchasesvalue</th>
+                <th>Isseller</th>
+                <th>Salescount</th>
+                <th>Salesvalue</th>
+                <th>Rating</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for userProfile in userProfiles %}
+            <tr>
+                <td><a href="{{ path('userprofile_show', { 'id': userProfile.id }) }}">{{ userProfile.id }}</a></td>
+                <td>{{ userProfile.cash }}</td>
+                <td>{{ userProfile.purchaseCount }}</td>
+                <td>{{ userProfile.purchasesValue }}</td>
+                <td>{% if userProfile.isSeller %}Yes{% else %}No{% endif %}</td>
+                <td>{{ userProfile.salesCount }}</td>
+                <td>{{ userProfile.salesValue }}</td>
+                <td>{{ userProfile.rating }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('userprofile_show', { 'id': userProfile.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('userprofile_edit', { 'id': userProfile.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('userprofile_new') }}">Create a new userProfile</a>
+        </li>
+    </ul>
+{% endblock %}
