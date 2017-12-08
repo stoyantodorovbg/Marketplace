@@ -12,32 +12,48 @@
         <br/>
 
         <h1>
-            <span class="badge badge-secondary">{{ product.name }}</span>
+            <span class="badge badge-warning">
+                {{ product.name }}
+            </span>
         </h1>
         <h3>
-            <span class="badge badge-secondary">{{ product.description }}</span>
+            <span class="badge badge-secondary">
+                {{ product.description }}
+            </span>
         </h3>
         <h2>
-            <span class="badge badge-secondary">{{ product.price }}</span> <span class="badge badge-secondary">{{ product.currency }}</span>
+            <span class="badge badge-primary">
+                {{ product.price }} {{ product.currency }}
+            </span>
         </h2>
         {% if product.availability %}
-            <span class="badge badge-secondary">Availability: {{ product.quantity }}</span>
+            <span class="badge badge-secondary">
+                Availability: {{ product.quantity }}
+            </span>
             {% else %}
-                <span class="badge badge-secondary">Now there is not availability of this product.</span>
+                <span class="badge badge-secondary">
+                    Now there is not availability of this product.
+                </span>
         {% endif %}
 
         <h4>
             {% if product.brand != null %}
-                {{ product.brand }}
+            <span class="badge badge-secondary">
+                By {{ product.brand }}
+            </span>
             {% endif %}
             {% if product.model != null %}
+            <span class="badge badge-secondary">
                 {{ product.model }}
+            </span>
             {% endif %}
         </h4>
 
         {% if product.isInPromotion %}
 
         {% endif %}
+
+        <br/><br/>
 
         <a href="{{ path('product_index') }}">
             <button type="button" class="btn btn-success">

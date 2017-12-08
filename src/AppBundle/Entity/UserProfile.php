@@ -86,6 +86,13 @@ class UserProfile
      */
     private $user;
 
+    /**
+     * Product constructor.
+     */
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    }
 
     /**
      * Get id

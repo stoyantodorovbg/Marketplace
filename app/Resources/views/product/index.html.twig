@@ -7,12 +7,17 @@
         <div class="col-md-6">
             <div class="container">
                 <div class="jumbotron">
-                    <h1>{{ product.name }}</h1>
+                    <h1>
+                        <span class="badge badge-warning">
+                        {{ product.name }}
+                        </span>
+                        <span class="badge badge-primary">
+                            {{ product.price }} {{ product.currency }}
+                        </span>
+                    </h1>
 
-                    <h2>{{ product.price }} {{ product.currency }}</h2>
 
-
-
+                    <br/><br/>
                      <a href="{{ path('product_show', { 'id': product.id }) }}">
                          <button type="button" class="btn btn-success">
                              Details

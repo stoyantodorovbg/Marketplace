@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,14 +16,15 @@ class UserProfileType extends AbstractType
     {
         $builder
             ->add('cash')
-            ->add('purchaseCount')
-            ->add('purchasesValue')
             ->add('isSeller')
-            ->add('salesCount')
-            ->add('salesValue')
-            ->add('rating')
-            ->add('currencies')
-            ->add('user');
+            ->add('currencies', EntityType::class, [
+                'class' => 'AppBundle:Currency',
+                'choice_label' => 'name',
+                'placeholder' => 'choose currency',
+                'multiple' => true,
+                'expanded' => true,
+                'label' => ' '
+            ]);
     }
     
     /**

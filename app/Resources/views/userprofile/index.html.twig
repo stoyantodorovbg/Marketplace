@@ -1,28 +1,53 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Userprofiles list</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Purchasecount</th>
-                <th>Isseller</th>
-                <th>Salescount</th>
-                <th>Rating</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for userProfile in userProfiles %}
-            <tr>
-                <td>{{ userProfile.purchaseCount }}</td>
-                <td>{% if userProfile.isSeller %}Yes{% else %}No{% endif %}</td>
-                <td>{{ userProfile.salesCount }}</td>
-                <td>{{ userProfile.rating }}</td>
-                
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<div class="container body-content">
+
+    <h1>
+        <span class="btn btn-info btn-lg btn-block">
+            Users
+        </span>
+    </h1>
+
+    {% for userProfile in userProfiles %}
+    <div class="row">
+        <div class="container">
+            <div class="jumbotron">
+                <h2>
+                    <span class="badge badge-info">
+                        Name: {{ userProfile.getUser.getFirstName }} {{ userProfile.getUser.getFirstName }}
+                    </span>
+                </h2>
+                <h3>
+                    <span class="badge badge-info">
+                        Email: {{ userProfile.getUser.getEmail }}
+                    </span>
+                </h3>
+                <h3>
+                    <span class="badge badge-warning">
+                        Rating: {{ userProfile.rating }}
+                    </span>
+                </h3>
+                {% if userProfile.isSeller %}<h3>
+                    <span class="badge badge-info">
+                        Buyer and Seller
+                    </span>
+                </h3>
+                    <h3><span class="badge badge-info">Purchases: {{ userProfile.purchaseCount }}</span>
+                    </h3>
+                    <h3><span class="badge badge-info">Sales: {{ userProfile.salesCount }}</span>
+                    </h3>
+                {% else %}
+                    <h3><span class="badge badge-info">Only Buyer</span>
+                    </h3>
+                    <h3><span class="badge badge-info">Purchases: {{ userProfile.purchaseCount }}</span>
+                    </h3>
+                {% endif %}
+            </div>
+        </div>
+        </div>
+    {% endfor %}
+</div>
 
 {% endblock %}

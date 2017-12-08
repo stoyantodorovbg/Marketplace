@@ -1,51 +1,66 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Userprofile</h1>
+<div class="jumbotron">
+    <span class="btn btn-info btn-lg btn-block">
+    <h1>Hallo {{ userProfile.getUser().getFirstName() }} {{ userProfile.getUser().getLastName() }}</h1>
+    </span>
+<br/><br/>
+    <h2>
+            <span class="badge badge-warning">
+                Cash: {{ userProfile.cash }}
+            </span>
+    </h2>
+    <h2>
+            <span class="badge badge-primary">
+                Rating: {{ userProfile.rating }}
+            </span>
+    </h2>
+    <h2>
+            <span class="badge badge-secondary">
+                Purchases: {{ userProfile.purchaseCount }}
+            </span>
+    </h2>
+    <h2>
+            <span class="badge badge-secondary">
+                Purchases value: {{ userProfile.purchasesValue }}
+            </span>
+    </h2>
+    {% if userProfile.isSeller %}
+        <h2>
+            <span class="badge badge-info">
+                Buyer and seller
+            </span>
+        </h2>
+        <h2>
+            <span class="badge badge-secondary">
+                Seles count: {{ userProfile.salesCount }}
+            </span>
+        </h2>
+        <h2>
+            <span class="badge badge-secondary">
+                Seles value: {{ userProfile.salesValue }}
+            </span>
+        </h2>
+    {% else %}
+        <h2>
+            <span class="badge badge-info">
+                Only buyer
+            </span>
+        </h2>
+    {% endif %}
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ userProfile.id }}</td>
-            </tr>
-            <tr>
-                <th>Cash</th>
-                <td>{{ userProfile.cash }}</td>
-            </tr>
-            <tr>
-                <th>Purchasecount</th>
-                <td>{{ userProfile.purchaseCount }}</td>
-            </tr>
-            <tr>
-                <th>Purchasesvalue</th>
-                <td>{{ userProfile.purchasesValue }}</td>
-            </tr>
-            <tr>
-                <th>Isseller</th>
-                <td>{% if userProfile.isSeller %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Salescount</th>
-                <td>{{ userProfile.salesCount }}</td>
-            </tr>
-            <tr>
-                <th>Salesvalue</th>
-                <td>{{ userProfile.salesValue }}</td>
-            </tr>
-            <tr>
-                <th>Rating</th>
-                <td>{{ userProfile.rating }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <br/><br/>
 
-    <ul>
-        <li>
-            <a href="{{ path('userprofile_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('userprofile_edit') }}">Edit</a>
-        </li>
-    </ul>
+    <a href="{{ path('userprofile_index') }}">
+        <button type="button" class="btn btn-success">
+            Show all users
+        </button>
+    </a>
+    <a href="{{ path('userprofile_edit') }}">
+        <button type="button" class="btn btn-danger">
+            Edit profile
+        </button>
+    </a>
+</div>
 {% endblock %}
