@@ -30,14 +30,11 @@ class UserProfile
     private $cash;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Currency", inversedBy="userProfiles")
-     * @ORM\JoinTable(name="userProfiles_currencies",
-     *     joinColumns={@ORM\JoinColumn(name="userProfile_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="currency_id", referencedColumnName="id")})
+     * @ORM\Column(name="currency_id", type="integer", length=11, nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Currency", inversedBy="userProfiles")
+     * @ORM\JoinColumn(name="currency_id", referencedColumnName="id")
      */
-    private $currencies;
+    private $currency;
 
     /**
      * @var int
@@ -289,20 +286,22 @@ class UserProfile
     }
 
     /**
-     * @return ArrayCollection
+     * @return mixed
      */
-    public function getCurrencies()
+    public function getCurrency()
     {
-        return $this->currencies;
+        return $this->currency;
     }
 
     /**
-     * @param ArrayCollection $currencies
+     * @param mixed $currency
      */
-    public function setCurrencies($currencies)
+    public function setCurrency($currency)
     {
-        $this->currencies = $currencies;
+        $this->currency = $currency;
     }
+
+
 
     public function __toString()
     {

@@ -44,7 +44,7 @@ class Currency
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\UserProfile", mappedBy="currencies")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserProfile", mappedBy="currency")
      */
     private $userProfiles;
 

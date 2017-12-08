@@ -17,12 +17,10 @@ class UserProfileType extends AbstractType
         $builder
             ->add('cash')
             ->add('isSeller')
-            ->add('currencies', EntityType::class, [
+            ->add('currency', EntityType::class, [
                 'class' => 'AppBundle:Currency',
                 'choice_label' => 'name',
                 'placeholder' => 'choose currency',
-                'multiple' => true,
-                'expanded' => true,
                 'label' => ' '
             ]);
     }

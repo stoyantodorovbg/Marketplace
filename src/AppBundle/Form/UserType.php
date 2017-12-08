@@ -36,8 +36,7 @@ class UserType extends AbstractType
             ->add('town', TextType::class)
             ->add('zipCode', TextType::class)
             ->add('address', TextType::class)
-            ->add('submit', SubmitType::class)
-            ->add('userProfile');
+            ->add('submit', SubmitType::class);
     }
     
     /**
