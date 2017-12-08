@@ -33,7 +33,16 @@ class UserController extends Controller
             $user->setPassword($password);
 
             $roleRepository = $this->getDoctrine()->getRepository(Role::class);
-            $userRole = $roleRepository->findOneBy(['name' => 'ROLE_USER']);
+            $userRepository = $this->getDoctrine()->getRepository(User::class);
+
+            $superAdmin = $userRepository->findBy(null, null, 1);
+
+
+            if ($superAdmin === null) {
+                $userRole = $roleRepository->findOneBy(['name' => 'ROLE_SUPER_ADMIN']);
+            } else {
+                $userRole = $roleRepository->findOneBy(['name' => 'ROLE_USER']);
+            }
             $userProfile = new UserProfile();
 
             $user->addRole($userRole);

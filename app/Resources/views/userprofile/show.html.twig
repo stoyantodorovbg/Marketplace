@@ -45,12 +45,7 @@
             <a href="{{ path('userprofile_index') }}">Back to the list</a>
         </li>
         <li>
-            <a href="{{ path('userprofile_edit', { 'id': userProfile.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
+            <a href="{{ path('userprofile_edit') }}">Edit</a>
         </li>
     </ul>
 {% endblock %}

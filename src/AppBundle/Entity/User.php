@@ -519,6 +519,14 @@ class User implements UserInterface
         return in_array("ROLE_ADMIN", $this->getRoles());
     }
 
+    /**
+     * @return bool
+     */
+    public function isSuperAdmin()
+    {
+        return in_array("ROLE_SUPER_ADMIN", $this->getRoles());
+    }
+
     public function __toString()
     {
         return $this->getEmail();
