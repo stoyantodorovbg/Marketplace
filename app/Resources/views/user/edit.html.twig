@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="jumbotron">
+    <span class="btn btn-info btn-lg btn-block">
+        <h1>User acount edit</h1>
+    </span>
+    <br/>
+    {{ form_start(edit_form) }}
+    <label>Phone:</label>
+    <div class="form-group">
+        {{ form_row(edit_form.phone) }}
+    </div>
+    <label>Company:</label>
+    <div class="form-group">
+        {{ form_row(edit_form.company) }}
+    </div>
+    <label>Country:</label>
+    <div class="form-group">
+        {{ form_row(edit_form.country) }}
+    </div>
+    {{ form_start(edit_form) }}
+    <label>Region:</label>
+    <div class="form-group">
+        {{ form_row(edit_form.region) }}
+    </div>
+    <label>Town:</label>
+    <div class="form-group">
+        {{ form_row(edit_form.town) }}
+    </div>
+    <label>Zip code:</label>
+    <div class="form-group">
+        {{ form_row(edit_form.zipCode) }}
+    </div>
+    <label>Address:</label>
+    <div class="form-group">
+        {{ form_row(edit_form.address) }}
+    </div>
+    <input type="submit" class="btn btn-danger" value="Edit" />
+    <a href="{{ path('user_show') }}">
+        <button type="button" class="btn btn-info">
+            cancel
+        </button>
+    </a>
+    {{ form_end(edit_form, {'render_rest': false}) }}
+    <br/><br/>
+
+    <a href="{{ path('userprofile_index') }}">
+        <button type="button" class="btn btn-info">
+            Show all users
+        </button>
+    </a>
+</div>
+{% endblock %}

@@ -59,49 +59,49 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string", length=255)
+     * @ORM\Column(name="phone", type="string", length=255, nullable=true)
      */
     private $phone;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="company", type="string", length=255, nullable=true)
+     * @ORM\Column(name="company", type="string", length=255, nullable=true, nullable=true)
      */
     private $company;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="country", type="string", length=255)
+     * @ORM\Column(name="country", type="string", length=255, nullable=true)
      */
     private $country;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="region", type="string", length=255)
+     * @ORM\Column(name="region", type="string", length=255, nullable=true)
      */
     private $region;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="town", type="string", length=255)
+     * @ORM\Column(name="town", type="string", length=255, nullable=true)
      */
     private $town;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="zipCode", type="string", length=255)
+     * @ORM\Column(name="zipCode", type="string", length=255, nullable=true)
      */
     private $zipCode;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="string", length=255)
+     * @ORM\Column(name="address", type="string", length=255, nullable=true)
      */
     private $address;
 

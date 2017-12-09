@@ -52,4 +52,48 @@ class UserController extends Controller
             'form' => $form->createView()
         ]);
     }
+    /**
+     * Displays a form to edit an existing user entity.
+     *
+     * @Route("/edit", name="user_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction(Request $request)
+    {
+        $userId = $user = $this->getUser()->getId();
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $user = $userRepo->find($userId);
+
+        $editForm = $this->createForm('AppBundle\Form\UserType', $user);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('user_show');
+        }
+
+        return $this->render('user/edit.html.twig', array(
+            'user' => $user,
+            'edit_form' => $editForm->createView()
+        ));
+    }
+
+    /**
+     * Finds and displays a userProfile entity.
+     *
+     * @Route("/show", name="user_show")
+     * @Method("GET")
+     */
+    public function showAction()
+    {
+        $userId = $user = $this->getUser()->getId();
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $user = $userRepo->find($userId);
+
+        return $this->render('user/show.html.twig', array(
+            'user' => $user,
+        ));
+    }
+
 }

@@ -3,7 +3,7 @@
 {% block body %}
 <div class="jumbotron">
     <span class="btn btn-info btn-lg btn-block">
-    <h1>Hallo {{ userProfile.getUser().getFirstName() }} {{ userProfile.getUser().getLastName() }}</h1>
+    <h1>Hello {{ userProfile.getUser().getFirstName() }} {{ userProfile.getUser().getLastName() }}</h1>
     </span>
 <br/><br/>
     <h2>
@@ -60,6 +60,11 @@
     <a href="{{ path('userprofile_edit') }}">
         <button type="button" class="btn btn-danger">
             Edit profile
+        </button>
+    </a>
+    <a href="{{ path('user_show') }}">
+        <button type="button" class="btn btn-info">
+            Show account
         </button>
     </a>
 </div>

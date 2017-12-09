@@ -14,8 +14,6 @@
     <body>
         {% block header%}
             <header>
-                <!-- Navigation -->
-
                 <ul class="navbar navbar-light list-unstyled" style="background-color: #e3f2fd;">
                     <li class="nav-item">
                         <a class="nav-link btn btn-primary" href="#">
@@ -33,8 +31,16 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-success" href="#">
+                            <a class="nav-link btn btn-success" href="{{ path('userprofile_index') }}">
                                 <button type="button" class="btn btn-success">
+                                    All Users
+                                </button>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary" href="#">
+                                <button type="button" class="btn btn-primary">
                                     My cart
                                 </button>
                             </a>
@@ -96,43 +102,83 @@
                         </li>
                     {% endif %}
                 </ul>
-                 {% if app.getUser() and app.getUser().isAdmin() %}
-                <ul class="navbar navbar-light list-unstyled" style="background-color: #e3f2fd;">
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-primary" href="{{ path('category_new') }}">
-                            <button type="button" class="btn btn-primary">
-                                Add category
-                            </button>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-primary" href="{{ path('product_new') }}">
-                            <button type="button" class="btn btn-primary">
-                                Add product
-                            </button>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-primary" href="{{ path('currency_new') }}">
-                            <button type="button" class="btn btn-primary">
-                                Add currency
-                            </button>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-primary" href="#">
-                            <button type="button" class="btn btn-primary">
-                                Add promotion
-                            </button>
-                        </a>
-                    </li>
-                </ul>
+                {% if app.getUser() and app.getUser().isAdmin() %}
+                    <ul class="navbar navbar-light list-unstyled" style="background-color: #e3f2fd;">
+                        <li class="nav-item">
+                            <h5 class="text-primary">
+                                Hallo Moderator!
+                            </h5>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary" href="{{ path('category_new') }}">
+                                <button type="button" class="btn btn-primary">
+                                    Add category
+                                </button>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary" href="{{ path('product_new') }}">
+                                <button type="button" class="btn btn-primary">
+                                    Add product
+                                </button>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary" href="{{ path('currency_new') }}">
+                                <button type="button" class="btn btn-primary">
+                                    Add currency
+                                </button>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary" href="#">
+                                <button type="button" class="btn btn-primary">
+                                    Add promotion
+                                </button>
+                            </a>
+                        </li>
+                    </ul>
+                {% elseif app.getUser() and app.getUser().isSuperAdmin() %}
+                    <ul class="navbar navbar-light list-unstyled" style="background-color: #e3f2fd;">
+                        <li class="nav-item">
+                            <h5 class="text-primary">
+                                Hallo Admin!
+                            </h5>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary" href="{{ path('category_new') }}">
+                                <button type="button" class="btn btn-primary">
+                                    Add category
+                                </button>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary" href="{{ path('product_new') }}">
+                                <button type="button" class="btn btn-primary">
+                                    Add product
+                                </button>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary" href="{{ path('currency_new') }}">
+                                <button type="button" class="btn btn-primary">
+                                    Add currency
+                                </button>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary" href="#">
+                                <button type="button" class="btn btn-primary">
+                                    Add promotion
+                                </button>
+                            </a>
+                        </li>
+                    </ul>
                 {% endif %}
             </header>
         {% endblock %}
 
         {% block body %}
-
         {% endblock %}
 
         {% block footer %}

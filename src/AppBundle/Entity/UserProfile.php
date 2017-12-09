@@ -30,7 +30,7 @@ class UserProfile
     private $cash;
 
     /**
-     * @ORM\Column(name="currency_id", type="integer", length=11, nullable=true)
+     * @ORM\Column(name="currency", type="string", length=255, nullable=true)
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Currency", inversedBy="userProfiles")
      * @ORM\JoinColumn(name="currency_id", referencedColumnName="id")
      */

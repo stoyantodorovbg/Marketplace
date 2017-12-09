@@ -2,8 +2,11 @@
 
 namespace AppBundle\Form;
 
+use Doctrine\DBAL\Types\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,8 +18,8 @@ class UserProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('cash')
-            ->add('isSeller')
+            ->add('cash', NumberType::class, ['label' => ' '])
+            ->add('isSeller', CheckboxType::class, ['label' => ' '])
             ->add('currency', EntityType::class, [
                 'class' => 'AppBundle:Currency',
                 'choice_label' => 'name',

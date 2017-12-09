@@ -69,7 +69,7 @@ class UserProfileController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('userprofile_edit', array('id' => $userProfile->getId()));
+            return $this->redirectToRoute('userprofile_show');
         }
 
         return $this->render('userprofile/edit.html.twig', array(

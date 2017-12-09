@@ -19,24 +19,24 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
+            ->add('email', EmailType::class, ['label' => ' '])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'The passwords mismatch',
                 'required' => true,
-                'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat password']
+                'first_options' => ['label' => 'Password:'],
+                'second_options' => ['label' => 'Repeat password:']
             ])
-            ->add('firstName', TextType::class)
-            ->add('lastName', TextType::class)
-            ->add('phone', TextType::class)
-            ->add('company', TextType::class)
-            ->add('country', TextType::class)
-            ->add('region', TextType::class)
-            ->add('town', TextType::class)
-            ->add('zipCode', TextType::class)
-            ->add('address', TextType::class)
-            ->add('submit', SubmitType::class);
+            ->add('firstName', TextType::class, ['label' => ' '])
+            ->add('lastName', TextType::class, ['label' => ' '])
+            ->add('phone', TextType::class, ['label' => ' '])
+            ->add('company', TextType::class, ['label' => ' '])
+            ->add('country', TextType::class, ['label' => ' '])
+            ->add('region', TextType::class, ['label' => ' '])
+            ->add('town', TextType::class, ['label' => ' '])
+            ->add('zipCode', TextType::class, ['label' => ' '])
+            ->add('address', TextType::class, ['label' => ' '])
+            ->add('submit', SubmitType::class, ['label' => ' ']);
     }
     
     /**

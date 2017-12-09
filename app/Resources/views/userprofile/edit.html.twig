@@ -16,7 +16,7 @@
     <div class="form-group">
         {{ form_row(edit_form.isSeller) }}
     </div>
-    <label>Currencies:</label>
+    <label>Currency:</label>
     <div class="form-group">
         {{ form_row(edit_form.currency) }}
     </div>
@@ -27,11 +27,11 @@
         </button>
     </a>
     {{ form_end(edit_form) }}
-    <br/><br/>
-    <a href="{{ path('userprofile_index') }}">
-        <button type="button" class="btn btn-info">
-            Show all users
-        </button>
-    </a>
+
+    <ul>
+        <li>
+            <a href="{{ path('userprofile_index') }}">Back to the list</a>
+        </li>
+    </ul>
 </div>
 {% endblock %}
