@@ -134,6 +134,11 @@ class User implements UserInterface
     private $products;
 
     /**
+     * @ORM\OneToOne(targetEntity="Cart", mappedBy="user")
+     */
+    private $cart;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -553,7 +558,21 @@ class User implements UserInterface
         $this->products = $products;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCart()
+    {
+        return $this->cart;
+    }
 
+    /**
+     * @param mixed $cart
+     */
+    public function setCart($cart)
+    {
+        $this->cart = $cart;
+    }
 
 }
 

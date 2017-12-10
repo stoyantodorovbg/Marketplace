@@ -66,8 +66,9 @@ class UserController extends Controller
 
         $editForm = $this->createForm('AppBundle\Form\UserType', $user);
         $editForm->handleRequest($request);
+        //dump($editForm);exit;
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() ) {//&& $editForm->isValid()
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('user_show');

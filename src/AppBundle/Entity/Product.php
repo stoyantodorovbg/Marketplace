@@ -110,6 +110,16 @@ class Product
     private $user;
 
     /**
+     * @ORM\OneToMany(targetEntity="Purchase", mappedBy="product")
+     */
+    private $purchases;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Cart", mappedBy="purchases")
+     */
+    private $carts;
+
+    /**
      * Product constructor.
      */
     public function __construct()
@@ -350,6 +360,38 @@ class Product
     public function setUser($user)
     {
         $this->user = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPurchases()
+    {
+        return $this->purchases;
+    }
+
+    /**
+     * @param mixed $purchases
+     */
+    public function setPurchases($purchases)
+    {
+        $this->purchases = $purchases;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCarts()
+    {
+        return $this->carts;
+    }
+
+    /**
+     * @param mixed $carts
+     */
+    public function setCarts($carts)
+    {
+        $this->carts = $carts;
     }
 
 
