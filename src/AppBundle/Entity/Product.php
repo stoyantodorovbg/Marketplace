@@ -104,6 +104,12 @@ class Product
     private $isInPromotion;
 
     /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="products")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+    /**
      * Product constructor.
      */
     public function __construct()
@@ -329,5 +335,23 @@ class Product
     {
         $this->isInPromotion = $isInPromotion;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+
 }
 

@@ -10,12 +10,18 @@
         </h1>
     </span>
         <br/>
-
         <h1>
             <span class="badge badge-warning">
                 {{ product.name }}
             </span>
         </h1>
+        <h2>
+            <a href="{{ path('userprofile_public_show') }}">
+                <span class="badge badge-primary">
+                    Sold by: {{ product.getUser.getFirstName() }} {{ product.getUser.getLastName() }}
+                </span>
+            </a>
+        </h2>
         <h3>
             <span class="badge badge-secondary">
                 {{ product.description }}

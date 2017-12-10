@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container body-content">
+        <div class="row">
+            <div class="container">
+                <div class="jumbotron">
+                    <h2>
+                        <span class="badge badge-info">
+                            Name: {{ userProfile.getUser.getFirstName }} {{ userProfile.getUser.getFirstName }}
+                        </span>
+                    </h2>
+                    <h3>
+                        <span class="badge badge-info">
+                            Email: {{ userProfile.getUser.getEmail }}
+                        </span>
+                    </h3>
+                    <h3>
+                        <span class="badge badge-warning">
+                            Rating: {{ userProfile.rating }}
+                        </span>
+                    </h3>
+                    {% if userProfile.isSeller %}<h3>
+                        <span class="badge badge-info">
+                            Buyer and Seller
+                        </span>
+                    </h3>
+                        <h3><span class="badge badge-info">Purchases: {{ userProfile.purchaseCount }}</span>
+                        </h3>
+                        <h3><span class="badge badge-info">Sales: {{ userProfile.salesCount }}</span>
+                        </h3>
+                    {% else %}
+                        <h3><span class="badge badge-info">Only Buyer</span>
+                        </h3>
+                        <h3><span class="badge badge-info">Purchases: {{ userProfile.purchaseCount }}</span>
+                        </h3>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock body %}

@@ -129,6 +129,11 @@ class User implements UserInterface
     private $userProfile;
 
     /**
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="user")
+     */
+    private $products;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -531,6 +536,24 @@ class User implements UserInterface
     {
         return $this->getEmail();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    /**
+     * @param mixed $products
+     */
+    public function setProducts($products)
+    {
+        $this->products = $products;
+    }
+
+
 
 }
 

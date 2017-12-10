@@ -51,6 +51,24 @@ class UserProfileController extends Controller
     }
 
     /**
+     * Finds and displays a userProfile entity.
+     *
+     * @Route("/publicShow", name="userprofile_public_show")
+     * @Method("GET")
+     */
+    public function publicShowAction()
+    {
+        $userId = $user = $this->getUser()->getId();
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $user = $userRepo->find($userId);
+        $userProfile = $user->getUserProfile();
+
+        return $this->render('userprofile/public_show.html.twig', array(
+            'userProfile' => $userProfile,
+        ));
+    }
+
+    /**
      * Displays a form to edit an existing userProfile entity.
      *
      * @Route("/edit", name="userprofile_edit")
