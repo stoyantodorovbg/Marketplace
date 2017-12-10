@@ -36,6 +36,7 @@ class Category
     private $description;
 
     /**
+
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product", mappedBy="categories")

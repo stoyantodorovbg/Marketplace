@@ -57,11 +57,11 @@
 
         <a href="{{ path('product_index') }}">
             <button type="button" class="btn btn-success">
-                Back to the list
+                Show all products
             </button>
         </a>
 
-        {% if app.getUser().isAdmin() %}
+        {% if app.getUser() and (app.getUser().isAdmin() or app.getUser().isSuperAdmin()) %}
             <a href="{{ path('product_edit', { 'id': product.id }) }}">
                 <button type="button" class="btn btn-danger">
                     Edit

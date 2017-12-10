@@ -13,14 +13,14 @@
             <div class="container-fluid">
                 <div class="col-md-6">
                     <h1>
-                        <span class="badge badge-secondary">{{ category.name }}</span>
+                        <span class="badge badge-secondary">
+                            <a href="{{ path('category_show', { 'id': category.id }) }}">
+                            {{ category.name }}
+                            </a>
+                        </span>
                     </h1>
-                    <a href="{{ path('category_show', { 'id': category.id }) }}">
-                        <button type="button" class="btn btn-success">
-                            Details
-                        </button>
-                    </a>
-                    {% if app.getUser().isAdmin() %}<a href="{{ path('category_edit', { 'id': category.id }) }}">
+                    {% if app.getUser() and (app.getUser().isAdmin() or app.getUser().isSuperAdmin())  %}
+                        <a href="{{ path('category_edit', { 'id': category.id }) }}">
                         <button type="button" class="btn btn-danger">
                             Edit
                         </button></a>
@@ -30,7 +30,7 @@
             </div>
         </div>
         {% endfor %}
-        {% if app.getUser().isAdmin() %}
+        {% if app.getUser() and app.getUser().isAdmin() %}
             <a href="{{ path('category_new') }}">
                 <button type="button" class="btn btn-primary">
                     Create a new category

@@ -4,21 +4,30 @@
 {% block body %}
 <div class="jumbotron">
     <span class="btn btn-info btn-lg btn-block">
-        <h1>Category</h1>
+        <h1>Products by category</h1>
     </span>
     <br/>
 
     <h1>
-        <span class="badge badge-secondary">{{ category.name }}</span> : <span class="badge badge-secondary">{{ category.description }}</span>
+        <span class="badge badge-secondary">Category: {{ category.name }} ({{ category.description }})</span>
     </h1>
+    {% for product in category.getProducts %}
+        <h3><a href="{{ path('product_show', { 'id': product.id }) }}">
+            <span class="badge badge-primary">
 
+                    {{ product.name}}
+
+            </span> </a>
+        </h3>
+    {% endfor %}
     <a href="{{ path('category_index') }}">
         <button type="button" class="btn btn-success">
             Back to the list
         </button>
     </a>
 
-    {% if app.getUser().isAdmin() %}
+
+    {% if app.getUser() and (app.getUser().isAdmin() or app.getUser().isSuperAdmin())  %}
         <a href="{{ path('category_edit', { 'id': category.id }) }}">
             <button type="button" class="btn btn-danger">
                 Edit

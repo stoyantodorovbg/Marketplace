@@ -16,7 +16,7 @@
             <header>
                 <ul class="navbar navbar-light list-unstyled" style="background-color: #e3f2fd;">
                     <li class="nav-item">
-                        <a class="nav-link btn btn-primary" href="#">
+                        <a class="nav-link btn btn-primary" href="{{ path('category_index') }}">
                             <button type="button" class="btn btn-primary">
                                 Marketplace
                             </button>
@@ -46,16 +46,6 @@
                             </a>
                         </li>
                     {% endif %}
-                    <li class="nav-item dropdown btn btn-light">
-                        <a class="nav-link dropdown-toggle btn btn-primary" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><button type="button" class="btn btn-primary">Products</button></a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
-                        </div>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link btn btn-warning" href="#">
                             <button type="button" class="btn btn-warning">
@@ -102,47 +92,16 @@
                         </li>
                     {% endif %}
                 </ul>
-                {% if app.getUser() and app.getUser().isAdmin() %}
+                {% if app.getUser() and (app.getUser().isAdmin() or app.getUser().isSuperAdmin())  %}
                     <ul class="navbar navbar-light list-unstyled" style="background-color: #e3f2fd;">
                         <li class="nav-item">
                             <h5 class="text-primary">
-                                Hallo Moderator!
-                            </h5>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-primary" href="{{ path('category_new') }}">
-                                <button type="button" class="btn btn-primary">
-                                    Add category
-                                </button>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-primary" href="{{ path('product_new') }}">
-                                <button type="button" class="btn btn-primary">
-                                    Add product
-                                </button>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-primary" href="{{ path('currency_new') }}">
-                                <button type="button" class="btn btn-primary">
-                                    Add currency
-                                </button>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-primary" href="#">
-                                <button type="button" class="btn btn-primary">
-                                    Add promotion
-                                </button>
-                            </a>
-                        </li>
-                    </ul>
-                {% elseif app.getUser() and app.getUser().isSuperAdmin() %}
-                    <ul class="navbar navbar-light list-unstyled" style="background-color: #e3f2fd;">
-                        <li class="nav-item">
-                            <h5 class="text-primary">
-                                Hallo Admin!
+                                {% if app.getUser().isAdmin() %}
+                                Hello Moderator!
+                                {% endif %}
+                                {% if app.getUser().isSuperAdmin() %}
+                                Hello Admin!
+                                {% endif %}
                             </h5>
                         </li>
                         <li class="nav-item">

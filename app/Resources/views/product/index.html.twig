@@ -23,7 +23,8 @@
                              Details
                          </button>
                      </a>
-                     {% if app.getUser().isAdmin() %}<a href="{{ path('product_edit', { 'id': product.id }) }}">
+                     {% if app.getUser() and (app.getUser().isAdmin() or app.getUser().isSuperAdmin()) %}
+                         <a href="{{ path('product_edit', { 'id': product.id }) }}">
                              <button type="button" class="btn btn-danger">
                                  Edit
                              </button></a>
