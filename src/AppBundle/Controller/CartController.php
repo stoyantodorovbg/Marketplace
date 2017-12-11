@@ -62,7 +62,6 @@ class CartController extends Controller
     {
         $cartRepo = $this->getDoctrine()->getRepository(Cart::class);
         $addsInCart = $cartRepo->findBy(['user' => $this->getUser()->getId()]);
-        //dump($addsInCart);exit;
         return $this->render('cart/show.html.twig', array(
             'addsInCart' => $addsInCart
         ));
@@ -75,13 +74,15 @@ class CartController extends Controller
      */
     public function addProduct(Request $request, Product $product)
     {
+        $productQuantity = $request->query->get('productQuantity');
         $user = $this->getUser();
 
         $cart = new Cart();
         $cart->setUser($user);
         $cart->setProduct($product);
         $cart->setQuantity(1);
-        //$cart->setStatus(1); //ne e kupeno
+        $cart->setBought(0); // is not bought
+        $cart->setQuantity($productQuantity);
 
         $em = $this->getDoctrine()->getManager();//
         $em->persist($cart);

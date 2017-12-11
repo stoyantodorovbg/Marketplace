@@ -34,6 +34,7 @@ class ProductType extends AbstractType
                 'required'   => false
             ])
             ->add('quantity', TextType::class, ['label' => ' '])
+            ->add('unit', TextType::class, ['label' => ' '])
             ->add('brand', TextType::class, [
                 'label' => ' ',
                 'required'   => false

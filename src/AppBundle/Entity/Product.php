@@ -67,6 +67,13 @@ class Product
     /**
      * @var string
      *
+     * @ORM\Column(name="unit", type="string", length=255)
+     */
+    private $unit;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="brand", type="string", length=255, nullable=true)
      */
     private $brand;
@@ -259,6 +266,22 @@ class Product
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnit()
+    {
+        return $this->unit;
+    }
+
+    /**
+     * @param string $unit
+     */
+    public function setUnit($unit)
+    {
+        $this->unit = $unit;
     }
 
     /**

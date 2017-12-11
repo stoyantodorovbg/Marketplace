@@ -29,7 +29,7 @@
         </h3>
         <h2>
             <span class="badge badge-primary">
-                {{ product.price }} {{ product.currency }}
+                {{ product.price }} {{ product.currency }} per {{ product.unit }}
             </span>
         </h2>
         {% if product.availability %}
@@ -61,11 +61,16 @@
 
         <br/><br/>
 
-        <a href="{{ path('cart_add_product', { 'id': product.id }) }}">
-            <button type="button" class="btn btn-primary">
-                Add to cart
-            </button>
-        </a>
+        <form action="{{ path('cart_add_product', { 'id': product.id }) }}">
+            <label class="badge badge-secondary">
+                Chose quantity:
+            </label>
+        <input name="productQuantity" type="number" min="0">
+            <br/>
+            <input type="submit" class="btn btn-primary" value="Add to cart">
+        </form>
+
+        <br/>
 
         <a href="#">
             <button class="btn btn-primary">

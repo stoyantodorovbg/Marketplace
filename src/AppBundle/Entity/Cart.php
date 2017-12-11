@@ -30,6 +30,13 @@ class Cart
     private $quantity;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="bought", type="boolean")
+     */
+    private $bought;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="carts")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
@@ -66,6 +73,22 @@ class Cart
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBought()
+    {
+        return $this->bought;
+    }
+
+    /**
+     * @param bool $bought
+     */
+    public function setBought($bought)
+    {
+        $this->bought = $bought;
     }
 
     /**
