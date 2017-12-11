@@ -63,7 +63,7 @@ class CartController extends Controller
         $cartRepo = $this->getDoctrine()->getRepository(Cart::class);
         $addsInCart = $cartRepo->findBy(['user' => $this->getUser()->getId()]);
         return $this->render('cart/show.html.twig', array(
-            'addsInCart' => $addsInCart
+            'addsInCart' => $addsInCart,
         ));
     }
 
@@ -82,7 +82,9 @@ class CartController extends Controller
         $cart->setProduct($product);
         $cart->setQuantity(1);
         $cart->setBought(0); // is not bought
+        $cart->setRefused(0); // is not refused
         $cart->setQuantity($productQuantity);
+
 
         $em = $this->getDoctrine()->getManager();//
         $em->persist($cart);
@@ -111,7 +113,21 @@ class CartController extends Controller
 
         return $this->render('cart/edit.html.twig', array(
             'cart' => $cart,
-            'edit_form' => $editForm->createView()
+            'edit_form' => $editForm->createView(),
         ));
     }
+
+    /**
+     * Deletes a cart entity.
+     *
+     * @Route("/{id}", name="refuse_row")
+     * @Method("GET")
+     */
+    public function refuseAction(Request $request, Cart $cart)
+    {
+        $cartRepo = $this->getDoctrine()->getRepository(Cart::class);
+        $cartRepo->refuseProduct($cart->getId());
+        return $this->redirectToRoute('cart_show');
+    }
+
 }

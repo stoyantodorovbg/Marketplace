@@ -37,6 +37,13 @@ class Cart
     private $bought;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="refused", type="boolean")
+     */
+    private $refused;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="carts")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
@@ -89,6 +96,22 @@ class Cart
     public function setBought($bought)
     {
         $this->bought = $bought;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRefused()
+    {
+        return $this->refused;
+    }
+
+    /**
+     * @param bool $refused
+     */
+    public function setRefused($refused)
+    {
+        $this->refused = $refused;
     }
 
     /**

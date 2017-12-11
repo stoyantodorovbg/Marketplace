@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Entity\Cart;
 
 /**
  * CartRepository
@@ -10,4 +11,18 @@ namespace AppBundle\Repository;
  */
 class CartRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function refuseProduct($cartId)
+    {
+        $em = $this->getEntityManager();
+        $db = $em->createQueryBuilder();
+        $query = $db
+            ->update(Cart::class, 'c')
+            ->set('c.refused', '1')
+            ->where('c.id = ?1')
+            ->setParameter(1, $cartId)
+            ->getQuery();
+        $query->execute();
+
+    }
+
 }

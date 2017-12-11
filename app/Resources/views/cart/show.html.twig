@@ -1,10 +1,39 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Cart</h1>
+<div class="jumbotron">
+    <span class="btn btn-info btn-lg btn-block">
+        <h1>Cart</h1>
+    </span>
+
+    <br/><br/>
 
     {% for addInCart in addsInCart %}
-        {{ addInCart.getProduct().getName() }} {{ addInCart.getproduct().getPrice() }} {{ addInCart.getProduct().getCurrency() }}
-    {% endfor %}
+        {% if addInCart.isRefused == 0 %}
+        <h3>
+            <div class="badge badge-success">
+                product: {{ addInCart.getProduct().getName() }}
+            </div>
+            <br/>
+            <div class="badge badge-success">
+                on price {{ addInCart.getproduct().getPrice() }} {{ addInCart.getProduct().getCurrency() }} per {{ addInCart.getProduct().getUnit() }}
+            </div>
+            <br/>
+            <div class="badge badge-success">
+                quantity: {{ addInCart.getQuantity() }} {{ addInCart.getProduct().getUnit() }}
+            </div>
+            <br/>
+            <a href="{{ path('refuse_row', { 'id': addInCart.id }) }}">
+                <button type="button" class="btn btn-danger">
+                    Remove from cart
+                </button>
+            </a>
 
+        </h3>
+        <br/><br/>
+
+    {% endif %}
+
+    {% endfor %}
+</div>
 {% endblock %}
