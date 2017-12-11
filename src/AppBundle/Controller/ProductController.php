@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Cart;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -42,7 +43,9 @@ class ProductController extends Controller
      */
     public function newAction(Request $request)
     {
+        $user = $this->getUser();
         $product = new Product();
+        $product->setUser($user);
         $form = $this->createForm('AppBundle\Form\ProductType', $product);
         $form->handleRequest($request);
 

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Cart</h1>
+
+    {% for product in cart %}
+        {{ product.name }} {{ product.price }}
+    {% endfor %}
+    <a href="{{ path('cart_edit', { 'id': cart.id }) }}">
+        <button>
+            Edit
+        </button>
+    </a>
+
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+
+{% endblock %}

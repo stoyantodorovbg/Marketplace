@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,20 +23,20 @@ class Cart
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Purchase", inversedBy="carts")
-     * @ORM\JoinTable(name="carts_purchases")
+     * @var int
+     *
+     * @ORM\Column(name="quantity", type="integer")
      */
-    private $purchases;
+    private $quantity;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Product", inversedBy="carts")
-     * @ORM\JoinTable(name="carts_products")
+     * @ORM\OneToOne(targetEntity="Product", mappedBy="cart")
      */
-    private $products;
+    private $product;
 
     /**
-     * @ORM\OneToOne(targetEntity="User", inversedBy="cart")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="carts")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")")
      */
     private $user;
 
@@ -53,33 +54,33 @@ class Cart
     /**
      * @return mixed
      */
-    public function getPurchases()
+    public function getQuantity()
     {
-        return $this->purchases;
+        return $this->quantity;
     }
 
     /**
-     * @param mixed $purchases
+     * @param mixed $quantity
      */
-    public function setPurchases($purchases)
+    public function setQuantity($quantity)
     {
-        $this->purchases = $purchases;
+        $this->quantity = $quantity;
     }
 
     /**
      * @return mixed
      */
-    public function getProducts()
+    public function getProduct()
     {
-        return $this->products;
+        return $this->product;
     }
 
     /**
-     * @param mixed $products
+     * @param mixed $product
      */
-    public function setProducts($products)
+    public function setProduct($product)
     {
-        $this->products = $products;
+        $this->product = $product;
     }
 
     /**

@@ -134,9 +134,9 @@ class User implements UserInterface
     private $products;
 
     /**
-     * @ORM\OneToOne(targetEntity="Cart", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Cart", mappedBy="cart")
      */
-    private $cart;
+    private $carts;
 
     /**
      * User constructor.
@@ -145,6 +145,7 @@ class User implements UserInterface
     {
         $this->articles = new ArrayCollection();
         $this->roles = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     /**
@@ -561,18 +562,17 @@ class User implements UserInterface
     /**
      * @return mixed
      */
-    public function getCart()
+    public function getCarts()
     {
-        return $this->cart;
+        return $this->carts;
     }
 
     /**
-     * @param mixed $cart
+     * @param mixed $carts
      */
-    public function setCart($cart)
+    public function setCarts($carts)
     {
-        $this->cart = $cart;
+        $this->carts = $carts;
     }
-
 }
 

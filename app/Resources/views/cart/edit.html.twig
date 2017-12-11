@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Are you add this product to the cart?</h1>
+
+    {{ form_start(edit_form) }}
+        <input type="submit" value="Add" />
+    {{ form_end(edit_form) }}
+
+    {{ form_start(delete_form) }}
+    <input type="submit" value="Remove this cart">
+    {{ form_end(delete_form) }}
+
+{% endblock %}

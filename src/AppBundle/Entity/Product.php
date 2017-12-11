@@ -110,14 +110,10 @@ class Product
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="Purchase", mappedBy="product")
+     * @ORM\OneToOne(targetEntity="Cart", inversedBy="product")
+     * @ORM\JoinColumn(name="cart_id", referencedColumnName="id")
      */
-    private $purchases;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Cart", mappedBy="purchases")
-     */
-    private $carts;
+    private $cart;
 
     /**
      * Product constructor.
@@ -365,35 +361,23 @@ class Product
     /**
      * @return mixed
      */
-    public function getPurchases()
+    public function getCart()
     {
-        return $this->purchases;
+        return $this->cart;
     }
 
     /**
-     * @param mixed $purchases
+     * @param mixed $cart
      */
-    public function setPurchases($purchases)
+    public function setCart($cart)
     {
-        $this->purchases = $purchases;
+        $this->cart = $cart;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCarts()
+    public function __toString()
     {
-        return $this->carts;
+        return $this->getName();
     }
-
-    /**
-     * @param mixed $carts
-     */
-    public function setCarts($carts)
-    {
-        $this->carts = $carts;
-    }
-
 
 }
 
