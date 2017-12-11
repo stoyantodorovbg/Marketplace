@@ -55,16 +55,16 @@ class CartController extends Controller
     /**
      * Finds and displays a cart entity.
      *
-     * @Route("/{id}", name="cart_show")
+     * @Route("/", name="cart_show")
      * @Method("GET")
      */
-    public function showAction(Cart $cart)
+    public function showAction()
     {
-        $deleteForm = $this->createDeleteForm($cart);
-
+        $cartRepo = $this->getDoctrine()->getRepository(Cart::class);
+        $addsInCart = $cartRepo->findBy(['user' => $this->getUser()->getId()]);
+        //dump($addsInCart);exit;
         return $this->render('cart/show.html.twig', array(
-            'cart' => $cart,
-            'delete_form' => $deleteForm->createView(),
+            'addsInCart' => $addsInCart
         ));
     }
 
@@ -98,7 +98,6 @@ class CartController extends Controller
      */
     public function editAction(Request $request, Cart $cart)
     {
-        $deleteForm = $this->createDeleteForm($cart);
         $editForm = $this->createForm('AppBundle\Form\CartType', $cart);
 
         $editForm->handleRequest($request);
@@ -111,44 +110,7 @@ class CartController extends Controller
 
         return $this->render('cart/edit.html.twig', array(
             'cart' => $cart,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form' => $editForm->createView()
         ));
-    }
-
-    /**
-     * Deletes a cart entity.
-     *
-     * @Route("/{id}", name="cart_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, Cart $cart)
-    {
-        $form = $this->createDeleteForm($cart);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($cart);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('cart_index');
-    }
-
-    /**
-     * Creates a form to delete a cart entity.
-     *
-     * @param Cart $cart The cart entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Cart $cart)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('cart_delete', array('id' => $cart->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
     }
 }

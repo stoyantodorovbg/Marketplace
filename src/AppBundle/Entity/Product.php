@@ -110,10 +110,9 @@ class Product
     private $user;
 
     /**
-     * @ORM\OneToOne(targetEntity="Cart", inversedBy="product")
-     * @ORM\JoinColumn(name="cart_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="Cart", mappedBy="product")
      */
-    private $cart;
+    private $carts;
 
     /**
      * Product constructor.
@@ -361,17 +360,17 @@ class Product
     /**
      * @return mixed
      */
-    public function getCart()
+    public function getCarts()
     {
-        return $this->cart;
+        return $this->carts;
     }
 
     /**
-     * @param mixed $cart
+     * @param mixed $carts
      */
-    public function setCart($cart)
+    public function setCarts($carts)
     {
-        $this->cart = $cart;
+        $this->carts = $carts;
     }
 
     public function __toString()

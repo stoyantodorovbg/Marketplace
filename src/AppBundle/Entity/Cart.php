@@ -30,7 +30,8 @@ class Cart
     private $quantity;
 
     /**
-     * @ORM\OneToOne(targetEntity="Product", mappedBy="cart")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="carts")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     private $product;
 

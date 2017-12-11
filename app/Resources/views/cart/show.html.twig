@@ -3,17 +3,8 @@
 {% block body %}
     <h1>Cart</h1>
 
-    {% for product in cart %}
-        {{ product.name }} {{ product.price }}
+    {% for addInCart in addsInCart %}
+        {{ addInCart.getProduct().getName() }} {{ addInCart.getproduct().getPrice() }} {{ addInCart.getProduct().getCurrency() }}
     {% endfor %}
-    <a href="{{ path('cart_edit', { 'id': cart.id }) }}">
-        <button>
-            Edit
-        </button>
-    </a>
-
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-
+    
 {% endblock %}
