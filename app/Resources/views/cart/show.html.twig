@@ -12,15 +12,19 @@
         {% if addInCart.isRefused == 0 %}
         <h3>
             <div class="badge badge-success">
-                product: {{ addInCart.getProduct().getName() }}
+                Product: {{ addInCart.getProduct().getName() }}
             </div>
             <br/>
             <div class="badge badge-success">
-                on price {{ addInCart.getproduct().getPrice() }} {{ addInCart.getProduct().getCurrency() }} per {{ addInCart.getProduct().getUnit() }}
+                On price {{ addInCart.getproduct().getPrice() }} {{ addInCart.getProduct().getCurrency() }} per {{ addInCart.getProduct().getUnit() }}
             </div>
             <br/>
             <div class="badge badge-success">
-                quantity: {{ addInCart.getQuantity() }} {{ addInCart.getProduct().getUnit() }}
+                Quantity: {{ addInCart.getQuantity() }} {{ addInCart.getProduct().getUnit() }}
+            </div>
+            <br/>
+            <div class="badge badge-success">
+                Value: {{ addInCart.getPrice() }} {{ addInCart.getProduct().getCurrency }}
             </div>
             <br/>
             <a href="{{ path('refuse_row', { 'id': addInCart.id }) }}">

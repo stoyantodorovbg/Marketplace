@@ -29,6 +29,14 @@ class Cart
      */
     private $quantity;
 
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="price", type="float")
+     */
+    private $price;
+
     /**
      * @var bool
      *
@@ -80,6 +88,22 @@ class Cart
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param float $price
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
     }
 
     /**

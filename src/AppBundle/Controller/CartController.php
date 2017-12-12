@@ -75,12 +75,14 @@ class CartController extends Controller
     public function addProduct(Request $request, Product $product)
     {
         $productQuantity = $request->query->get('productQuantity');
+        $priceOrder = $product->getPrice() * $productQuantity;
         $user = $this->getUser();
+
 
         $cart = new Cart();
         $cart->setUser($user);
         $cart->setProduct($product);
-        $cart->setQuantity(1);
+        $cart->setPrice($priceOrder);
         $cart->setBought(0); // is not bought
         $cart->setRefused(0); // is not refused
         $cart->setQuantity($productQuantity);
