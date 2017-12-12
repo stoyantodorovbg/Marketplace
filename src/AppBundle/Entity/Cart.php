@@ -58,6 +58,12 @@ class Cart
     private $product;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Currency", inversedBy="carts")
+     * @ORM\JoinColumn(name="currency_id", referencedColumnName="id")
+     */
+    private $currency;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="carts")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")")
      */
@@ -152,6 +158,22 @@ class Cart
     public function setProduct($product)
     {
         $this->product = $product;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    /**
+     * @param mixed $currency
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
     }
 
     /**

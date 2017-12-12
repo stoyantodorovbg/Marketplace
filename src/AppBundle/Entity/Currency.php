@@ -42,6 +42,11 @@ class Currency
     private $products;
 
     /**
+     * @ORM\OneToMany(targetEntity="Cart", mappedBy="currency")
+     */
+    private $carts;
+
+    /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserProfile", mappedBy="currency")
@@ -127,6 +132,24 @@ class Currency
     {
         $this->products = $products;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCarts()
+    {
+        return $this->carts;
+    }
+
+    /**
+     * @param mixed $carts
+     */
+    public function setCarts($carts)
+    {
+        $this->carts = $carts;
+    }
+
+
 
     /**
      * @return ArrayCollection

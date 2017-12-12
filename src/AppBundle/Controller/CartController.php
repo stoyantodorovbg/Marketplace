@@ -60,10 +60,41 @@ class CartController extends Controller
      */
     public function showAction()
     {
+
+        $userCurrency = $this->getUser()->getUserProfile()->getCurrency();
         $cartRepo = $this->getDoctrine()->getRepository(Cart::class);
         $addsInCart = $cartRepo->findBy(['user' => $this->getUser()->getId()]);
+        //dump($addsInCart);exit;
+        $cartBill = 0;
+
+        foreach($addsInCart as $add) {
+            $priceAddInEuro = 0;
+            if ($add->getCurrency()->getExchangeRateEUR() < 1) {
+                $priceAddInEuro = $add->getPrice() * $add->getCurrency()->getExchangeRateEUR();
+            } elseif ($add->getCurrency()->getExchangeRateEUR() > 1) {
+                $priceAddInEuro = $add->getPrice() / $add->getCurrency()->getExchangeRateEUR();
+            } else {
+                $priceAddInEuro = $add->getPrice();
+            }
+
+            $priceAddInUserCurrency = 0;
+            if ($userCurrency->getExchangeRateEUR() < 1) {
+                $priceAddInUserCurrency = $priceAddInEuro / $userCurrency->getExchangeRateEUR();
+            } elseif ($userCurrency->getExchangeRateEUR() > 1) {
+                $priceAddInUserCurrency = $priceAddInEuro * $userCurrency->getExchangeRateEUR();
+            } else {
+                $priceAddInUserCurrency = $priceAddInEuro;
+            }
+
+            $cartBill += $priceAddInUserCurrency;
+        }
+
+        $cartBill = number_format($cartBill, 2);
+
         return $this->render('cart/show.html.twig', array(
             'addsInCart' => $addsInCart,
+            'cartBill' => $cartBill,
+            'userCurrency' => $userCurrency
         ));
     }
 
@@ -77,12 +108,13 @@ class CartController extends Controller
         $productQuantity = $request->query->get('productQuantity');
         $priceOrder = $product->getPrice() * $productQuantity;
         $user = $this->getUser();
-
+        $currency = $product->getCurrency();
 
         $cart = new Cart();
         $cart->setUser($user);
         $cart->setProduct($product);
         $cart->setPrice($priceOrder);
+        $cart->setCurrency($currency);
         $cart->setBought(0); // is not bought
         $cart->setRefused(0); // is not refused
         $cart->setQuantity($productQuantity);

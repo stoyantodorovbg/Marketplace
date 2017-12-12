@@ -11,6 +11,7 @@ use AppBundle\Entity\Cart;
  */
 class CartRepository extends \Doctrine\ORM\EntityRepository
 {
+
     public function refuseProduct($cartId)
     {
         $em = $this->getEntityManager();
@@ -22,7 +23,6 @@ class CartRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter(1, $cartId)
             ->getQuery();
         $query->execute();
-
     }
 
 }
