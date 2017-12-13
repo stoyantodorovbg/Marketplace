@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ec6835a8-052b-4906-a521-69c99f0d7f67" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Resources/views/cart/buyFailure.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Resources/views/cart/buySuccess.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/cart/show.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/cart/show.html.twig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/CartController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/CartController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Repository/CartRepository.php" afterPath="$PROJECT_DIR$/src/AppBundle/Repository/CartRepository.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Repository/UserProfileRepository.php" afterPath="$PROJECT_DIR$/src/AppBundle/Repository/UserProfileRepository.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -25,12 +19,12 @@
       <file leaf-file-name="CartController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CartController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
-              <caret line="124" column="39" lean-forward="false" selection-start-line="124" selection-start-column="39" selection-end-line="124" selection-end-column="39" />
+            <state relative-caret-position="273">
+              <caret line="226" column="91" lean-forward="false" selection-start-line="226" selection-start-column="91" selection-end-line="226" selection-end-column="91" />
               <folding>
-                <element signature="e#3934#3961#0#PHP" expanded="true" />
-                <element signature="e#4137#4164#0#PHP" expanded="true" />
-                <element signature="e#4845#4866#0#PHP" expanded="true" />
+                <element signature="e#3974#4001#0#PHP" expanded="true" />
+                <element signature="e#4177#4204#0#PHP" expanded="true" />
+                <element signature="e#4885#4906#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -197,8 +191,8 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Repository/CartRepository.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/UserProfile.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/cart/buySuccess.html.twig" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/CartController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Repository/UserProfileRepository.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/CartController.php" />
       </list>
     </option>
   </component>
@@ -415,18 +409,18 @@
       <workItem from="1512992865457" duration="7276000" />
       <workItem from="1513004687151" duration="1463000" />
       <workItem from="1513013260346" duration="20100000" />
-      <workItem from="1513070123915" duration="25656000" />
+      <workItem from="1513070123915" duration="28951000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="218983000" />
+    <option name="totallyTimeSpent" value="222278000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1" y="1" width="1364" height="766" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2158385" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286219" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -839,12 +833,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CartController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="124" column="39" lean-forward="false" selection-start-line="124" selection-start-column="39" selection-end-line="124" selection-end-column="39" />
+        <state relative-caret-position="273">
+          <caret line="226" column="91" lean-forward="false" selection-start-line="226" selection-start-column="91" selection-end-line="226" selection-end-column="91" />
           <folding>
-            <element signature="e#3934#3961#0#PHP" expanded="true" />
-            <element signature="e#4137#4164#0#PHP" expanded="true" />
-            <element signature="e#4845#4866#0#PHP" expanded="true" />
+            <element signature="e#3974#4001#0#PHP" expanded="true" />
+            <element signature="e#4177#4204#0#PHP" expanded="true" />
+            <element signature="e#4885#4906#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

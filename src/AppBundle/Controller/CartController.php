@@ -125,6 +125,8 @@ class CartController extends Controller
             $em->persist($userProfile);
             $em->flush();
 
+            $this->chargeBuyersCash();
+
             return $this->render('cart/buySuccess.html.twig', [
                 'cartBill' => $cartBill,
                 'user' => $user
@@ -178,9 +180,10 @@ class CartController extends Controller
 
     private function calculateCartBill()
     {
+        $userId = $this->getUser()->getId();
         $userCurrency = $this->getUser()->getUserProfile()->getCurrency();
         $cartRepo = $this->getDoctrine()->getRepository(Cart::class);
-        $addsInCart = $cartRepo->findBy(['user' => $this->getUser()->getId()]);
+        $addsInCart = $cartRepo->findBy(['user' => $userId]);
         $cartBill = 0;
 
         foreach($addsInCart as $add) {
@@ -207,6 +210,27 @@ class CartController extends Controller
         }
 
         return number_format($cartBill, 2);
+    }
+
+    private function chargeBuyersCash()
+    {
+        $userId = $this->getUser()->getId();
+        $userCurrency = $this->getUser()->getUserProfile()->getCurrency();
+        $cartRepo = $this->getDoctrine()->getRepository(Cart::class);
+        $addsInCart = $cartRepo->findBy(['user' => $userId]);
+
+        foreach($addsInCart as $add) {
+            if ($add->isBought() != 1 && $add->isRefused() != 1) {
+                $productRepo = $this->getDoctrine()->getRepository(Product::class);
+                $addTotal = $add->getProduct()->getPrice() * $add->getQuantity();
+                $productId = $add->getProduct()->getId();
+                $userProfile = $productRepo->find($productId)->getUser()->getUserProfile();
+                $userProfile->setCash($userProfile->getCash() + $addTotal);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($userProfile);
+                $em->flush();
+            }
+        }
     }
 
 }
