@@ -126,6 +126,11 @@ class Product
     private $userPurchases;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Promotion", mappedBy="products")
+     */
+    private $promotions;
+
+    /**
      * Product constructor.
      */
     public function __construct()
@@ -419,6 +424,22 @@ class Product
     public function setUserPurchases($userPurchases)
     {
         $this->userPurchases = $userPurchases;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPromotions()
+    {
+        return $this->promotions;
+    }
+
+    /**
+     * @param mixed $promotions
+     */
+    public function setPromotions($promotions)
+    {
+        $this->promotions = $promotions;
     }
 
 }

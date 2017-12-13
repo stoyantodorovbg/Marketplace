@@ -144,6 +144,11 @@ class User implements UserInterface
     private $purchases;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Promotion", mappedBy="users")
+     */
+    private $promotions;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -594,6 +599,22 @@ class User implements UserInterface
     public function setPurchases($purchases)
     {
         $this->purchases = $purchases;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPromotions()
+    {
+        return $this->promotions;
+    }
+
+    /**
+     * @param mixed $promotions
+     */
+    public function setPromotions($promotions)
+    {
+        $this->promotions = $promotions;
     }
 }
 
