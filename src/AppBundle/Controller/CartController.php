@@ -83,9 +83,17 @@ class CartController extends Controller
     public function addProduct(Request $request, Product $product)
     {
         $productQuantity = $request->query->get('productQuantity');
+        if ($productQuantity == '') {
+            $productQuantity = 1;
+        }
         $priceOrder = $product->getPrice() * $productQuantity;
         $user = $this->getUser();
         $currency = $product->getCurrency();
+
+        if ($product->getUser()->getId() == $this->getUser()->getId()) {
+            return $this->render('cart/buyOwnProduct.html.twig', [
+            ]);
+        }
 
         $cart = new Cart();
         $cart->setUser($user);
@@ -140,30 +148,6 @@ class CartController extends Controller
             'user' => $user
         ]);
 
-    }
-
-    /**
-     * Displays a form to edit an existing cart entity.
-     *
-     * @Route("/{id}/edit", name="cart_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editAction(Request $request, Cart $cart)
-    {
-        $editForm = $this->createForm('AppBundle\Form\CartType', $cart);
-
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('cart_edit', array('id' => $cart->getId()));
-        }
-
-        return $this->render('cart/edit.html.twig', array(
-            'cart' => $cart,
-            'edit_form' => $editForm->createView(),
-        ));
     }
 
     /**

@@ -1,7 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>
-        Congratulations! You successfully bought this products and paid {{ cartBill }} {{ user.getUserProfile.getCurrency }}
-    </h1>
+    <div class="jumbotron">
+        <h1>
+            <div class="badge badge-info">
+                Congratulations! You successfully bought this products and paid {{ cartBill }} {{ user.getUserProfile.getCurrency }}
+            </div>
+        </h1>
+    </div>
 {% endblock %}
