@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Entity\UserProfile;
 
 /**
  * UserProfileRepository

@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Cart;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
+use AppBundle\Entity\UserProfile;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -60,36 +61,11 @@ class CartController extends Controller
      */
     public function showAction()
     {
-
         $userCurrency = $this->getUser()->getUserProfile()->getCurrency();
         $cartRepo = $this->getDoctrine()->getRepository(Cart::class);
         $addsInCart = $cartRepo->findBy(['user' => $this->getUser()->getId()]);
-        //dump($addsInCart);exit;
-        $cartBill = 0;
 
-        foreach($addsInCart as $add) {
-            $priceAddInEuro = 0;
-            if ($add->getCurrency()->getExchangeRateEUR() < 1) {
-                $priceAddInEuro = $add->getPrice() * $add->getCurrency()->getExchangeRateEUR();
-            } elseif ($add->getCurrency()->getExchangeRateEUR() > 1) {
-                $priceAddInEuro = $add->getPrice() / $add->getCurrency()->getExchangeRateEUR();
-            } else {
-                $priceAddInEuro = $add->getPrice();
-            }
-
-            $priceAddInUserCurrency = 0;
-            if ($userCurrency->getExchangeRateEUR() < 1) {
-                $priceAddInUserCurrency = $priceAddInEuro / $userCurrency->getExchangeRateEUR();
-            } elseif ($userCurrency->getExchangeRateEUR() > 1) {
-                $priceAddInUserCurrency = $priceAddInEuro * $userCurrency->getExchangeRateEUR();
-            } else {
-                $priceAddInUserCurrency = $priceAddInEuro;
-            }
-
-            $cartBill += $priceAddInUserCurrency;
-        }
-
-        $cartBill = number_format($cartBill, 2);
+        $cartBill = $this->calculateCartBill();
 
         return $this->render('cart/show.html.twig', array(
             'addsInCart' => $addsInCart,
@@ -120,11 +96,47 @@ class CartController extends Controller
         $cart->setQuantity($productQuantity);
 
 
-        $em = $this->getDoctrine()->getManager();//
+        $em = $this->getDoctrine()->getManager();
         $em->persist($cart);
         $em->flush();
 
         return $this->redirectToRoute('product_show', ['id' => $product->getId()]);
+    }
+
+    /**
+     *
+     * @Route("/buy", name="buy_product_cart")
+     * @Method("GET")
+     */
+    public function buy()
+    {
+        $cartBill = $this->calculateCartBill();
+        $user = $this->getUser();
+        $userCash = $user->getUserProfile()->getCash();
+
+        if ($userCash >= $cartBill) {
+            $cartRepo = $this->getDoctrine()->getRepository(Cart::class);
+            $userProfileRepo = $this->getDoctrine()->getRepository(UserProfile::class);
+            $userProfile = $user->getUserProfile();
+
+            $cartRepo->buyProductsInCart($user->getId());
+            $userProfile->setCash($userProfile->getCash() - $cartBill);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($userProfile);
+            $em->flush();
+
+            return $this->render('cart/buySuccess.html.twig', [
+                'cartBill' => $cartBill,
+                'user' => $user
+            ]);
+        }
+        $shortage = $cartBill - $userCash;
+
+        return $this->render('cart/buyFailure.html.twig', [
+            'shortage' => $shortage,
+            'user' => $user
+        ]);
+
     }
 
     /**
@@ -162,6 +174,39 @@ class CartController extends Controller
         $cartRepo = $this->getDoctrine()->getRepository(Cart::class);
         $cartRepo->refuseProduct($cart->getId());
         return $this->redirectToRoute('cart_show');
+    }
+
+    private function calculateCartBill()
+    {
+        $userCurrency = $this->getUser()->getUserProfile()->getCurrency();
+        $cartRepo = $this->getDoctrine()->getRepository(Cart::class);
+        $addsInCart = $cartRepo->findBy(['user' => $this->getUser()->getId()]);
+        $cartBill = 0;
+
+        foreach($addsInCart as $add) {
+            if ($add->isBought() != 1 && $add->isRefused() != 1) {
+                $priceAddInEuro = 0;
+                if ($add->getCurrency()->getExchangeRateEUR() < 1) {
+                    $priceAddInEuro = $add->getPrice() * $add->getCurrency()->getExchangeRateEUR();
+                } elseif ($add->getCurrency()->getExchangeRateEUR() > 1) {
+                    $priceAddInEuro = $add->getPrice() / $add->getCurrency()->getExchangeRateEUR();
+                } else {
+                    $priceAddInEuro = $add->getPrice();
+                }
+
+                $priceAddInUserCurrency = 0;
+                if ($userCurrency->getExchangeRateEUR() < 1) {
+                    $priceAddInUserCurrency = $priceAddInEuro / $userCurrency->getExchangeRateEUR();
+                } elseif ($userCurrency->getExchangeRateEUR() > 1) {
+                    $priceAddInUserCurrency = $priceAddInEuro * $userCurrency->getExchangeRateEUR();
+                } else {
+                    $priceAddInUserCurrency = $priceAddInEuro;
+                }
+                $cartBill += $priceAddInUserCurrency;
+            }
+        }
+
+        return number_format($cartBill, 2);
     }
 
 }

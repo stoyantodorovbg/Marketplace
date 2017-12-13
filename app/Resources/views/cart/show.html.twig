@@ -9,7 +9,7 @@
     <br/><br/>
 
     {% for addInCart in addsInCart %}
-        {% if addInCart.isRefused == 0 %}
+        {% if addInCart.isRefused != 1 and  addInCart.isBought != 1 %}
         <h3>
             <div class="badge badge-success">
                 Product: {{ addInCart.getProduct().getName() }}
@@ -32,7 +32,6 @@
                     Remove from cart
                 </button>
             </a>
-
         </h3>
         <br/><br/>
 
@@ -44,6 +43,11 @@
         <div class="badge badge-primary">
             Total {{ cartBill }} {{ userCurrency }}
         </div>
+        <a href="{{ path('buy_product_cart') }}">
+            <button class="badge badge-primary">
+                Buy
+            </button>
+        </a>
     </h2>
 </div>
 {% endblock %}
