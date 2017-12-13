@@ -44,8 +44,10 @@ class ProductController extends Controller
     public function newAction(Request $request)
     {
         $user = $this->getUser();
+        $userCurrency = $user->getUserProfile()->getCurrency();
         $product = new Product();
         $product->setUser($user);
+        $product->setCurrency($userCurrency);
         $form = $this->createForm('AppBundle\Form\ProductType', $product);
         $form->handleRequest($request);
 

@@ -23,12 +23,6 @@ class ProductType extends AbstractType
             ->add('name', TextType::class, ['label' => ' '])
             ->add('description', TextareaType::class, ['label' => ' '])
             ->add('price', TextType::class, ['label' => ' '])
-            ->add('currency', EntityType::class, [
-                'class' => 'AppBundle:Currency',
-                'choice_label' => 'name',
-                'placeholder' => 'choose currency',
-                'label' => ' '
-            ])
             ->add('availability', CheckboxType::class, [
                 'label' => ' ',
                 'required'   => false
