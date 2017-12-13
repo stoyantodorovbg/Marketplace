@@ -1,5 +1,58 @@
-<h1>Register user</h1>
+{% extends 'base.html.twig' %}
 
-{{ form_start(form) }}
+{% block body %}
+    <div class="jumbotron">
+        <span class="btn btn-info btn-lg btn-block">
+            <h1>Register user</h1>
+        </span>
+        <br/>
 
-{{ form_end(form) }}
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}<label>Email:</label><div class="form-group">{{ form_row(form.email) }}</div><div class="form-group">
+            {{ form_row(form.plainPassword) }}
+        </div>
+        <label>First Name:</label>
+        <div class="form-group">
+            {{ form_row(form.firstName) }}
+        </div>
+        <label>Last name:</label>
+        <div class="form-group">
+            {{ form_row(form.lastName) }}
+        </div>
+        <label>Phone:</label>
+        <div class="form-group">
+            {{ form_row(form.phone) }}
+        </div>
+        <label>Company:</label>
+        <div class="form-group">
+            {{ form_row(form.company) }}
+        </div>
+        <label>Country:</label>
+        <div class="form-group">
+            {{ form_row(form.country) }}
+        </div>
+        <label>Region:</label>
+        <div class="form-group">
+            {{ form_row(form.region) }}
+        </div>
+        <label>Town:</label>
+        <div class="form-group">
+            {{ form_row(form.town) }}
+        </div>
+        <label>ZIP code:</label>
+        <div class="form-group">
+            {{ form_row(form.zipCode) }}
+        </div>
+        <label>Address:</label>
+        <div class="form-group">
+            {{ form_row(form.address) }}
+        </div>
+        <input type="submit" class="btn btn-danger" value="Register" />
+        <a href="{{ path('homepage') }}">
+            <button type="button" class="btn btn-info">
+                cancel
+            </button>
+        </a>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

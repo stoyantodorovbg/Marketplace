@@ -4,7 +4,7 @@
     <div class="jumbotron">
         <h1>
             <div class="badge badge-info">
-                You have not enough money - {{ shortage }} {{ user->getUserProfile->getCurrency }}
+                You have not enough money - shortage: {{ shortage }} {{ user.getUserProfile().getCurrency() }}
             </div>
         </h1>
     </div>

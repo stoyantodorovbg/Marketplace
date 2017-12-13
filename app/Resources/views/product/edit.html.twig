@@ -7,7 +7,7 @@
     </span>
         <br/>
 
-        {{ form_start(edit_form) }}
+        {{ form_start(edit_form, {'attr': {'novalidate': 'novalidate'}}) }}
         <label>Name:</label>
         <div class="form-group">
             {{ form_row(edit_form.name) }}
