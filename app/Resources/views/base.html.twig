@@ -29,7 +29,21 @@
                             </button>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary" href="{{ path('promotion_index') }}">
+                            <button type="button" class="btn btn-primary">
+                                Promotions
+                            </button>
+                        </a>
+                    </li>
                     {% if app.user %}
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary" href="{{ path('cart_show') }}">
+                                <button type="button" class="btn btn-primary">
+                                    My cart
+                                </button>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link btn btn-success" href="{{ path('userprofile_show')}}">
                                 <button type="button" class="btn btn-success">
@@ -45,13 +59,6 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-primary" href="{{ path('cart_show') }}">
-                                <button type="button" class="btn btn-primary">
-                                    My cart
-                                </button>
-                            </a>
-                        </li>
                     {% endif %}
                     <li class="nav-item">
                         <div class="dropdown nav-link btn btn-success">
@@ -135,7 +142,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-primary" href="#">
+                            <a class="nav-link btn btn-primary" href="{{ path('choose_type_new_promotion') }}">
                                 <button type="button" class="btn btn-primary">
                                     Add promotion
                                 </button>
