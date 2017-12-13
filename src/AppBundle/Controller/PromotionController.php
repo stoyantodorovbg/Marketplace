@@ -2,10 +2,16 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Category;
+use AppBundle\Entity\Product;
 use AppBundle\Entity\Promotion;
+use AppBundle\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+
 
 /**
  * Promotion controller.
@@ -33,7 +39,6 @@ class PromotionController extends Controller
 
     /**
      * @Route("/newChooseType", name="choose_type_new_promotion")
-     * @Method("GET")
      */
     public function chooseTypeNewPromotion(Request $request)
     {
@@ -43,23 +48,41 @@ class PromotionController extends Controller
             switch ($chosenType) {
                 case 'certain_products':
                     return $this->newForCertainProducts($request);
-                case 'all_products':
-                    return $this->newForAllProducts($request);
-                case 'certain_categories':
-                    return $this->newForCertainCategories($request);
-                case 'certain_users':
-                    return $this->newForCertainUsers($request);
+               case 'all_products':
+                   return $this->newForAllProducts($request);
+               case 'certain_categories':
+                   return $this->newForCertainCategories($request);
+               case 'certain_users':
+                   return $this->newForCertainUsers($request);
             }
         }
 
         return $this->render('promotion/new_promotion_choose_type.html.twig');
     }
 
+
+    /**
+     * @Route("/newForCertainProducts", name="new_for_certain_products")
+     */
     private function newForCertainProducts(Request $request)
     {
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $allUsers = $userRepo->findAll();
+
         $promotion = new Promotion();
         $promotion->setCreatedDate(new \DateTime());
+        $promotion->setUsers($allUsers);
+        $promotion->setType('certain_products');
+
         $form = $this->createForm('AppBundle\Form\PromotionType', $promotion);
+        $form->add('products', EntityType::class, [
+            'class' => 'AppBundle:Product',
+            'choice_label' => 'name',
+            'placeholder' => 'choose products',
+            'multiple' => true,
+            'expanded' => true,
+            'label' => ' '
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -70,17 +93,30 @@ class PromotionController extends Controller
             return $this->redirectToRoute('promotion_show', array('id' => $promotion->getId()));
         }
 
-        return $this->render('promotion/new.html.twig', array(
+        return $this->render('promotion/newForCertainProducts.html.twig', array(
             'promotion' => $promotion,
             'form' => $form->createView(),
         ));
     }
 
+    /**
+     * @Route("/newForAllProducts", name="new_for_all_products")
+     */
     private function newForAllProducts(Request $request)
     {
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $allUsers = $userRepo->findAll();
+        $productRepo = $this->getDoctrine()->getRepository(Product::class);
+        $allProducts = $productRepo->findAll();
+
         $promotion = new Promotion();
         $promotion->setCreatedDate(new \DateTime());
+        $promotion->setUsers($allUsers);
+        $promotion->setProducts($allProducts);
+        $promotion->setType('all_products');
+
         $form = $this->createForm('AppBundle\Form\PromotionType', $promotion);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -91,17 +127,36 @@ class PromotionController extends Controller
             return $this->redirectToRoute('promotion_show', array('id' => $promotion->getId()));
         }
 
-        return $this->render('promotion/new.html.twig', array(
+        return $this->render('promotion/newForAllProducts.html.twig', array(
             'promotion' => $promotion,
             'form' => $form->createView(),
         ));
     }
 
+
+    /**
+     * @Route("/newForCertainCategories", name="new_for_certain_categories")
+     */
     private function newForCertainCategories(Request $request)
     {
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $allUsers = $userRepo->findAll();
+
         $promotion = new Promotion();
         $promotion->setCreatedDate(new \DateTime());
+        $promotion->setUsers($allUsers);
+        $promotion->setType('certain_categories');
+
         $form = $this->createForm('AppBundle\Form\PromotionType', $promotion);
+        $form->add('categories', EntityType::class, [
+            'class' => 'AppBundle:Category',
+            'choice_label' => 'name',
+            'placeholder' => 'choose category',
+            'multiple' => true,
+            'expanded' => true,
+            'label' => ' '
+        ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -112,7 +167,7 @@ class PromotionController extends Controller
             return $this->redirectToRoute('promotion_show', array('id' => $promotion->getId()));
         }
 
-        return $this->render('promotion/new.html.twig', array(
+        return $this->render('promotion/newForCertainCategories.html.twig', array(
             'promotion' => $promotion,
             'form' => $form->createView(),
         ));
@@ -133,7 +188,7 @@ class PromotionController extends Controller
             return $this->redirectToRoute('promotion_show', array('id' => $promotion->getId()));
         }
 
-        return $this->render('promotion/new.html.twig', array(
+        return $this->render('newForAllProducts.html.twig', array(
             'promotion' => $promotion,
             'form' => $form->createView(),
         ));

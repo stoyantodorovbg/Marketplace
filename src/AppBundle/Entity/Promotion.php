@@ -31,7 +31,7 @@ class Promotion
     /**
      * @var string
      *
-     * @ORM\Column(name="discription", type="string", length=10000)
+     * @ORM\Column(name="description", type="string", length=10000)
      */
     private $description;
 
@@ -81,6 +81,12 @@ class Promotion
      * @ORM\JoinTable(name="products_promotions")
      */
     private $products;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Category", inversedBy="promotions")
+     * @ORM\JoinTable(name="categories_promotions")
+     */
+    private $categories;
 
 
     /**
@@ -267,6 +273,22 @@ class Promotion
     public function setProducts($products)
     {
         $this->products = $products;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param mixed $categories
+     */
+    public function setCategories($categories)
+    {
+        $this->categories = $categories;
     }
 }
 

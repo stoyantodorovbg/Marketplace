@@ -48,7 +48,7 @@ class CartController extends Controller
             return $this->redirectToRoute('cart_show', array('id' => $cart->getId()));
         }
 
-        return $this->render('cart/new.html.twig', array(
+        return $this->render('cart/newForAllProducts.html.twig', array(
             'cart' => $cart,
             'form' => $form->createView(),
         ));

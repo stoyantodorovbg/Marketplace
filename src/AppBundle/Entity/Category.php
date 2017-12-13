@@ -43,6 +43,11 @@ class Category
      */
     private $products;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Promotion", mappedBy="categories")
+     */
+    private $promotions;
+
 
     /**
      * Get id
@@ -123,6 +128,21 @@ class Category
         return $this->getName();
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPromotions()
+    {
+        return $this->promotions;
+    }
+
+    /**
+     * @param mixed $promotions
+     */
+    public function setPromotions($promotions)
+    {
+        $this->promotions = $promotions;
+    }
 
 }
 
