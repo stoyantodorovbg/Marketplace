@@ -121,6 +121,11 @@ class Product
     private $carts;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserPurchase", mappedBy="product")
+     */
+    private $userPurchases;
+
+    /**
      * Product constructor.
      */
     public function __construct()
@@ -398,6 +403,22 @@ class Product
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserPurchases()
+    {
+        return $this->userPurchases;
+    }
+
+    /**
+     * @param mixed $userPurchases
+     */
+    public function setUserPurchases($userPurchases)
+    {
+        $this->userPurchases = $userPurchases;
     }
 
 }

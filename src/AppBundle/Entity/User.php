@@ -139,6 +139,11 @@ class User implements UserInterface
     private $carts;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserPurchase", mappedBy="user")
+     */
+    private $purchases;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -573,6 +578,22 @@ class User implements UserInterface
     public function setCarts($carts)
     {
         $this->carts = $carts;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPurchases()
+    {
+        return $this->purchases;
+    }
+
+    /**
+     * @param mixed $purchases
+     */
+    public function setPurchases($purchases)
+    {
+        $this->purchases = $purchases;
     }
 }
 

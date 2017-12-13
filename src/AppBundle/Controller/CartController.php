@@ -6,6 +6,7 @@ use AppBundle\Entity\Cart;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserProfile;
+use AppBundle\Entity\UserPurchase;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -125,7 +126,7 @@ class CartController extends Controller
             $em->persist($userProfile);
             $em->flush();
 
-            $this->chargeBuyersCash();
+            $this->buyAction();
 
             return $this->render('cart/buySuccess.html.twig', [
                 'cartBill' => $cartBill,
@@ -188,31 +189,15 @@ class CartController extends Controller
 
         foreach($addsInCart as $add) {
             if ($add->isBought() != 1 && $add->isRefused() != 1) {
-                $priceAddInEuro = 0;
-                if ($add->getCurrency()->getExchangeRateEUR() < 1) {
-                    $priceAddInEuro = $add->getPrice() * $add->getCurrency()->getExchangeRateEUR();
-                } elseif ($add->getCurrency()->getExchangeRateEUR() > 1) {
-                    $priceAddInEuro = $add->getPrice() / $add->getCurrency()->getExchangeRateEUR();
-                } else {
-                    $priceAddInEuro = $add->getPrice();
-                }
-
-                $priceAddInUserCurrency = 0;
-                if ($userCurrency->getExchangeRateEUR() < 1) {
-                    $priceAddInUserCurrency = $priceAddInEuro / $userCurrency->getExchangeRateEUR();
-                } elseif ($userCurrency->getExchangeRateEUR() > 1) {
-                    $priceAddInUserCurrency = $priceAddInEuro * $userCurrency->getExchangeRateEUR();
-                } else {
-                    $priceAddInUserCurrency = $priceAddInEuro;
-                }
+                $priceAddInUserCurrency = $this->calculateAddInUserCurrency($add);
                 $cartBill += $priceAddInUserCurrency;
             }
         }
 
-        return number_format($cartBill, 2);
+        return $cartBill;
     }
 
-    private function chargeBuyersCash()
+    private function buyAction()
     {
         $userId = $this->getUser()->getId();
         $userCurrency = $this->getUser()->getUserProfile()->getCurrency();
@@ -221,16 +206,61 @@ class CartController extends Controller
 
         foreach($addsInCart as $add) {
             if ($add->isBought() != 1 && $add->isRefused() != 1) {
+                $purchaseValue = $this->calculateAddInUserCurrency($add);
                 $productRepo = $this->getDoctrine()->getRepository(Product::class);
                 $addTotal = $add->getProduct()->getPrice() * $add->getQuantity();
                 $productId = $add->getProduct()->getId();
-                $userProfile = $productRepo->find($productId)->getUser()->getUserProfile();
-                $userProfile->setCash($userProfile->getCash() + $addTotal);
+                $userProfileSeller = $productRepo->find($productId)->getUser()->getUserProfile();
+                $userProfileSeller->setCash($userProfileSeller->getCash() + $addTotal);
+                $userProfileSeller->setSalesCount($userProfileSeller->getSalesCount() + 1);
+                $userProfileSeller->setSalesValue($userProfileSeller->getSalesValue() + $purchaseValue);
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($userProfile);
+                $em->persist($userProfileSeller);
                 $em->flush();
+
+                $userProfileBuyer = $this->getUser()->getUserProfile();
+                $userProfileBuyer->setPurchaseCount($userProfileBuyer->getPurchaseCount() + 1);
+                $userProfileBuyer->setPurchasesValue($userProfileSeller->getPurchasesValue() + $purchaseValue);
+                $em->persist($userProfileBuyer);
+                $em->flush();
+
+                $userPurchase = new UserPurchase();
+                $userPurchase->setUser($this->getUser());
+                $userPurchase->setProduct($add->getProduct());
+                $userPurchase->setQuantity($add->getQuantity());
+                $userPurchase->setValue($purchaseValue);
+                $userPurchase->setDateCreated(new \DateTime());
+                $em->persist($userPurchase);
+                $em->flush();
+
+                $userPurchaseRepo = $this->getDoctrine()->getRepository(UserPurchase::class);
             }
         }
     }
+
+    private function calculateAddInUserCurrency($add)
+    {
+        $userCurrency = $this->getUser()->getUserProfile()->getCurrency();
+        $priceAddInEuro = 0;
+        if ($add->getCurrency()->getExchangeRateEUR() < 1) {
+            $priceAddInEuro = $add->getPrice() * $add->getCurrency()->getExchangeRateEUR();
+        } elseif ($add->getCurrency()->getExchangeRateEUR() > 1) {
+            $priceAddInEuro = $add->getPrice() / $add->getCurrency()->getExchangeRateEUR();
+        } else {
+            $priceAddInEuro = $add->getPrice();
+        }
+
+        $priceAddInUserCurrency = 0;
+        if ($userCurrency->getExchangeRateEUR() < 1) {
+            $priceAddInUserCurrency = $priceAddInEuro / $userCurrency->getExchangeRateEUR();
+        } elseif ($userCurrency->getExchangeRateEUR() > 1) {
+            $priceAddInUserCurrency = $priceAddInEuro * $userCurrency->getExchangeRateEUR();
+        } else {
+            $priceAddInUserCurrency = $priceAddInEuro;
+        }
+
+        return number_format($priceAddInUserCurrency, 2);
+    }
+
 
 }
