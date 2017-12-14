@@ -129,12 +129,18 @@ class CartController extends Controller
             $userProfile = $user->getUserProfile();
 
             $cartRepo->buyProductsInCart($user->getId());
+
+            $connection = $this->getDoctrine()->getConnection();
+            $connection->beginTransaction();
+
             $userProfile->setCash($userProfile->getCash() - $cartBill);
             $em = $this->getDoctrine()->getManager();
             $em->persist($userProfile);
             $em->flush();
 
             $this->buyAction();
+
+            $connection->commit();
 
             return $this->render('cart/buySuccess.html.twig', [
                 'cartBill' => $cartBill,
