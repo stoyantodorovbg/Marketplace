@@ -46,7 +46,7 @@ class PromotionRepository extends \Doctrine\ORM\EntityRepository
         $query = $db
             ->select('u')
             ->from(UserProfile::class, 'u')
-            ->where('u.purchasesCount >= ?1')
+            ->where('u.purchaseCount >= ?1')
             ->setParameter(1, $purchaseCount)
             ->getQuery();
         $userProfiles = $query->execute();

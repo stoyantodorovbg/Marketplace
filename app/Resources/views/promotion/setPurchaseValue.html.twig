@@ -3,16 +3,16 @@
 {% block body %}
     <div class="jumbotron">
     <span class="btn btn-info btn-lg btn-block">
-        <h1>Define minimum user purchases value for this promotion</h1>
+        <h2>Define minimum user purchases value in euro for this promotion</h2>
     </span>
         <br/>
 
-        <form>
+        <form action="setPurchaseValue">
             <div class="form-group">
                 <div class="form-group">
                     <div class="form-group">
-                        <input type="number" name="min_purchase_value">
-                    </div>>
+                        <input type="number" name="min_purchases_value">
+                    </div>
                 </div>
                 <input type="submit" class="btn btn-success" value="Continue">
             </div>

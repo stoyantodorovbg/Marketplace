@@ -184,9 +184,9 @@ class PromotionController extends Controller
             switch ($criteria) {
                 case 'rating':
                     return $this->findUsersByRating($request);
-                case 'purchaseValue':
+                case 'purchasesValue':
                     return $this->findUsersByPurchaseValue($request);
-                case 'purchaseCount':
+                case 'purchasesCount':
                     return $this->findUsersByPurchaseCount($request);
                 case 'cash':
                     return $this->findUsersByCash($request);
@@ -218,17 +218,18 @@ class PromotionController extends Controller
 
     /**
      * @Route("/setPurchaseValue", name="set_purchase_value")
+     * @Method({"GET", "POST"})
      */
     public function findUsersByPurchaseValue(Request $request)
     {
-        if (isset($request->request->all()['min_purchase_value'])) {
-            $minPurchaseValue = $request->request->all()['criteria'];
+        if (isset($request->query->all()['min_purchases_value'])) {
+            $minPurchaseValue = $request->query->all()['min_purchases_value'];
             $userProfiles = $this
                 ->getDoctrine()
                 ->getRepository(Promotion::class)
                 ->findUserByPurchaseValue($minPurchaseValue);
             $users = $this->findUsersByUserProfiles($userProfiles);
-            $this->newForCertainUsers($request, $users);
+            return $this->newForCertainUsers($request, $users);
 
         }
         return $this->render('promotion/setPurchaseValue.html.twig');
@@ -236,17 +237,18 @@ class PromotionController extends Controller
 
     /**
      * @Route("/setPurchaseCount", name="set_purchase_count")
+     * @Method({"GET", "POST"})
      */
     public function findUsersByPurchaseCount(Request $request)
     {
-        if (isset($request->request->all()['min_purchase_count'])) {
-            $minPurchaseCount = $request->request->all()['criteria'];
+        if (isset($request->query->all()['min_purchases_count'])) {
+            $minPurchaseCount = $request->query->all()['min_purchases_count'];
             $userProfiles = $this
                 ->getDoctrine()
                 ->getRepository(Promotion::class)
                 ->findUserByPurchaseCount($minPurchaseCount);
             $users = $this->findUsersByUserProfiles($userProfiles);
-            $this->newForCertainUsers($request, $users);
+            return $this->newForCertainUsers($request, $users);
 
         }
         return $this->render('promotion/setPurchaseCount.html.twig');
@@ -254,17 +256,18 @@ class PromotionController extends Controller
 
     /**
      * @Route("/setCash", name="set_cash")
+     * @Method({"GET", "POST"})
      */
     public function findUsersByCash(Request $request)
     {
-        if (isset($request->request->all()['min_cash'])) {
-            $minCash = $request->request->all()['criteria'];
+        if (isset($request->query->all()['min_cash'])) {
+            $minCash = $request->query->all()['min_cash'];
             $userProfiles = $this
                 ->getDoctrine()
                 ->getRepository(Promotion::class)
                 ->findUserByCash($minCash);
             $users = $this->findUsersByUserProfiles($userProfiles);
-            $this->newForCertainUsers($request, $users);
+            return $this->newForCertainUsers($request, $users);
 
         }
         return $this->render('promotion/setCash.html.twig');
@@ -272,16 +275,17 @@ class PromotionController extends Controller
 
     /**
      * @Route("/setRegistrationDate", name="set_registration_date")
+     * @Method({"GET", "POST"})
      */
     public function findUsersByRegistrationDate(Request $request)
     {
-        if (isset($request->request->all()['most_recent_date'])) {
-            $mostRecentDate = $request->request->all()['criteria'];
+        if (isset($request->query->all()['most_recent_date'])) {
+            $mostRecentDate = $request->query->all()['most_recent_date'];
             $users = $this
                 ->getDoctrine()
                 ->getRepository(Promotion::class)
                 ->findUserByPurchaseCount($mostRecentDate);
-            $this->newForCertainUsers($request, $users);
+            return $this->newForCertainUsers($request, $users);
 
         }
         return $this->render('promotion/setRegistrationDate.html.twig');
