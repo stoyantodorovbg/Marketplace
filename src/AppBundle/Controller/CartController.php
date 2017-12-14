@@ -226,19 +226,15 @@ class CartController extends Controller
     {
         $userCurrency = $this->getUser()->getUserProfile()->getCurrency();
         $priceAddInEuro = 0;
-        if ($add->getCurrency()->getExchangeRateEUR() < 1) {
+        if ($add->getCurrency()->getExchangeRateEUR() != 1) {
             $priceAddInEuro = $add->getPrice() * $add->getCurrency()->getExchangeRateEUR();
-        } elseif ($add->getCurrency()->getExchangeRateEUR() > 1) {
-            $priceAddInEuro = $add->getPrice() / $add->getCurrency()->getExchangeRateEUR();
         } else {
             $priceAddInEuro = $add->getPrice();
         }
 
         $priceAddInUserCurrency = 0;
-        if ($userCurrency->getExchangeRateEUR() < 1) {
+        if ($userCurrency->getExchangeRateEUR() != 1) {
             $priceAddInUserCurrency = $priceAddInEuro / $userCurrency->getExchangeRateEUR();
-        } elseif ($userCurrency->getExchangeRateEUR() > 1) {
-            $priceAddInUserCurrency = $priceAddInEuro * $userCurrency->getExchangeRateEUR();
         } else {
             $priceAddInUserCurrency = $priceAddInEuro;
         }

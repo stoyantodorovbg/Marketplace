@@ -223,11 +223,11 @@ class PromotionController extends Controller
     public function findUsersByPurchaseValue(Request $request)
     {
         if (isset($request->query->all()['min_purchases_value'])) {
-            $minPurchaseValue = $request->query->all()['min_purchases_value'];
+            $minPurchasesValue = $request->query->all()['min_purchases_value'];
             $userProfiles = $this
                 ->getDoctrine()
                 ->getRepository(Promotion::class)
-                ->findUserByPurchaseValue($minPurchaseValue);
+                ->findUserByPurchaseValue($minPurchasesValue);
             $users = $this->findUsersByUserProfiles($userProfiles);
             return $this->newForCertainUsers($request, $users);
 
@@ -405,22 +405,5 @@ class PromotionController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
-    }
-
-    private function convertUserCashInEuro($userCash)
-    {
-        $userCurrency = $this->getUser()->getUserProfile()->getCurrency();
-        //$userCash = $this->getUser()->getUserProfile()->getCash();
-
-        $userCashInEuro = 0;
-        if ($userCurrency->getExchangeRateEUR() < 1) {
-            $userCashInEuro = $userCash / $userCurrency->getExchangeRateEUR();
-        } elseif ($userCurrency->getExchangeRateEUR() > 1) {
-            $userCashInEuro = $userCash * $userCurrency->getExchangeRateEUR();
-        } else {
-            $userCashInEuro = $userCash;
-        }
-
-        return number_format($userCashInEuro, 2);
     }
 }

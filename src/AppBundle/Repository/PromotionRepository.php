@@ -80,4 +80,16 @@ class PromotionRepository extends \Doctrine\ORM\EntityRepository
         $users = $query->execute();
         return $users;
     }
+
+    private function convertMinValueInUserCurrency($minValueInEuro, $userCurrency)
+    {
+        $minValueInUserCurrency = 0;
+        if ($userCurrency->getExchangeRateEUR() != 1) {
+            $minValueInUserCurrency = $minValueInEuro / $userCurrency->getExchangeRateEUR();
+        } else {
+            $minValueInUserCurrency = $minValueInEuro;
+        }
+
+        return number_format($minValueInUserCurrency, 2);
+    }
 }
