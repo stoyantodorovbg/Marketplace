@@ -284,7 +284,7 @@ class PromotionController extends Controller
             $users = $this
                 ->getDoctrine()
                 ->getRepository(Promotion::class)
-                ->findUserByPurchaseCount($mostRecentDate);
+                ->findUserByDateCreated($mostRecentDate);
             return $this->newForCertainUsers($request, $users);
 
         }
@@ -405,5 +405,22 @@ class PromotionController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    private function convertUserCashInEuro($userCash)
+    {
+        $userCurrency = $this->getUser()->getUserProfile()->getCurrency();
+        //$userCash = $this->getUser()->getUserProfile()->getCash();
+
+        $userCashInEuro = 0;
+        if ($userCurrency->getExchangeRateEUR() < 1) {
+            $userCashInEuro = $userCash / $userCurrency->getExchangeRateEUR();
+        } elseif ($userCurrency->getExchangeRateEUR() > 1) {
+            $userCashInEuro = $userCash * $userCurrency->getExchangeRateEUR();
+        } else {
+            $userCashInEuro = $userCash;
+        }
+
+        return number_format($userCashInEuro, 2);
     }
 }
