@@ -1,21 +1,44 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Promotion edit</h1>
+    <div class="jumbotron">
+    <span class="btn btn-info btn-lg btn-block">
+        <h1>Edit promotion</h1>
+    </span>
+        <br/>
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('promotion_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+        {{ form_start(edit_form) }}
+        <label>Name:</label>
+        <div class="form-group">
+            {{ form_row(edit_form.name) }}
+        </div>
+        <label>Description:</label>
+        <div class="form-group">
+            {{ form_row(edit_form.description) }}
+        </div>
+        <label>Percents discount:</label>
+        <div class="form-group">
+            {{ form_row(edit_form.percentsDiscount) }}
+        </div>
+        <label>Starts on:</label>
+        <div class="form-group">
+            {{ form_row(edit_form.startDate) }}
+        </div>
+        <label>Ends on:</label>
+        <div class="form-group">
+            {{ form_row(edit_form.endDate) }}
+        </div>
+        <input class="btn btn-primary" type="submit" value="Edit" />
+        {{ form_end(edit_form) }}
+        <br/>
+        {{ form_start(delete_form) }}
+        <input class="btn btn-danger" type="submit" value="Delete">
+        {{ form_end(delete_form) }}
+        <br/>
+        <a href="{{ path('promotion_index') }}">
+            <button type="button" class="btn btn-info">
+                Show all promotions
+            </button>
+        </a>
+    </div>
 {% endblock %}

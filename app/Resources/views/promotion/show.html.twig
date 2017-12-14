@@ -1,52 +1,55 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Promotion</h1>
+    <div class="jumbotron">
+    <span class="btn btn-info btn-lg btn-block">
+        <h1>Promotion</h1>
+    </span>
+        <br/>
+        <h1>
+            <span class="badge badge-warning">
+                {{ promotion.percentsDiscount }}% Discount
+            </span>
+        </h1>
+        <h2>
+            <span class="badge badge-success">
+                {{ promotion.name }}
+            </span>
+        </h2>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ promotion.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ promotion.name }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ promotion.description }}</td>
-            </tr>
-            <tr>
-                <th>Percentsdiscount</th>
-                <td>{{ promotion.percentsDiscount }}</td>
-            </tr>
-            <tr>
-                <th>Createddate</th>
-                <td>{% if promotion.createdDate %}{{ promotion.createdDate|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Startdate</th>
-                <td>{% if promotion.startDate %}{{ promotion.startDate|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Enddate</th>
-                <td>{% if promotion.endDate %}{{ promotion.endDate|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+        <h2>
+            <span class="badge badge-success">
+                {{ promotion.description }}
+            </span>
+        </h2>
+        <h2>
+            <span class="badge badge-primary">
+                Starts on: {{ promotion.startDate|date('Y-m-d H:i:s') }}
+            </span>
+        </h2>
+        <h2>
+            <span class="badge badge-primary">
+                Applies to: {{ promotion.endDate|date('Y-m-d H:i:s') }}
+            </span>
+        </h2>
+        <br/>
+        <a href="{{ path('promotion_index') }}">
+            <button type="button" class="btn btn-info">
+                Show all promotions
+            </button>
+        </a>
+        <br/><br/>
 
-    <ul>
-        <li>
-            <a href="{{ path('promotion_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('promotion_edit', { 'id': promotion.id }) }}">Edit</a>
-        </li>
-        <li>
+        {% if app.getUser() and (app.getUser().isAdmin() or app.getUser().isSuperAdmin()) %}
+            <a href="{{ path('promotion_edit', { 'id': promotion.id }) }}">
+                <button class="btn btn-danger">
+                    Edit
+                </button>
+            </a>
+            <br/><br/>
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+            <input class="btn btn-danger" type="submit" value="Delete">
             {{ form_end(delete_form) }}
-        </li>
-    </ul>
+        {% endif %}
+    </div>
 {% endblock %}
