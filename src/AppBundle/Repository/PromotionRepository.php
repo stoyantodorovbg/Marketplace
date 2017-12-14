@@ -32,7 +32,8 @@ class PromotionRepository extends \Doctrine\ORM\EntityRepository
         $query = $db
             ->select('u')
             ->from(UserProfile::class, 'u')
-            ->where('u.purchasesValue >= ?1')
+            ->join('u.currency', 'c')
+            ->where('u.purchasesValue * c.exchangeRateEUR >= ?1')
             ->setParameter(1, $purchaseValue)
             ->getQuery();
         $userProfiles = $query->execute();
@@ -60,7 +61,8 @@ class PromotionRepository extends \Doctrine\ORM\EntityRepository
         $query = $db
             ->select('u')
             ->from(UserProfile::class, 'u')
-            ->where('u.cash >= ?1')
+            ->join('u.currency', 'c')
+            ->where('u.cash * c.exchangeRateEUR >= ?1')
             ->setParameter(1, $cash)
             ->getQuery();
         $userProfiles = $query->execute();
@@ -79,17 +81,5 @@ class PromotionRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery();
         $users = $query->execute();
         return $users;
-    }
-
-    private function convertMinValueInUserCurrency($minValueInEuro, $userCurrency)
-    {
-        $minValueInUserCurrency = 0;
-        if ($userCurrency->getExchangeRateEUR() != 1) {
-            $minValueInUserCurrency = $minValueInEuro / $userCurrency->getExchangeRateEUR();
-        } else {
-            $minValueInUserCurrency = $minValueInEuro;
-        }
-
-        return number_format($minValueInUserCurrency, 2);
     }
 }
