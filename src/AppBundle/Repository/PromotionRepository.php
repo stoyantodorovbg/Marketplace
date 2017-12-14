@@ -1,7 +1,8 @@
 <?php
 
 namespace AppBundle\Repository;
-
+use AppBundle\Entity\User;
+use AppBundle\Entity\UserProfile;
 /**
  * PromotionRepository
  *
@@ -10,4 +11,73 @@ namespace AppBundle\Repository;
  */
 class PromotionRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findUserByRating($rating)
+    {
+        $em = $this->getEntityManager();
+        $db = $em->createQueryBuilder();
+        $query = $db
+            ->select('u')
+            ->from(UserProfile::class, 'u')
+            ->where('u.rating >= ?1')
+            ->setParameter(1, $rating)
+            ->getQuery();
+        $userProfiles = $query->execute();
+        return $userProfiles;
+    }
+
+    public function findUserByPurchaseValue($purchaseValue)
+    {
+        $em = $this->getEntityManager();
+        $db = $em->createQueryBuilder();
+        $query = $db
+            ->select('u')
+            ->from(UserProfile::class, 'u')
+            ->where('u.purchasesValue >= ?1')
+            ->setParameter(1, $purchaseValue)
+            ->getQuery();
+        $userProfiles = $query->execute();
+        return $userProfiles;
+    }
+
+    public function findUserByPurchaseCount($purchaseCount)
+    {
+        $em = $this->getEntityManager();
+        $db = $em->createQueryBuilder();
+        $query = $db
+            ->select('u')
+            ->from(UserProfile::class, 'u')
+            ->where('u.purchasesCount >= ?1')
+            ->setParameter(1, $purchaseCount)
+            ->getQuery();
+        $userProfiles = $query->execute();
+        return $userProfiles;
+    }
+
+    public function findUserByCash($cash)
+    {
+        $em = $this->getEntityManager();
+        $db = $em->createQueryBuilder();
+        $query = $db
+            ->select('u')
+            ->from(UserProfile::class, 'u')
+            ->where('u.cash >= ?1')
+            ->setParameter(1, $cash)
+            ->getQuery();
+        $userProfiles = $query->execute();
+        return $userProfiles;
+    }
+
+    public function findUserByDateCreated($dateCreated)
+    {
+        $em = $this->getEntityManager();
+        $db = $em->createQueryBuilder();
+        $query = $db
+            ->select('u')
+            ->from(User::class, 'u')
+            ->where('u.dateCreated <= ?1')
+            ->setParameter(1, $dateCreated)
+            ->getQuery();
+        $users = $query->execute();
+        return $users;
+    }
 }

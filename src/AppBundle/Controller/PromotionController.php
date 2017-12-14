@@ -53,7 +53,7 @@ class PromotionController extends Controller
                case 'certain_categories':
                    return $this->newForCertainCategories($request);
                case 'certain_users':
-                   return $this->newForCertainUsers($request);
+                   return $this->redirectToRoute('choose_user_criteria');
             }
         }
 
@@ -173,10 +173,142 @@ class PromotionController extends Controller
         ));
     }
 
-    private function newForCertainUsers(Request $request)
+    /**
+     * @Route("/chooseUserCriteria", name="choose_user_criteria")
+     * @Method("GET")
+     */
+    public function chooseUserCriteria(Request $request) {
+        if (isset($request->query->all()['criteria'])) {
+            $criteria = $request->query->all()['criteria'];
+
+            switch ($criteria) {
+                case 'rating':
+                    return $this->findUsersByRating($request);
+                case 'purchaseValue':
+                    return $this->findUsersByPurchaseValue($request);
+                case 'purchaseCount':
+                    return $this->findUsersByPurchaseCount($request);
+                case 'cash':
+                    return $this->findUsersByCash($request);
+                case 'registrationDate':
+                    return $this->findUsersByRegistrationDate($request);
+            }
+        }
+        return $this->render('promotion/chooseUserCriteria.html.twig');
+    }
+
+    /**
+     * @Route("/setRating", name="set_rating")
+     * @Method({"GET", "POST"})
+     */
+    public function findUsersByRating(Request $request)
+    {
+        if (isset($request->query->all()['min_rating'])) {
+            $minRating = $request->query->all()['min_rating'];
+            $userProfiles = $this
+                ->getDoctrine()
+                ->getRepository(Promotion::class)
+                ->findUserByPurchaseValue($minRating);
+            $users = $this->findUsersByUserProfiles($userProfiles);
+            return $this->newForCertainUsers($request, $users);
+
+        }
+        return $this->render('promotion/setRating.html.twig');
+    }
+
+    /**
+     * @Route("/setPurchaseValue", name="set_purchase_value")
+     */
+    public function findUsersByPurchaseValue(Request $request)
+    {
+        if (isset($request->request->all()['min_purchase_value'])) {
+            $minPurchaseValue = $request->request->all()['criteria'];
+            $userProfiles = $this
+                ->getDoctrine()
+                ->getRepository(Promotion::class)
+                ->findUserByPurchaseValue($minPurchaseValue);
+            $users = $this->findUsersByUserProfiles($userProfiles);
+            $this->newForCertainUsers($request, $users);
+
+        }
+        return $this->render('promotion/setPurchaseValue.html.twig');
+    }
+
+    /**
+     * @Route("/setPurchaseCount", name="set_purchase_count")
+     */
+    public function findUsersByPurchaseCount(Request $request)
+    {
+        if (isset($request->request->all()['min_purchase_count'])) {
+            $minPurchaseCount = $request->request->all()['criteria'];
+            $userProfiles = $this
+                ->getDoctrine()
+                ->getRepository(Promotion::class)
+                ->findUserByPurchaseCount($minPurchaseCount);
+            $users = $this->findUsersByUserProfiles($userProfiles);
+            $this->newForCertainUsers($request, $users);
+
+        }
+        return $this->render('promotion/setPurchaseCount.html.twig');
+    }
+
+    /**
+     * @Route("/setCash", name="set_cash")
+     */
+    public function findUsersByCash(Request $request)
+    {
+        if (isset($request->request->all()['min_cash'])) {
+            $minCash = $request->request->all()['criteria'];
+            $userProfiles = $this
+                ->getDoctrine()
+                ->getRepository(Promotion::class)
+                ->findUserByCash($minCash);
+            $users = $this->findUsersByUserProfiles($userProfiles);
+            $this->newForCertainUsers($request, $users);
+
+        }
+        return $this->render('promotion/setCash.html.twig');
+    }
+
+    /**
+     * @Route("/setRegistrationDate", name="set_registration_date")
+     */
+    public function findUsersByRegistrationDate(Request $request)
+    {
+        if (isset($request->request->all()['most_recent_date'])) {
+            $mostRecentDate = $request->request->all()['criteria'];
+            $users = $this
+                ->getDoctrine()
+                ->getRepository(Promotion::class)
+                ->findUserByPurchaseCount($mostRecentDate);
+            $this->newForCertainUsers($request, $users);
+
+        }
+        return $this->render('promotion/setRegistrationDate.html.twig');
+    }
+
+    private function findUsersByUserProfiles($userProfiles) {
+        $users = [];
+        foreach ($userProfiles as $userProfile) {
+            $userProfileId = $userProfile->getId();
+            $userRepo = $this->getDoctrine()->getRepository(User::class);
+            $user = $userRepo->findOneBy(['userProfile' => $userProfile]);
+            $users[] = $user;
+        }
+
+        return $users;
+    }
+
+    /**
+     * @Route("/newForCertainUsers", name="new_for_certain_users")
+     * @Method("GET")
+     */
+    private function newForCertainUsers(Request $request, $users)
     {
         $promotion = new Promotion();
         $promotion->setCreatedDate(new \DateTime());
+        $promotion->setUsers($users);
+        $promotion->setType('certain_users');
         $form = $this->createForm('AppBundle\Form\PromotionType', $promotion);
         $form->handleRequest($request);
 
@@ -188,7 +320,7 @@ class PromotionController extends Controller
             return $this->redirectToRoute('promotion_show', array('id' => $promotion->getId()));
         }
 
-        return $this->render('newForAllProducts.html.twig', array(
+        return $this->render('promotion/newForCertainUsers.html.twig', array(
             'promotion' => $promotion,
             'form' => $form->createView(),
         ));

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron">
+    <span class="btn btn-info btn-lg btn-block">
+        <h1>Define minimum user purchases value for this promotion</h1>
+    </span>
+        <br/>
+
+        <form>
+            <div class="form-group">
+                <div class="form-group">
+                    <div class="form-group">
+                        <input type="number" name="min_purchase_value">
+                    </div>>
+                </div>
+                <input type="submit" class="btn btn-success" value="Continue">
+            </div>
+        </form>
+        <br/>
+        <a href="{{ path('promotion_index') }}">
+            <button type="button" class="btn btn-info">
+                Show all promotions
+            </button>
+        </a>
+    </div>
+{% endblock %}

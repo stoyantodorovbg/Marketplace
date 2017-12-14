@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron">
+    <span class="btn btn-info btn-lg btn-block">
+        <h1>Choose user criteria</h1>
+    </span>
+        <br/>
+
+    <form>
+        <div class="form-group">
+            <div class="form-group">
+                <select name="criteria">
+                    <option value="rating">By rating</option>
+                    <option value="purchasesValue">By value of purchases</option>
+                    <option value="purchasesCount">By count of purchases</option>
+                    <option value="cash">By cash</option>
+                    <option value="registrationDate">By date of registration</option>
+                </select>
+            </div>
+            <input type="submit" class="btn btn-success" value="Choose criteria">
+        </div>
+    </form>
+        <br/>
+        <a href="{{ path('promotion_index') }}">
+            <button type="button" class="btn btn-info">
+                Show all promotions
+            </button>
+        </a>
+    </div>
+{% endblock %}
