@@ -7,7 +7,7 @@
     </span>
         <br/>
 
-        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}})) }}
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
         <label>Category name:</label>
         <div class="form-group">
             {{ form_row(form.name) }}
@@ -15,6 +15,10 @@
         <label>Category description:</label>
         <div class="form-group">
             {{ form_row(form.description) }}
+        </div>
+        <label>Parent category:</label>
+        <div class="form-group">
+            {{ form_row(form.parent) }}
         </div>
         <input type="submit" class="btn btn-primary" value="Create" />
         {{ form_end(form) }}

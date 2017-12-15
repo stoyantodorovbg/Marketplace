@@ -53,6 +53,12 @@ class ProductController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $quantity = $request->request->all()['appbundle_product']['quantity'];
+            if (intval($quantity) > 0) {
+                $product->setAvailability(1);
+            } else {
+                $product->setAvailability(0);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
@@ -107,7 +113,14 @@ class ProductController extends Controller
         $editForm = $this->createForm('AppBundle\Form\ProductType', $product);
         $editForm->handleRequest($request);
 
+
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $quantity = $request->request->all()['appbundle_product']['quantity'];
+            if (intval($quantity) > 0) {
+                $product->setAvailability(1);
+            } else {
+                $product->setAvailability(0);
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('product_edit', array('id' => $product->getId()));

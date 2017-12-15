@@ -66,10 +66,22 @@ class CategoryController extends Controller
     public function showAction(Category $category)
     {
         $deleteForm = $this->createDeleteForm($category);
+        $categoryRepo = $this->getDoctrine()->getRepository(Category::class);
+        $allCategories = false;
+        $categories = $categoryRepo->findAll();
+        foreach($categories as $cat) {
+            if ($cat->getParent() != null && $cat->getParent() == $category) {
+                $allCategories = true;
+            }
+        }
+        if ($allCategories) {
+            $allCategories = $categories;
+        }
 
         return $this->render('category/show.html.twig', array(
             'category' => $category,
             'delete_form' => $deleteForm->createView(),
+            'allCategories' =>$allCategories
         ));
     }
 

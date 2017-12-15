@@ -3,6 +3,22 @@
 
 {% block body %}
 <div class="jumbotron">
+    {% if allCategories %}
+        <span class="btn btn-info btn-lg btn-block">
+            <h1>Subcategories</h1>
+        </span>
+        {% for cat in allCategories %}
+        {% if cat.parent == category %}
+        <h3>
+            <a href="{{ path('category_show', { 'id': cat.id }) }}">
+            <span class="badge badge-primary">
+                {{ cat.name }}
+            </span>
+            </a>
+        </h3>
+        {% endif %}
+        {% endfor %}
+    {% endif %}
     <span class="btn btn-info btn-lg btn-block">
         <h1>Products by category</h1>
     </span>
@@ -12,11 +28,10 @@
         <span class="badge badge-secondary">Category: {{ category.name }} ({{ category.description }})</span>
     </h1>
     {% for product in category.getProducts %}
-        <h3><a href="{{ path('product_show', { 'id': product.id }) }}">
+        <h3>
+            <a href="{{ path('product_show', { 'id': product.id }) }}">
             <span class="badge badge-primary">
-
-                    {{ product.name}}
-
+                {{ product.name}}
             </span> </a>
         </h3>
     {% endfor %}
