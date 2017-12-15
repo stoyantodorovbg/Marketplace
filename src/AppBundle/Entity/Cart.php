@@ -52,6 +52,13 @@ class Cart
     private $refused;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_in_promotion", type="boolean")
+     */
+    private $isInPromotion;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="carts")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
@@ -142,6 +149,22 @@ class Cart
     public function setRefused($refused)
     {
         $this->refused = $refused;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getisInPromotion()
+    {
+        return $this->isInPromotion;
+    }
+
+    /**
+     * @param mixed $isInPromotion
+     */
+    public function setIsInPromotion($isInPromotion)
+    {
+        $this->isInPromotion = $isInPromotion;
     }
 
     /**

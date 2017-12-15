@@ -113,6 +113,11 @@ class CartController extends Controller
         $cart->setCurrency($currency);
         $cart->setBought(0); // is not bought
         $cart->setRefused(0); // is not refused
+        if ($bestPromotion) {
+            $cart->setIsInPromotion(1);
+        } else {
+            $cart->setIsInPromotion(0);
+        }
         $cart->setQuantity($productQuantity);
 
 
