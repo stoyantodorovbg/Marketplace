@@ -212,28 +212,37 @@ class CartController extends Controller
 
         foreach($addsInCart as $add) {
             if ($add->isBought() != 1 && $add->isRefused() != 1) {
+                $product = $add->getProduct();
+                $addQuantity = $add->getQuantity();
+                $user = $this->getUser();
+
                 $purchaseValue = $this->calculateAddInUserCurrency($add);
                 $productRepo = $this->getDoctrine()->getRepository(Product::class);
-                $addTotal = $add->getProduct()->getPrice() * $add->getQuantity();
-                $productId = $add->getProduct()->getId();
+                $addTotal = $product->getPrice() * $addQuantity;
+                $productId = $product->getId();
+
+                $product->setQuantity($product->getQuantity() - $addQuantity);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($product);
+                $em->flush();
+
                 $userProfileSeller = $productRepo->find($productId)->getUser()->getUserProfile();
                 $userProfileSeller->setCash($userProfileSeller->getCash() + $addTotal);
                 $userProfileSeller->setSalesCount($userProfileSeller->getSalesCount() + 1);
                 $userProfileSeller->setSalesValue($userProfileSeller->getSalesValue() + $purchaseValue);
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($userProfileSeller);
                 $em->flush();
 
-                $userProfileBuyer = $this->getUser()->getUserProfile();
+                $userProfileBuyer = $user->getUserProfile();
                 $userProfileBuyer->setPurchaseCount($userProfileBuyer->getPurchaseCount() + 1);
                 $userProfileBuyer->setPurchasesValue($userProfileSeller->getPurchasesValue() + $purchaseValue);
                 $em->persist($userProfileBuyer);
                 $em->flush();
 
                 $userPurchase = new UserPurchase();
-                $userPurchase->setUser($this->getUser());
-                $userPurchase->setProduct($add->getProduct());
-                $userPurchase->setQuantity($add->getQuantity());
+                $userPurchase->setUser($user);
+                $userPurchase->setProduct($product);
+                $userPurchase->setQuantity($addQuantity);
                 $userPurchase->setValue($purchaseValue);
                 $userPurchase->setDateCreated(new \DateTime());
                 $em->persist($userPurchase);
