@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Cart;
 use AppBundle\Entity\Product;
+use AppBundle\Entity\Promotion;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserProfile;
 use AppBundle\Entity\UserPurchase;
@@ -93,6 +94,16 @@ class CartController extends Controller
         if ($product->getUser()->getId() == $this->getUser()->getId()) {
             return $this->render('cart/buyOwnProduct.html.twig', [
             ]);
+        }
+
+        $activePromotions = $this->findActivePromotions($product);
+
+        $bestPromotion = false;
+        $reducedPrice = false;
+        if (count($activePromotions) > 0) {
+            $bestPromotion = $this->getBestPromotion($activePromotions);
+            $reducedPrice = $this->calculateReduction($product, $bestPromotion->getpercentsDiscount());
+            $priceOrder = $reducedPrice * $productQuantity;
         }
 
         $cart = new Cart();
@@ -246,6 +257,70 @@ class CartController extends Controller
         }
 
         return number_format($priceAddInUserCurrency, 2);
+    }
+
+    private function findActivePromotions(Product $product)
+    {
+        $promotionRepo = $this->getDoctrine()->getRepository(Promotion::class);
+        $productRepo = $this->getDoctrine()->getRepository(Product::class);
+        $productsCategoriesIds = $productRepo->getCategoriesIds($product->getId());
+
+        $promotionsByDate = $promotionRepo->getActivePromotionByDate();
+        $activePromotions = [];
+
+        foreach($promotionsByDate as $promotion) {
+            $promotionId = $promotion->getId();
+            $promotionType = $promotion->getType();
+            switch ($promotionType) {
+                case 'certain_products':
+                    $promoProductsIds = $promotionRepo->getProductsIds($promotionId);
+                    if (in_array($product->getId(), $promoProductsIds)) {
+                        $activePromotions[] = $promotion;
+                    }
+                    break;
+                case 'all_products':
+                    $activePromotions[] = $promotion;
+                    break;
+                case 'certain_categories':
+                    $promoCategoriesIds = $promotionRepo->getCategoriesIds($promotionId);
+                    $isInCategory = false;
+                    foreach($productsCategoriesIds as $id) {
+                        if (in_array($id, $promoCategoriesIds)) {
+                            $isInCategory = true;
+                        }
+                    }
+                    if ($isInCategory) {
+                        $activePromotions[] = $promotion;
+                    }
+                    break;
+                case 'certain_users':
+                    $promoUsersIds = $promotionRepo->getUsersIds($promotionId);
+                    if (in_array($this->getUser()->getid(), $promoUsersIds)) {
+                        $activePromotions[] = $promotion;
+                    }
+                    break;
+            }
+        }
+
+        return $activePromotions;
+    }
+
+    private function getBestPromotion(array $promotions)
+    {
+        $bestPromotion = $promotions[0];
+        foreach ($promotions as $promotion) {
+            if ($promotion->getPercentsDiscount() > $bestPromotion->getPercentsDiscount()) {
+                $bestPromotion = $promotion;
+            }
+        }
+        return $bestPromotion;
+    }
+
+    private function calculateReduction(Product $product, int $percentsDiscount)
+    {
+        $productPrice = $product->getPrice();
+        $reducedPrice = $productPrice - (($productPrice * $percentsDiscount) / 100);
+        return number_format($reducedPrice, 2);
     }
 
 
