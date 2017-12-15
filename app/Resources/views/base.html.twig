@@ -30,6 +30,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link btn btn-primary" href="{{ path('product_index') }}">
+                            <button type="button" class="btn btn-primary">
+                                All products
+                            </button>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link btn btn-primary" href="{{ path('promotion_index') }}">
                             <button type="button" class="btn btn-primary">
                                 Promotions
@@ -117,10 +124,10 @@
                         <li class="nav-item">
                             <h5 class="text-primary">
                                 {% if app.getUser().isAdmin() %}
-                                Hello Moderator!
+                                    Hello Moderator!
                                 {% endif %}
                                 {% if app.getUser().isSuperAdmin() %}
-                                Hello Admin!
+                                    Hello Admin!
                                 {% endif %}
                             </h5>
                         </li>
@@ -135,6 +142,13 @@
                             <a class="nav-link btn btn-primary" href="{{ path('product_new') }}">
                                 <button type="button" class="btn btn-primary">
                                     Add product
+                                </button>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary" href="{{ path('all_products_admin') }}">
+                                <button type="button" class="btn btn-primary">
+                                    All products
                                 </button>
                             </a>
                         </li>

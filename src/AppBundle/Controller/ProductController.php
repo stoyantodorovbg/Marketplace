@@ -20,8 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ProductController extends Controller
 {
     /**
-     * Lists all product entities.
-     *
+     * List available products
      * @Route("/", name="product_index")
      * @Method("GET")
      */
@@ -32,6 +31,22 @@ class ProductController extends Controller
         $products = $em->getRepository('AppBundle:Product')->findAll();
 
         return $this->render('product/index.html.twig', array(
+            'products' => $products,
+        ));
+    }
+
+    /**
+     * List all products
+     * @Route("/allProducts", name="all_products_admin")
+     * @Method("GET")
+     */
+    public function showAllProductsAdmin()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $products = $em->getRepository('AppBundle:Product')->findAll();
+
+        return $this->render('product/allProductsAdmin.html.twig', array(
             'products' => $products,
         ));
     }

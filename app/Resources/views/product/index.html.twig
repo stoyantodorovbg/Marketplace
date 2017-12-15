@@ -4,35 +4,37 @@
 <div class="container body-content">
     <div class="row">
         {% for product in products %}
-        <div class="col-md-6">
-            <div class="container">
-                <div class="jumbotron">
-                    <h1>
-                        <span class="badge badge-warning">
-                        {{ product.name }}
-                        </span>
-                        <span class="badge badge-primary">
-                            {{ product.price }} {{ product.currency }}
-                        </span>
-                    </h1>
+            {% if product.availability %}
+                <div class="col-md-6">
+                    <div class="container">
+                        <div class="jumbotron">
+                            <h1>
+                                <span class="badge badge-warning">
+                                {{ product.name }}
+                                </span>
+                                <span class="badge badge-primary">
+                                    {{ product.price }} {{ product.currency }}
+                                </span>
+                            </h1>
 
 
-                    <br/><br/>
-                     <a href="{{ path('product_show', { 'id': product.id }) }}">
-                         <button type="button" class="btn btn-success">
-                             Details
-                         </button>
-                     </a>
-                     {% if app.getUser() and (app.getUser().isAdmin() or app.getUser().isSuperAdmin()) %}
-                         <a href="{{ path('product_edit', { 'id': product.id }) }}">
-                             <button type="button" class="btn btn-danger">
-                                 Edit
-                             </button></a>
-                     {% endif %}
-
+                            <br/><br/>
+                             <a href="{{ path('product_show', { 'id': product.id }) }}">
+                                 <button type="button" class="btn btn-success">
+                                     Details
+                                 </button>
+                             </a>
+                             {% if app.getUser() and (app.getUser().isAdmin() or app.getUser().isSuperAdmin()) %}
+                                 <a href="{{ path('product_edit', { 'id': product.id }) }}">
+                                     <button type="button" class="btn btn-danger">
+                                         Edit
+                                     </button>
+                                 </a>
+                             {% endif %}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            {% endif %}
         {% endfor %}
     </div>
 </div>
