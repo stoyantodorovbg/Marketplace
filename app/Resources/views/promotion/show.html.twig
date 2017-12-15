@@ -32,6 +32,11 @@
                 Applies to: {{ promotion.endDate|date('Y-m-d H:i:s') }}
             </span>
         </h2>
+        <h2>
+            <span class="badge badge-primary">
+                Is calculated from: {{ promotion.createdDate|date('Y-m-d H:i:s') }}
+            </span>
+        </h2>
         <br/>
         <a href="{{ path('promotion_index') }}">
             <button type="button" class="btn btn-info">

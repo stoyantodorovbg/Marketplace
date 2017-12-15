@@ -103,13 +103,6 @@ class Product
     private $categories;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="isInPromotion", type="boolean")
-     */
-    private $isInPromotion;
-
-    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="products")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
@@ -355,22 +348,6 @@ class Product
     public function setCategories($categories)
     {
         $this->categories = $categories;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isInPromotion()
-    {
-        return $this->isInPromotion;
-    }
-
-    /**
-     * @param bool $isInPromotion
-     */
-    public function setIsInPromotion($isInPromotion)
-    {
-        $this->isInPromotion = $isInPromotion;
     }
 
     /**

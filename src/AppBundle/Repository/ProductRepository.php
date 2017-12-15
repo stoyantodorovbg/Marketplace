@@ -1,7 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
-
+use AppBundle\Entity\Product;
 /**
  * ProductRepository
  *
@@ -10,4 +10,18 @@ namespace AppBundle\Repository;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getCategoriesIds($productId)
+    {
+        $em = $this->getEntityManager();
+        $db = $em->createQueryBuilder();
+        $query = $db
+            ->select('p.id')
+            ->from(Product::class, 'p')
+            ->join('p.categories', 'c')
+            ->where('p.id = ?1')
+            ->setParameter(1, $productId)
+            ->getQuery();
+        $categoriesIds = $query->execute();
+        return $categoriesIds;
+    }
 }

@@ -38,10 +38,6 @@ class ProductType extends AbstractType
                 'label' => ' ',
                 'required'   => false
             ])
-            ->add('isInPromotion', CheckboxType::class, [
-                'label' => ' ',
-                'required'   => false
-            ])
             ->add('categories', EntityType::class, [
                 'class' => 'AppBundle:Category',
                 'choice_label' => 'name',

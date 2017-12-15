@@ -11,10 +11,27 @@
     </span>
         <br/>
         <h1>
-            <span class="badge badge-warning">
+            <span class="badge badge-success">
                 {{ product.name }}
             </span>
         </h1>
+        {% if bestPromotion %}
+            <h1>
+                <span class="badge badge-warning">
+                    There is {{ bestPromotion.getPercentsDiscount }}% discount for this product!
+                </span>
+                <span class="badge badge-warning">
+                    The price which we can offer you is  {{reducedPrice}} {{ product.getCurrency }} per {{ product.getUnit }}!
+                </span>
+            </h1>
+        {% else %}
+            <h3>
+               <span class="badge badge-warning">
+                   In this moment we can't offer you any promotion for this product.
+Inform yourself in a timely manner for our promotions.
+               </span>
+            </h3>
+        {% endif %}
         <h2>
             <a href="{{ path('userprofile_public_show') }}">
                 <span class="badge badge-primary">
@@ -54,10 +71,6 @@
             </span>
             {% endif %}
         </h4>
-
-        {% if product.isInPromotion %}
-
-        {% endif %}
 
         <br/><br/>
 
