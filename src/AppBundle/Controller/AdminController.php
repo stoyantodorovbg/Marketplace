@@ -59,6 +59,25 @@ class AdminController extends Controller
     }
 
     /**
+     * @Route("/addAdmin/{id})", name="add_admin")
+     * @Method("GET")
+     * @Security("is_granted(['ROLE_SUPER_ADMIN'])")
+     */
+    public function addAdmin(User $user)
+    {
+        $roleRepo = $this->getDoctrine()->getRepository(Role::class);
+        $roleEditor = $roleRepo->find(3);
+        $user->addRole($roleEditor);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $this->redirectToRoute('admin_user_view', [
+            'id' => $user->getId()
+        ]);
+    }
+
+    /**
      * @Route("/banEditor/{id})", name="ban_editor")
      * @Method("GET")
      * @Security("is_granted(['ROLE_SUPER_ADMIN'])")

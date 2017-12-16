@@ -16,6 +16,32 @@
                 Email: {{ user.email }}
             </span>
         </h1>
+        {% if user.isUser() %}
+            <h1>
+                <span class="badge badge-primary">
+                    Rights: User
+                </span>
+            </h1>
+        {% elseif user.isAdmin() %}
+            <h1>
+                <span class="badge badge-primary">
+                    Rights: Editor
+                </span>
+            </h1>
+        {% elseif user.isSuperAdmin() %}
+            <h1>
+                <span class="badge badge-primary">
+                    Rights: Admin
+                </span>
+            </h1>
+        {% else %}
+            <h1>
+                <span class="badge badge-primary">
+                    Rights: Banned
+                </span>
+            </h1>
+        {% endif %}
+
         <h3>
             <span class="badge badge-info">
                 Name: {{ user.getFirstName }} {{ user.getLastName }}
@@ -141,6 +167,13 @@
                 <a href="{{ path('ban_user', { 'id': user.id })  }}">
                     <button type="button" class="btn btn-danger">
                         Ban users rights
+                    </button>
+                </a>
+            {% endif %}
+            {% if user.isSuperAdmin() == false %}
+                <a href="{{ path('add_admin', { 'id': user.id })  }}">
+                    <button type="button" class="btn btn-danger">
+                        Add Admin
                     </button>
                 </a>
             {% endif %}

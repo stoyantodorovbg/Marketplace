@@ -551,6 +551,14 @@ class User implements UserInterface
     /**
      * @return bool
      */
+    public function isUser()
+    {
+        return in_array("ROLE_USER", $this->getRoles());
+    }
+
+    /**
+     * @return bool
+     */
     public function isAdmin()
     {
         return in_array("ROLE_ADMIN", $this->getRoles());
