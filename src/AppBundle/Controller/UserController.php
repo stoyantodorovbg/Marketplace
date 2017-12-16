@@ -8,6 +8,7 @@ use AppBundle\Entity\UserProfile;
 use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,6 +58,7 @@ class UserController extends Controller
      *
      * @Route("/edit", name="user_edit")
      * @Method({"GET", "POST"})
+     * @Security("is_granted(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function editAction(Request $request)
     {
@@ -85,6 +87,7 @@ class UserController extends Controller
      *
      * @Route("/show", name="user_show")
      * @Method("GET")
+     * @Security("is_granted(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function showAction()
     {

@@ -6,6 +6,7 @@ use AppBundle\Entity\Cart;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\Promotion;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -39,6 +40,7 @@ class ProductController extends Controller
      * List all products
      * @Route("/allProducts", name="all_products_admin")
      * @Method("GET")
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function showAllProductsAdmin()
     {
@@ -56,6 +58,7 @@ class ProductController extends Controller
      *
      * @Route("/new", name="product_new")
      * @Method({"GET", "POST"})
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function newAction(Request $request)
     {
@@ -92,6 +95,7 @@ class ProductController extends Controller
      *
      * @Route("/{id}", name="product_show")
      * @Method("GET")
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function showAction(Product $product)
     {
@@ -121,6 +125,7 @@ class ProductController extends Controller
      *
      * @Route("/{id}/edit", name="product_edit")
      * @Method({"GET", "POST"})
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function editAction(Request $request, Product $product)
     {
@@ -153,6 +158,7 @@ class ProductController extends Controller
      *
      * @Route("/{id}", name="product_delete")
      * @Method("DELETE")
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function deleteAction(Request $request, Product $product)
     {
@@ -174,6 +180,7 @@ class ProductController extends Controller
      * @param Product $product The product entity
      *
      * @return \Symfony\Component\Form\Form The form
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     private function createDeleteForm(Product $product)
     {

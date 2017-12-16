@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserProfile;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,7 @@ class UserProfileController extends Controller
      *
      * @Route("/", name="userprofile_index")
      * @Method("GET")
+     * @Security("is_granted(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function indexAction()
     {
@@ -37,6 +39,7 @@ class UserProfileController extends Controller
      *
      * @Route("/show", name="userprofile_show")
      * @Method("GET")
+     * @Security("is_granted(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function showAction()
     {
@@ -55,6 +58,7 @@ class UserProfileController extends Controller
      *
      * @Route("/publicShow", name="userprofile_public_show")
      * @Method("GET")
+     * @Security("is_granted(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function publicShowAction()
     {
@@ -73,6 +77,7 @@ class UserProfileController extends Controller
      *
      * @Route("/edit", name="userprofile_edit")
      * @Method({"GET", "POST"})
+     * @Security("is_granted(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function editAction(Request $request)
     {

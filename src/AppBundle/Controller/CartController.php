@@ -8,6 +8,7 @@ use AppBundle\Entity\Promotion;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserProfile;
 use AppBundle\Entity\UserPurchase;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -25,6 +26,7 @@ class CartController extends Controller
      *
      * @Route("/new", name="cart_new")
      * @Method({"GET", "POST"})
+     * @Security("is_granted(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function newAction(Request $request)
     {
@@ -60,6 +62,7 @@ class CartController extends Controller
      *
      * @Route("/", name="cart_show")
      * @Method("GET")
+     * @Security("is_granted(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function showAction()
     {
@@ -80,6 +83,7 @@ class CartController extends Controller
      *
      * @Route("/{id}/addProduct", name="cart_add_product")
      * @Method({"GET", "POST"})
+     * @Security("is_granted(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function addProduct(Request $request, Product $product)
     {
@@ -132,6 +136,7 @@ class CartController extends Controller
      *
      * @Route("/buy", name="buy_product_cart")
      * @Method("GET")
+     * @Security("is_granted(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function buy()
     {
@@ -177,6 +182,7 @@ class CartController extends Controller
      *
      * @Route("/{id}", name="refuse_row")
      * @Method("GET")
+     * @Security("is_granted(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function refuseAction(Request $request, Cart $cart)
     {

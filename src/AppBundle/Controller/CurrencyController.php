@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Currency;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -36,6 +37,7 @@ class CurrencyController extends Controller
      *
      * @Route("/new", name="currency_new")
      * @Method({"GET", "POST"})
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function newAction(Request $request)
     {
@@ -78,6 +80,7 @@ class CurrencyController extends Controller
      *
      * @Route("/{id}/edit", name="currency_edit")
      * @Method({"GET", "POST"})
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function editAction(Request $request, Currency $currency)
     {
@@ -103,6 +106,7 @@ class CurrencyController extends Controller
      *
      * @Route("/{id}", name="currency_delete")
      * @Method("DELETE")
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function deleteAction(Request $request, Currency $currency)
     {
@@ -124,6 +128,7 @@ class CurrencyController extends Controller
      * @param Currency $currency The currency entity
      *
      * @return \Symfony\Component\Form\Form The form
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     private function createDeleteForm(Currency $currency)
     {

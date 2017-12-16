@@ -6,6 +6,7 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\User;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -39,6 +40,7 @@ class PromotionController extends Controller
 
     /**
      * @Route("/newChooseType", name="choose_type_new_promotion")
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function chooseTypeNewPromotion(Request $request)
     {
@@ -60,9 +62,9 @@ class PromotionController extends Controller
         return $this->render('promotion/new_promotion_choose_type.html.twig');
     }
 
-
     /**
      * @Route("/newForCertainProducts", name="new_for_certain_products")
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     private function newForCertainProducts(Request $request)
     {
@@ -101,6 +103,7 @@ class PromotionController extends Controller
 
     /**
      * @Route("/newForAllProducts", name="new_for_all_products")
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     private function newForAllProducts(Request $request)
     {
@@ -133,9 +136,9 @@ class PromotionController extends Controller
         ));
     }
 
-
     /**
      * @Route("/newForCertainCategories", name="new_for_certain_categories")
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     private function newForCertainCategories(Request $request)
     {
@@ -176,6 +179,7 @@ class PromotionController extends Controller
     /**
      * @Route("/chooseUserCriteria", name="choose_user_criteria")
      * @Method("GET")
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function chooseUserCriteria(Request $request) {
         if (isset($request->query->all()['criteria'])) {
@@ -200,6 +204,7 @@ class PromotionController extends Controller
     /**
      * @Route("/setRating", name="set_rating")
      * @Method({"GET", "POST"})
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function findUsersByRating(Request $request)
     {
@@ -219,6 +224,7 @@ class PromotionController extends Controller
     /**
      * @Route("/setPurchaseValue", name="set_purchase_value")
      * @Method({"GET", "POST"})
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function findUsersByPurchaseValue(Request $request)
     {
@@ -238,6 +244,7 @@ class PromotionController extends Controller
     /**
      * @Route("/setPurchaseCount", name="set_purchase_count")
      * @Method({"GET", "POST"})
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function findUsersByPurchaseCount(Request $request)
     {
@@ -257,6 +264,7 @@ class PromotionController extends Controller
     /**
      * @Route("/setCash", name="set_cash")
      * @Method({"GET", "POST"})
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function findUsersByCash(Request $request)
     {
@@ -276,6 +284,7 @@ class PromotionController extends Controller
     /**
      * @Route("/setRegistrationDate", name="set_registration_date")
      * @Method({"GET", "POST"})
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function findUsersByRegistrationDate(Request $request)
     {
@@ -306,6 +315,7 @@ class PromotionController extends Controller
     /**
      * @Route("/newForCertainUsers", name="new_for_certain_users")
      * @Method("GET")
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     private function newForCertainUsers(Request $request, $users)
     {
@@ -335,6 +345,7 @@ class PromotionController extends Controller
      *
      * @Route("/{id}", name="promotion_show")
      * @Method("GET")
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function showAction(Promotion $promotion)
     {
@@ -351,6 +362,7 @@ class PromotionController extends Controller
      *
      * @Route("/{id}/edit", name="promotion_edit")
      * @Method({"GET", "POST"})
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function editAction(Request $request, Promotion $promotion)
     {
@@ -376,6 +388,7 @@ class PromotionController extends Controller
      *
      * @Route("/{id}", name="promotion_delete")
      * @Method("DELETE")
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function deleteAction(Request $request, Promotion $promotion)
     {
@@ -397,6 +410,7 @@ class PromotionController extends Controller
      * @param Promotion $promotion The promotion entity
      *
      * @return \Symfony\Component\Form\Form The form
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     private function createDeleteForm(Promotion $promotion)
     {
