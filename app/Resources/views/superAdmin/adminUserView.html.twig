@@ -10,125 +10,127 @@
         </span>
     </h1>
 
-<div class="jumbotron">
-    <h1>
-                            <span class="badge badge-primary">
-                                Email: {{ user.email }}
-                            </span>
-    </h1>
-    <h3>
-                            <span class="badge badge-info">
-                                Name: {{ user.getFirstName }} {{ user.getLastName }}
-                            </span>
-    </h3>
-    <h3>
-                            <span class="badge badge-info">
-                                Phone: {{ user.phone }}
-                            </span>
-    </h3>
-    <h3>
-                            <span class="badge badge-info">
-                                Company: {{ user.company }}
-                            </span>
-    </h3>
-    <h3>
-                            <span class="badge badge-info">
-                                Country: {{ user.country }}
-                            </span>
-    </h3>
-    <h3>
-                            <span class="badge badge-info">
-                                Region: {{ user.region }}
-                            </span>
-    </h3>
-    <h3>
-                            <span class="badge badge-info">
-                                Town: {{ user.town }}
-                            </span>
-    </h3>
-    <h3>
-                            <span class="badge badge-info">
-                                Zip code: {{ user.zipCode }}
-                            </span>
-    </h3>
-    <h3>
-                            <span class="badge badge-info">
-                                Address: {{ user.address }}
-                            </span>
-    </h3>
-    <h3>
-                            <span class="badge badge-info">
-                                Registered on: {{ user.dateCreated|date('Y-m-d H:i:s') }}
-                            </span>
-    </h3>
-    <h3>
-                            <span class="badge badge-info">
-                                Rating: {{ user.userProfile.rating }}
-                            </span>
-    </h3>
-    <h3>
-                            <span class="badge badge-info">
-                                Cash: {{ user.userProfile.cash }}
-                            </span>
-    </h3>
-    <h3>
-                            <span class="badge badge-info">
-                                Currency: {{ user.userProfile.currency }}
-                            </span>
-    </h3>
-    {% if user.userProfile.isSeller %}
+    <div class="jumbotron">
+        <h1>
+            <span class="badge badge-primary">
+                Email: {{ user.email }}
+            </span>
+        </h1>
         <h3>
-                            <span class="badge badge-info">
-                                Buyer and Seller
-                            </span>
+            <span class="badge badge-info">
+                Name: {{ user.getFirstName }} {{ user.getLastName }}
+            </span>
         </h3>
         <h3>
-                            <span class="badge badge-info">
-                                Purchases: {{ user.userProfile.purchaseCount }}
-                            </span>
+            <span class="badge badge-info">
+                Phone: {{ user.phone }}
+            </span>
         </h3>
         <h3>
-                            <span class="badge badge-info">
-                                Purchases value: {{ user.userProfile.purchasesValue }}
-                            </span>
+            <span class="badge badge-info">
+                Company: {{ user.company }}
+            </span>
         </h3>
         <h3>
-                            <span class="badge badge-info">
-                                Sales: {{ user.userProfile.salesCount }}
-                            </span>
+            <span class="badge badge-info">
+                Country: {{ user.country }}
+            </span>
         </h3>
         <h3>
-                            <span class="badge badge-info">
-                                Sales value: {{ user.userProfile.salesValue }}
-                            </span>
-        </h3>
-    {% else %}
-        <h3>
-                            <span class="badge badge-info">
-                                Only Buyer
-                            </span>
+            <span class="badge badge-info">
+                Region: {{ user.region }}
+            </span>
         </h3>
         <h3>
-                            <span class="badge badge-info">
-                                Purchases: {{ user.userProfile.purchaseCount }}
-                            </span>
+            <span class="badge badge-info">
+                Town: {{ user.town }}
+            </span>
         </h3>
         <h3>
-                            <span class="badge badge-info">
-                                Purchases value: {{ user.userProfile.purchasesValue }}
-                            </span>
+            <span class="badge badge-info">
+                Zip code: {{ user.zipCode }}
+            </span>
         </h3>
-    {% endif %}
-    <h3>
-                            <span class="badge badge-danger ">
-                                Actions:
-                            </span>
-        <a href="{{ path('add_editor', { 'id': user.id })  }}">
+        <h3>
+            <span class="badge badge-info">
+                Address: {{ user.address }}
+            </span>
+        </h3>
+        <h3>
+            <span class="badge badge-info">
+                Registered on: {{ user.dateCreated|date('Y-m-d H:i:s') }}
+            </span>
+        </h3>
+        <h3>
+            <span class="badge badge-info">
+                Rating: {{ user.userProfile.rating }}
+            </span>
+        </h3>
+        <h3>
+            <span class="badge badge-info">
+                Cash: {{ user.userProfile.cash }}
+            </span>
+        </h3>
+        <h3>
+            <span class="badge badge-info">
+                Currency: {{ user.userProfile.currency }}
+            </span>
+        </h3>
+        {% if user.userProfile.isSeller %}
+            <h3>
+                <span class="badge badge-info">
+                    Buyer and Seller
+                </span>
+            </h3>
+            <h3><span class="badge badge-info">Purchases: {{ user.userProfile.purchaseCount }}</span>
+            </h3>
+            <h3>
+                <span class="badge badge-info">
+                    Purchases value: {{ user.userProfile.purchasesValue }}
+                </span>
+            </h3>
+            <h3><span class="badge badge-info">Sales: {{ user.userProfile.salesCount }}</span>
+            </h3>
+            <h3>
+                <span class="badge badge-info">
+                    Sales value: {{ user.userProfile.salesValue }}
+                </span>
+            </h3>
+        {% else %}
+            <h3>
+                <span class="badge badge-info">
+                    Only Buyer
+                </span>
+            </h3>
+            <h3>
+                <span class="badge badge-info">
+                    Purchases: {{ user.userProfile.purchaseCount }}
+                </span>
+            </h3>
+            <h3>
+                <span class="badge badge-info">Purchases value:
+                    {{ user.userProfile.purchasesValue }}
+                </span>
+            </h3>
+        {% endif %}
+        <h3>
+            <span class="badge badge-danger ">
+                Actions:
+            </span>
+            <a href="{{ path('add_editor', { 'id': user.id })  }}">
+                <button type="button" class="btn btn-danger">
+                    Add editorial right
+                </button>
+            </a>
+    {% if user.isAdmin()  %}
+        <a href="{{ path('ban_editor', { 'id': user.id })  }}">
             <button type="button" class="btn btn-danger">
-                Add to editors
+                Ban editorial rights
             </button>
         </a>
-    </h3>
+    {% endif %}
+        </h3>
+    </div>
 </div>
 
     {% endblock %}

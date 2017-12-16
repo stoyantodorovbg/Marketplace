@@ -506,6 +506,22 @@ class User implements UserInterface
     }
 
     /**
+     * @param \AppBundle\Entity\Role $role
+     *
+     * @return User
+     */
+    public function banRole(Role $role)
+    {
+        foreach ($this->getRoles() as $key => $value){
+            if ($value == $role->getName()) {
+                unset($this->roles[$key]);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * @param UserProfile $userProfile
      *
      * @return $this

@@ -41,7 +41,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/addEditor/{id})", name="add_editor")
-     * @Method({"GET", "POST"})
+     * @Method("GET")
      * @Security("is_granted(['ROLE_SUPER_ADMIN'])")
      */
     public function addEditor(User $user)
@@ -53,6 +53,27 @@ class AdminController extends Controller
         $em->persist($user);
         $em->flush();
 
-        return $this->redirectToRoute('admin_user_view');
+        return $this->redirectToRoute('admin_user_view', [
+            'id' => $user->getId()
+        ]);
+    }
+
+    /**
+     * @Route("/banEditor/{id})", name="ban_editor")
+     * @Method("GET")
+     * @Security("is_granted(['ROLE_SUPER_ADMIN'])")
+     */
+    public function banEditor(User $user)
+    {
+        $roleRepo = $this->getDoctrine()->getRepository(Role::class);
+        $roleEditor = $roleRepo->find(2);
+        $user->banRole($roleEditor);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $this->redirectToRoute('admin_user_view', [
+            'id' => $user->getId()
+        ]);
     }
 }
