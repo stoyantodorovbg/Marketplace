@@ -102,40 +102,32 @@
                 Currency: {{ user.userProfile.currency }}
             </span>
         </h3>
+        <h3>
+            <span class="badge badge-info">
+                Purchases count: {{ user.userProfile.purchaseCount }}
+            </span>
+        </h3>
+        <h3>
+            <span class="badge badge-info">
+                Purchases value: {{ user.userProfile.purchasesValue }}
+            </span>
+        </h3>
+        <h3>
+            <a href="{{ path('admin_users_purchases_view', { 'id': user.id })  }}">
+                <button type="button" class="btn btn-secondary">
+                View purchases:
+                </button>
+            </a>
+        </h3>
         {% if user.userProfile.isSeller %}
             <h3>
                 <span class="badge badge-info">
-                    Buyer and Seller
+                    Sales count: {{ user.userProfile.salesCount }}
                 </span>
-            </h3>
-            <h3><span class="badge badge-info">Purchases: {{ user.userProfile.purchaseCount }}</span>
-            </h3>
-            <h3>
-                <span class="badge badge-info">
-                    Purchases value: {{ user.userProfile.purchasesValue }}
-                </span>
-            </h3>
-            <h3><span class="badge badge-info">Sales: {{ user.userProfile.salesCount }}</span>
             </h3>
             <h3>
                 <span class="badge badge-info">
                     Sales value: {{ user.userProfile.salesValue }}
-                </span>
-            </h3>
-        {% else %}
-            <h3>
-                <span class="badge badge-info">
-                    Only Buyer
-                </span>
-            </h3>
-            <h3>
-                <span class="badge badge-info">
-                    Purchases: {{ user.userProfile.purchaseCount }}
-                </span>
-            </h3>
-            <h3>
-                <span class="badge badge-info">Purchases value:
-                    {{ user.userProfile.purchasesValue }}
                 </span>
             </h3>
         {% endif %}

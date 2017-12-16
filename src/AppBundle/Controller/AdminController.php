@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Product;
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -22,7 +23,7 @@ class AdminController extends Controller
         $userRepo = $this->getDoctrine()->getRepository(User::class);
         $allUsers = $userRepo->findAll();
 
-        return $this->render('superAdmin/adminAllUsersView.html.twig',[
+        return $this->render('admin/adminAllUsersView.html.twig',[
             'allUsers' => $allUsers
             ]);
     }
@@ -34,8 +35,33 @@ class AdminController extends Controller
      */
     public function userView(User $user)
     {
-        return $this->render('superAdmin/adminUserView.html.twig', [
-            'user' => $user
+        $productRepo = $this->getDoctrine()->getRepository(Product::class);
+        $userProducts = $productRepo->findBy(['user' => $user]);
+
+        $userPurchases = $user->getPurchases();
+
+        return $this->render('admin/adminUserView.html.twig', [
+            'user' => $user,
+            'userProducts' => $userProducts,
+            'userPurchases' => $userPurchases
+        ]);
+    }
+
+    /**
+     * @Route("/adminUsersPurchasesView/{id})", name="admin_users_purchases_view")
+     * @Method("GET")
+     * @Security("is_granted(['ROLE_SUPER_ADMIN'])")
+     */
+    public function userPurchasesView(User $user)
+    {
+        $productRepo = $this->getDoctrine()->getRepository(Product::class);
+        $userProducts = $productRepo->findBy(['user' => $user]);
+
+        $userPurchases = $user->getPurchases();
+
+        return $this->render('admin/adminUserPurchasesView.html.twig', [
+            'user' => $user,
+            'userPurchases' => $userPurchases
         ]);
     }
 
