@@ -122,6 +122,13 @@ Inform yourself in a timely manner for our promotions.
                                  {{ comment.content }}
                             </span>
                         </h5>
+                        {% if app.getUser() and (app.getUser().isAdmin() or app.getUser().isSuperAdmin())  %}
+                            <a href="{{ path('comment_edit', { 'id': comment.id }) }}">
+                                <button type="button" class="btn btn-danger">
+                                    Edit
+                                </button>
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}

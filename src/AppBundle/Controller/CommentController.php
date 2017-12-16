@@ -21,6 +21,7 @@ class CommentController extends Controller
      *
      * @Route("/", name="comment_index")
      * @Method("GET")
+     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function indexAction()
     {
@@ -36,7 +37,7 @@ class CommentController extends Controller
     /**
      * Creates a new comment entity.
      *
-     * @Route("/new{id}", name="comment_new")
+     * @Route("/new/{id}", name="comment_new")
      * @Method({"GET", "POST"})
      * @Security("is_granted(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
@@ -54,28 +55,12 @@ class CommentController extends Controller
             $em->persist($comment);
             $em->flush();
 
-            return $this->redirectToRoute('comment_show', array('id' => $comment->getId()));
+            return $this->redirectToRoute('product_show', array('id' => $product->getId()));
         }
 
         return $this->render('comment/new.html.twig', array(
             'comment' => $comment,
             'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * Finds and displays a comment entity.
-     *
-     * @Route("/{id}", name="comment_show")
-     * @Method("GET")
-     */
-    public function showAction(Comment $comment)
-    {
-        $deleteForm = $this->createDeleteForm($comment);
-
-        return $this->render('comment/show.html.twig', array(
-            'comment' => $comment,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -95,7 +80,7 @@ class CommentController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('comment_edit', array('id' => $comment->getId()));
+            return $this->redirectToRoute('product_show', array('id' => $comment->getProduct()->getId()));
         }
 
         return $this->render('comment/edit.html.twig', array(
@@ -114,6 +99,8 @@ class CommentController extends Controller
      */
     public function deleteAction(Request $request, Comment $comment)
     {
+        $productId = $comment->getProduct()->getId();
+
         $form = $this->createDeleteForm($comment);
         $form->handleRequest($request);
 
@@ -123,7 +110,7 @@ class CommentController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('comment_index');
+        return $this->redirectToRoute('product_show', array('id' => $productId));
     }
 
     /**

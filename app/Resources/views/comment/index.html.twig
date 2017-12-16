@@ -1,39 +1,36 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Comments list</h1>
+    <div class="container body-content">
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Content</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+        <h1>
+        <span class="btn btn-info btn-lg btn-block">
+            Users
+        </span>
+        </h1>
+
         {% for comment in comments %}
-            <tr>
-                <td><a href="{{ path('comment_show', { 'id': comment.id }) }}">{{ comment.id }}</a></td>
-                <td>{{ comment.content }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('comment_show', { 'id': comment.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('comment_edit', { 'id': comment.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
+            <div class="row">
+                <div class="container">
+                    <div class="jumbotron">
+                        <h2>
+                            <span class="badge badge-info">
+                                {{ comment.content }}
+                            </span>
+                            <a href="{{ path('product_show', { 'id': comment.product.id }) }}">
+                                <button type="button" class="btn btn-success">
+                                    View in context
+                                </button>
+                            </a>
+                            <a href="{{ path('comment_edit', { 'id': comment.id }) }}">
+                                <button type="button" class="btn btn-danger">
+                                    Edit
+                                </button>
+                            </a>
+                        </h2>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('comment_new') }}">Create a new comment</a>
-        </li>
-    </ul>
+    </div>
 {% endblock %}
