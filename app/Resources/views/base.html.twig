@@ -124,7 +124,7 @@
                         <li class="nav-item">
                             <h5 class="text-primary">
                                 {% if app.getUser().isAdmin() %}
-                                    Hello Moderator!
+                                    Hello Editor!
                                 {% endif %}
                                 {% if app.getUser().isSuperAdmin() %}
                                     Hello Admin!
@@ -163,6 +163,22 @@
                             <a class="nav-link btn btn-primary" href="{{ path('choose_type_new_promotion') }}">
                                 <button type="button" class="btn btn-primary">
                                     Add promotion
+                                </button>
+                            </a>
+                        </li>
+                    </ul>
+                {% endif %}
+                {% if app.getUser() and app.getUser().isSuperAdmin() %}
+                    <ul class="navbar navbar-light list-unstyled" style="background-color: #e3f2fd;">
+                        <li class="nav-item">
+                            <h5 class="text-primary">
+                                Admin panel
+                            </h5>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-danger" href="{{ path('admin_all_users_view') }}">
+                                <button type="button" class="btn btn-danger">
+                                    View all users
                                 </button>
                             </a>
                         </li>

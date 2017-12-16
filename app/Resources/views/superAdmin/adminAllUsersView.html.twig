@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container body-content">
+
+        <h1>
+        <span class="btn btn-info btn-lg btn-block">
+            Users
+        </span>
+        </h1>
+
+        {% for user in allUsers %}
+            <div class="row">
+                <div class="container">
+                    <div class="jumbotron">
+                        <h1>
+                            <span class="badge badge-primary">
+                                Email: {{ user.email }}
+                            </span>
+                        </h1>
+                        <h3>
+                            <span class="badge badge-info">
+                                Name: {{ user.getFirstName }} {{ user.getLastName }}
+                            </span>
+                        </h3>
+                        <a href="{{ path('admin_user_view', { 'id': user.id })  }}">
+                            <button type="button" class="btn btn-danger">
+                                Details
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
