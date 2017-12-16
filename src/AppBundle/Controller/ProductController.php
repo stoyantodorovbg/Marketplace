@@ -95,7 +95,6 @@ class ProductController extends Controller
      *
      * @Route("/{id}", name="product_show")
      * @Method("GET")
-     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function showAction(Product $product)
     {

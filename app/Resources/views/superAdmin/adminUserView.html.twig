@@ -117,18 +117,33 @@
             <span class="badge badge-danger ">
                 Actions:
             </span>
-            <a href="{{ path('add_editor', { 'id': user.id })  }}">
-                <button type="button" class="btn btn-danger">
-                    Add editorial right
-                </button>
-            </a>
-    {% if user.isAdmin()  %}
-        <a href="{{ path('ban_editor', { 'id': user.id })  }}">
-            <button type="button" class="btn btn-danger">
-                Ban editorial rights
-            </button>
-        </a>
-    {% endif %}
+
+            {% if user.isAdmin()  %}
+                <a href="{{ path('ban_editor', { 'id': user.id })  }}">
+                    <button type="button" class="btn btn-danger">
+                        Ban editorial rights
+                    </button>
+                </a>
+            {% else %}
+                <a href="{{ path('add_editor', { 'id': user.id })  }}">
+                    <button type="button" class="btn btn-danger">
+                        Add editorial right
+                    </button>
+                </a>
+            {% endif %}
+            {% if user.roles == [] %}
+                <a href="{{ path('return_users_rights', { 'id': user.id })  }}">
+                    <button type="button" class="btn btn-danger">
+                        Return users rights
+                    </button>
+                </a>
+            {% else %}
+                <a href="{{ path('ban_user', { 'id': user.id })  }}">
+                    <button type="button" class="btn btn-danger">
+                        Ban users rights
+                    </button>
+                </a>
+            {% endif %}
         </h3>
     </div>
 </div>
