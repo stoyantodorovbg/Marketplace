@@ -149,6 +149,11 @@ class User implements UserInterface
     private $promotions;
 
     /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="user")
+     */
+    private $comments;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -639,6 +644,22 @@ class User implements UserInterface
     public function setPromotions($promotions)
     {
         $this->promotions = $promotions;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
     }
 }
 

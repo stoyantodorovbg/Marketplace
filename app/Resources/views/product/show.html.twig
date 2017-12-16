@@ -58,7 +58,6 @@ Inform yourself in a timely manner for our promotions.
                     Now there is not availability of this product.
                 </span>
         {% endif %}
-
         <h4>
             {% if product.brand != null %}
             <span class="badge badge-secondary">
@@ -95,11 +94,44 @@ Inform yourself in a timely manner for our promotions.
             <a href="{{ path('product_edit', { 'id': product.id }) }}">
                 <button type="button" class="btn btn-danger">
                     Edit
-                </button></a>
+                </button>
+            </a>
             <br/><br/>
             {{ form_start(delete_form) }}
             <input type="submit" class="btn btn-danger" value="Delete">
             {{ form_end(delete_form) }}
         {% endif %}
     </div>
+        <h2>
+            <span class="badge badge-info">
+                Comments:
+            </span>
+        </h2>
+        <div class="container body-content">
+            <div class="row">
+            {% for comment in product.comments %}
+                <div class="container">
+                    <div class="jumbotron">
+                        <h5>
+                            <span class="badge badge-info">
+                                {{ comment.user.firstName }} {{ comment.user.lastName }}:
+                            </span>
+                        </h5>
+                        <h5>
+                            <span class="badge badge-info">
+                                 {{ comment.content }}
+                            </span>
+                        </h5>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+        {% if app.user %}
+            <a href="{{ path('comment_new', { 'id': product.id }) }}">
+                <button type="button" class="btn btn-secondary">
+                    Add comment
+                </button>
+            </a>
+        {% endif %}
 {% endblock %}

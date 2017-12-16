@@ -124,6 +124,11 @@ class Product
     private $promotions;
 
     /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="product")
+     */
+    private $comments;
+
+    /**
      * Product constructor.
      */
     public function __construct()
@@ -417,6 +422,22 @@ class Product
     public function setPromotions($promotions)
     {
         $this->promotions = $promotions;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
     }
 
 }
