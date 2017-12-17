@@ -150,10 +150,10 @@ class CartController extends Controller
             $userProfileRepo = $this->getDoctrine()->getRepository(UserProfile::class);
             $userProfile = $user->getUserProfile();
 
-            $cartRepo->buyProductsInCart($user->getId());
-
             $connection = $this->getDoctrine()->getConnection();
             $connection->beginTransaction();
+
+            $cartRepo->buyProductsInCart($user->getId());
 
             $userProfile->setCash($userProfile->getCash() - $cartBill);
             $em = $this->getDoctrine()->getManager();
@@ -176,6 +176,61 @@ class CartController extends Controller
             'user' => $user
         ]);
 
+    }
+
+    private function buyAction()
+    {
+        $userId = $this->getUser()->getId();
+        $userCurrency = $this->getUser()->getUserProfile()->getCurrency();
+        $cartRepo = $this->getDoctrine()->getRepository(Cart::class);
+        $addsInCart = $cartRepo->findBy(['user' => $userId]);
+
+        $em = $this->getDoctrine()->getManager();
+
+        foreach($addsInCart as $add) {
+            if ($add->isBought() != 1 && $add->isRefused() != 1) {
+                $product = $add->getProduct();
+                $addQuantity = $add->getQuantity();
+                $user = $this->getUser();
+
+                $purchaseValue = $this->calculateAddInUserCurrency($add);
+                $productRepo = $this->getDoctrine()->getRepository(Product::class);
+                $addTotal = $product->getPrice() * $addQuantity;
+                $productId = $product->getId();
+
+                $product->setQuantity($product->getQuantity() - $addQuantity);
+                $em->persist($product);
+                $em->flush();
+
+                $userProfileSeller = $productRepo->find($productId)->getUser()->getUserProfile();
+                $userProfileSeller->setCash($userProfileSeller->getCash() + $addTotal);
+                $userProfileSeller->setSalesCount($userProfileSeller->getSalesCount() + 1);
+                $userProfileSeller->setSalesValue($userProfileSeller->getSalesValue() + $purchaseValue);
+                if ($userProfileSeller->getIsSeller() == 0) {
+                    $userProfileSeller->setIsSeller(1);
+                }
+                $em->persist($userProfileSeller);
+                $em->flush();
+
+                $userProfileBuyer = $user->getUserProfile();
+                $userProfileBuyer->setPurchaseCount($userProfileBuyer->getPurchaseCount() + 1);
+                $userProfileBuyer->setPurchasesValue($userProfileBuyer->getPurchasesValue() + $purchaseValue);
+
+                $em->persist($userProfileBuyer);
+                $em->flush();
+
+                $userPurchase = new UserPurchase();
+                $userPurchase->setUser($user);
+                $userPurchase->setProduct($product);
+                $userPurchase->setQuantity($addQuantity);
+                $userPurchase->setValue($purchaseValue);
+                $userPurchase->setDateCreated(new \DateTime());
+                $em->persist($userPurchase);
+                $em->flush();
+
+                $userPurchaseRepo = $this->getDoctrine()->getRepository(UserPurchase::class);
+            }
+        }
     }
 
     /**
@@ -208,56 +263,6 @@ class CartController extends Controller
         }
 
         return $cartBill;
-    }
-
-    private function buyAction()
-    {
-        $userId = $this->getUser()->getId();
-        $userCurrency = $this->getUser()->getUserProfile()->getCurrency();
-        $cartRepo = $this->getDoctrine()->getRepository(Cart::class);
-        $addsInCart = $cartRepo->findBy(['user' => $userId]);
-
-        foreach($addsInCart as $add) {
-            if ($add->isBought() != 1 && $add->isRefused() != 1) {
-                $product = $add->getProduct();
-                $addQuantity = $add->getQuantity();
-                $user = $this->getUser();
-
-                $purchaseValue = $this->calculateAddInUserCurrency($add);
-                $productRepo = $this->getDoctrine()->getRepository(Product::class);
-                $addTotal = $product->getPrice() * $addQuantity;
-                $productId = $product->getId();
-
-                $product->setQuantity($product->getQuantity() - $addQuantity);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($product);
-                $em->flush();
-
-                $userProfileSeller = $productRepo->find($productId)->getUser()->getUserProfile();
-                $userProfileSeller->setCash($userProfileSeller->getCash() + $addTotal);
-                $userProfileSeller->setSalesCount($userProfileSeller->getSalesCount() + 1);
-                $userProfileSeller->setSalesValue($userProfileSeller->getSalesValue() + $purchaseValue);
-                $em->persist($userProfileSeller);
-                $em->flush();
-
-                $userProfileBuyer = $user->getUserProfile();
-                $userProfileBuyer->setPurchaseCount($userProfileBuyer->getPurchaseCount() + 1);
-                $userProfileBuyer->setPurchasesValue($userProfileSeller->getPurchasesValue() + $purchaseValue);
-                $em->persist($userProfileBuyer);
-                $em->flush();
-
-                $userPurchase = new UserPurchase();
-                $userPurchase->setUser($user);
-                $userPurchase->setProduct($product);
-                $userPurchase->setQuantity($addQuantity);
-                $userPurchase->setValue($purchaseValue);
-                $userPurchase->setDateCreated(new \DateTime());
-                $em->persist($userPurchase);
-                $em->flush();
-
-                $userPurchaseRepo = $this->getDoctrine()->getRepository(UserPurchase::class);
-            }
-        }
     }
 
     private function calculateAddInUserCurrency($add)

@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container body-content">
+        <h1>
+            <span class="btn btn-info btn-lg btn-block">
+                User purchases
+            </span>
+        </h1>
+        <h1>
+            <span class="badge badge-primary">
+                Email: {{ user.email }}
+            </span>
+        </h1>
+        {% if user.isUser() %}
+            <h1>
+                <span class="badge badge-primary">
+                    Rights: User
+                </span>
+            </h1>
+        {% elseif user.isAdmin() %}
+            <h1>
+                <span class="badge badge-primary">
+                    Rights: Editor
+                </span>
+            </h1>
+        {% elseif user.isSuperAdmin() %}
+            <h1>
+                <span class="badge badge-primary">
+                    Rights: Admin
+                </span>
+            </h1>
+        {% else %}
+            <h1>
+                <span class="badge badge-primary">
+                    Rights: Banned
+                </span>
+            </h1>
+        {% endif %}
+        <h3>
+            <span class="badge badge-info">
+                Name: {{ user.getFirstName }} {{ user.getLastName }}
+            </span>
+        </h3>
+        <h3>
+            <span class="badge badge-info">
+                Purchases count: {{ user.userProfile.purchaseCount }}
+            </span>
+        </h3>
+        <h3>
+            <span class="badge badge-info">
+                Purchases value: {{ user.userProfile.purchasesValue }}
+            </span>
+        </h3>
+        <h3>
+            <span class="badge badge-info">
+                Purchases:
+            </span>
+        </h3>
+        <div class="row">
+            {% for purchase in userPurchases %}
+                <div class="col-md-6">
+                    <div class="container">
+                        <div class="jumbotron">
+                            <p>
+                                <span class="badge badge-info">
+                                    Product name:
+                                </span>
+                                <span class="badge badge-info">
+                                    {{ purchase.product.name }}
+                                </span>
+                            </p>
+                            <p>
+                            <span class="badge badge-info">
+                                    Product price:
+                                </span>
+                                <span class="badge badge-info">
+                                {{ purchase.product.price }} {{ purchase.product.currency }} per {{ purchase.product.unit }}
+                            </span>
+                            </p>
+                            <p>
+                                <span class="badge badge-info">
+                                    Purchase quantity:
+                                </span>
+                                <span class="badge badge-info">
+                                    {{ purchase.quantity }} {{ purchase.product.unit }}
+                                </span>
+                            </p>
+                            <p>
+                                <span class="badge badge-info">
+                                    Purchase value:
+                                </span>
+                                <span class="badge badge-info">
+                                    {{ purchase.value }} {{ user.userProfile.currency }}
+                                </span>
+                            </p>
+                            <p>
+                                <span class="badge badge-info">
+                                    Date of purchase:
+                                </span>
+                                <span class="badge badge-info">
+                                    {{ purchase.dateCreated|date('Y-m-d H:i:s') }}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

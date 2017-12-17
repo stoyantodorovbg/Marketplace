@@ -39,6 +39,7 @@ class UserController extends Controller
             $userRole = $roleRepository->findOneBy(['name' => 'ROLE_USER']);
 
             $userProfile = new UserProfile();
+            $userProfile->setIsSeller(0);
 
             $user->addRole($userRole);
             $user->addUserProfile($userProfile);

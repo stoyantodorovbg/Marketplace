@@ -19,7 +19,6 @@ class UserProfileType extends AbstractType
     {
         $builder
             ->add('cash', NumberType::class, ['label' => ' '])
-            ->add('isSeller', CheckboxType::class, ['label' => ' '])
             ->add('currency', EntityType::class, [
                 'class' => 'AppBundle:Currency',
                 'choice_label' => 'name',

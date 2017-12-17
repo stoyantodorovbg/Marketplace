@@ -3,29 +3,40 @@
 {% block body %}
 <div class="jumbotron">
     <span class="btn btn-info btn-lg btn-block">
-    <h1>Hello {{ userProfile.getUser().getFirstName() }} {{ userProfile.getUser().getLastName() }}</h1>
+    <h1>
+        Hello {{ userProfile.getUser().getFirstName() }} {{ userProfile.getUser().getLastName() }}
+    </h1>
     </span>
-<br/><br/>
+
+    <br/><br/>
+
     <h2>
-            <span class="badge badge-warning">
-                Cash: {{ userProfile.cash }} {{ userProfile.currency }}
-            </span>
+        <span class="badge badge-warning">
+            Cash: {{ userProfile.cash }} {{ userProfile.currency }}
+        </span>
     </h2>
     <h2>
-            <span class="badge badge-primary">
-                Rating: {{ userProfile.rating }}
-            </span>
+        <span class="badge badge-primary">
+            Rating: {{ userProfile.rating }}
+        </span>
     </h2>
     <h2>
-            <span class="badge badge-secondary">
-                Purchases: {{ userProfile.purchaseCount }}
-            </span>
+        <span class="badge badge-secondary">
+            Purchases count: {{ userProfile.purchaseCount }}
+        </span>
     </h2>
     <h2>
-            <span class="badge badge-secondary">
-                Purchases value: {{ userProfile.purchasesValue }} {{ userProfile.currency }}
-            </span>
+        <span class="badge badge-secondary">
+            Purchases value: {{ userProfile.purchasesValue }} {{ userProfile.currency }}
+        </span>
     </h2>
+    <h3>
+        <a href="{{ path('user_purchases_view') }}">
+            <button type="button" class="btn btn-secondary">
+                View purchases:
+            </button>
+        </a>
+    </h3>
     {% if userProfile.isSeller %}
         <h2>
             <span class="badge badge-info">

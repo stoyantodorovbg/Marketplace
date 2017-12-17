@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserProfile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -62,14 +63,34 @@ class UserProfileController extends Controller
      */
     public function publicShowAction()
     {
-        $userId = $user = $this->getUser()->getId();
-        $userRepo = $this->getDoctrine()->getRepository(User::class);
-        $user = $userRepo->find($userId);
+        $user = $this->getUser();
         $userProfile = $user->getUserProfile();
+
+        $userPurchases = $user->getPurchases();
 
         return $this->render('userprofile/public_show.html.twig', array(
             'userProfile' => $userProfile,
+            'userPurchases' => $userPurchases
         ));
+    }
+
+    /**
+     * @Route("/userPurchasesView)", name="user_purchases_view")
+     * @Method("GET")
+     * @Security("is_granted(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
+     */
+    public function userPurchasesView()
+    {
+        $user = $this->getUser();
+        $productRepo = $this->getDoctrine()->getRepository(Product::class);
+        $userProducts = $productRepo->findBy(['user' => $user]);
+
+        $userPurchases = $user->getPurchases();
+
+        return $this->render('userprofile/userPurchasesView.html.twig', [
+            'user' => $user,
+            'userPurchases' => $userPurchases
+        ]);
     }
 
     /**
