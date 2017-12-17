@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h1>
+            <div class="badge badge-info">
+                Sorry! There is not such quantity of this product. <br/>
+                We can offer you only {{ product.quantity }} {{ product.unit }} of the product {{ product.name }}.
+            </div>
+        </h1>
+    </div>
+{% endblock %}

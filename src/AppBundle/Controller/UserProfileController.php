@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserProfile;
+use AppBundle\Entity\UserPurchase;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -91,6 +92,49 @@ class UserProfileController extends Controller
             'user' => $user,
             'userPurchases' => $userPurchases
         ]);
+    }
+
+    /**
+     * @Route("/putPurchaseOnSale/{id})", name="put_purchase_on_sale")
+     * @Method({"GET", "POST"})
+     * @Security("is_granted(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
+     */
+    public function putPurchaseOnSale(Request $request, UserPurchase $userPurchase)
+    {
+        $user = $this->getUser();
+        $userCurrency = $user->getUserProfile()->getCurrency();
+
+        $product = new Product();
+        $form = $this->createForm('AppBundle\Form\ProductType', $product);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() ) {//&& $form->isValid()
+            $product->setUser($user);
+            $product->setCurrency($userCurrency);
+            $product->setQuantity($userPurchase->getQuantity());
+            $product->setUser($user);
+            $product->setCurrency($userCurrency);
+            $product->setAvailability(1);
+            $em = $this->getDoctrine()->getManager();
+
+            $connection = $this->getDoctrine()->getConnection();
+            $connection->beginTransaction();
+
+            $em->persist($product);
+            $em->flush();
+
+            $em->remove($userPurchase);
+            $em->flush();
+
+            $connection->commit();
+
+            return $this->redirectToRoute('product_show', array('id' => $product->getId()));
+        }
+
+        return $this->render('userprofile/putPurchaseOnSale.html.twig', array(
+            'product' => $product,
+            'form' => $form->createView(),
+        ));
     }
 
     /**

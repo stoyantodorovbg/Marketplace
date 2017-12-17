@@ -88,17 +88,32 @@ class CartController extends Controller
      */
     public function addProduct(Request $request, Product $product)
     {
-        $productQuantity = $request->query->get('productQuantity');
-        if ($productQuantity == '') {
-            $productQuantity = 1;
+        $addQuantity = $request->query->get('productQuantity');
+        if ($addQuantity == '') {
+            $addQuantity = 1;
         }
-        $priceOrder = $product->getPrice() * $productQuantity;
+        $priceOrder = $product->getPrice() * $addQuantity;
         $user = $this->getUser();
         $currency = $product->getCurrency();
 
         if ($product->getUser()->getId() == $this->getUser()->getId()) {
             return $this->render('cart/buyOwnProduct.html.twig', [
             ]);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        if ($product->getQuantity() < $addQuantity) {
+            return $this->render('cart/QuantityShortage.html.twig', [
+                'product' => $product
+            ]);
+        } else {
+            $product->setQuantity($product->getQuantity() - $addQuantity);
+            if ($product->getQuantity() == 0) {
+                $product->setAvailability(0);
+            }
+            $em->persist($product);
+            $em->flush();
         }
 
         $activePromotions = $this->findActivePromotions($product);
@@ -123,10 +138,8 @@ class CartController extends Controller
         } else {
             $cart->setIsInPromotion(0);
         }
-        $cart->setQuantity($productQuantity);
+        $cart->setQuantity($addQuantity);
 
-
-        $em = $this->getDoctrine()->getManager();
         $em->persist($cart);
         $em->flush();
 
@@ -198,7 +211,6 @@ class CartController extends Controller
                 $addTotal = $product->getPrice() * $addQuantity;
                 $productId = $product->getId();
 
-                $product->setQuantity($product->getQuantity() - $addQuantity);
                 $em->persist($product);
                 $em->flush();
 
@@ -242,8 +254,20 @@ class CartController extends Controller
      */
     public function refuseAction(Request $request, Cart $cart)
     {
+        $product = $cart->getProduct();
+        $addQuantity = $cart->getQuantity();
+        $product->setQuantity($product->getQuantity() + $addQuantity);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($product);
+
+        $connection = $this->getDoctrine()->getConnection();
+        $connection->beginTransaction();
+        $em->flush();
+
         $cartRepo = $this->getDoctrine()->getRepository(Cart::class);
         $cartRepo->refuseProduct($cart->getId());
+
+        $connection->commit();
         return $this->redirectToRoute('cart_show');
     }
 

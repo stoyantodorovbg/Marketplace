@@ -63,14 +63,11 @@
                 <div class="col-md-6">
                     <div class="container">
                         <div class="jumbotron">
-                            <p>
-                                <span class="badge badge-info">
-                                    Product name:
-                                </span>
+                            <h3>
                                 <span class="badge badge-info">
                                     {{ purchase.product.name }}
                                 </span>
-                            </p>
+                            </h3>
                             <p>
                             <span class="badge badge-info">
                                     Product price:
@@ -103,6 +100,13 @@
                                     {{ purchase.dateCreated|date('Y-m-d H:i:s') }}
                                 </span>
                             </p>
+                            <h4>
+                                <a href="{{ path('put_purchase_on_sale', { 'id': purchase.id }) }}">
+                                    <button type="button" class="btn btn-primary">
+                                        Put on sale
+                                    </button>
+                                </a>
+                            </h4>
                         </div>
                     </div>
                 </div>
