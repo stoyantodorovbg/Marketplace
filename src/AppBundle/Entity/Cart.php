@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Cart
@@ -26,6 +27,9 @@ class Cart
      * @var int
      *
      * @ORM\Column(name="quantity", type="integer")
+     *
+     * @Assert\NotBlank()
+     * @Assert\GreaterThan(0)
      */
     private $quantity;
 
@@ -34,6 +38,9 @@ class Cart
      * @var float
      *
      * @ORM\Column(name="price", type="float")
+     *
+     * @Assert\NotBlank()
+     * @Assert\GreaterThanOrEqual(0)
      */
     private $price;
 

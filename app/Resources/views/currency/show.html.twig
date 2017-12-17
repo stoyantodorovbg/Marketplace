@@ -13,11 +13,11 @@
 
     <a href="{{ path('currency_index') }}">
         <button type="button" class="btn btn-success">
-            Back to the list
+            Show all currencies
         </button>
     </a>
 
-    {% if app.getUser().isAdmin() %}
+    {% if app.getUser() and (app.getUser().isAdmin() or app.getUser().isSuperAdmin()) %}
         <a href="{{ path('currency_edit', { 'id': currency.id }) }}">
             <button type="button" class="btn btn-danger">
                 Edit

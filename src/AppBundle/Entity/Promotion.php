@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Promotion
@@ -25,6 +26,8 @@ class Promotion
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -39,6 +42,9 @@ class Promotion
      * @var float
      *
      * @ORM\Column(name="percentsDiscount", type="float")
+     *
+     * @Assert\NotBlank()
+     * @Assert\GreaterThan(0)
      */
     private $percentsDiscount;
 
@@ -46,6 +52,7 @@ class Promotion
      * @var \DateTime
      *
      * @ORM\Column(name="createdDate", type="datetime")
+     * @Assert\DateTime()
      */
     private $createdDate;
 
@@ -53,6 +60,8 @@ class Promotion
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=255)
+     *
+     * @Assert\NotBlank()
      */
     private $type;
 
@@ -60,6 +69,7 @@ class Promotion
      * @var \DateTime
      *
      * @ORM\Column(name="startDate", type="datetime")
+     * @Assert\DateTime()
      */
     private $startDate;
 
@@ -67,6 +77,7 @@ class Promotion
      * @var \DateTime
      *
      * @ORM\Column(name="endDate", type="datetime")
+     * @Assert\DateTime()
      */
     private $endDate;
 

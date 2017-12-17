@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * UserPurchase
@@ -25,6 +26,9 @@ class UserPurchase
      * @var int
      *
      * @ORM\Column(name="quantity", type="integer")
+     *
+     * @Assert\NotBlank()
+     * @Assert\GreaterThan(0)
      */
     private $quantity;
 
@@ -32,6 +36,9 @@ class UserPurchase
      * @var float
      *
      * @ORM\Column(name="value", type="float")
+     *
+     * @Assert\NotBlank()
+     * @Assert\GreaterThanOrEqual(0)
      */
     private $value;
 
@@ -39,6 +46,8 @@ class UserPurchase
      * @var \DateTime
      *
      * @ORM\Column(name="dateCreated", type="datetime")
+     *
+     * @Assert\DateTime()
      */
     private $dateCreated;
 

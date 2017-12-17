@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Comment
@@ -25,6 +26,8 @@ class Comment
      * @var string
      *
      * @ORM\Column(name="content", type="string", length=10000)
+     *
+     * @Assert\NotBlank()
      */
     private $content;
 
