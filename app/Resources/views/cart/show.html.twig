@@ -9,7 +9,7 @@
     <br/><br/>
 
     {% for addInCart in addsInCart %}
-        {% if addInCart.isRefused != 1 and  addInCart.isBought != 1 %}
+        {% if addInCart.isBought != 1 %}
         <h3>
             <div class="badge badge-success">
                 Product: {{ addInCart.getProduct().getName() }}
@@ -33,11 +33,19 @@
                 </div>
             {% endif %}
             <br/>
-            <a href="{{ path('refuse_row', { 'id': addInCart.id }) }}">
-                <button type="button" class="btn btn-danger">
-                    Remove from cart
+            {% if addInCart.isRefused == 0 %}
+            <a href="{{ path('return_refuse_row', { 'id': addInCart.id }) }}">
+                <button type="button" class="btn btn-info">
+                    Refuse this product
                 </button>
             </a>
+            {% else %}
+            <a href="{{ path('return_refuse_row', { 'id': addInCart.id }) }}">
+                <button type="button" class="btn btn-primary">
+                    Return this product
+                </button>
+            </a>
+            {% endif %}
         </h3>
         <br/><br/>
 

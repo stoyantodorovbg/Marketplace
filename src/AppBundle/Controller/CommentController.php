@@ -51,9 +51,20 @@ class CommentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $connection = $this->getDoctrine()->getConnection();
+            $connection->beginTransaction();
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($comment);
             $em->flush();
+
+            $userProfile = $user->getUserProfile();
+            $userProfile->setRating($userProfile->getRating() + 0.02);
+            $em->persist($userProfile);
+            $em->flush();
+
+            $connection->commit();
 
             return $this->redirectToRoute('product_show', array('id' => $product->getId()));
         }
@@ -105,9 +116,20 @@ class CommentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $connection = $this->getDoctrine()->getConnection();
+            $connection->beginTransaction();
+
             $em = $this->getDoctrine()->getManager();
             $em->remove($comment);
             $em->flush();
+
+            $userProfileAuthor = $this->getUser()->getUserProfile();
+            $userProfileAuthor->setRating($userProfileAuthor->getRating() - 0.1);
+            $em->remove($userProfileAuthor);
+            $em->flush();
+
+            $connection->commit();
         }
 
         return $this->redirectToRoute('product_show', array('id' => $productId));

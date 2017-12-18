@@ -140,15 +140,19 @@ class CartController extends Controller
             $cartRepo = $this->getDoctrine()->getRepository(Cart::class);
             $userProfileRepo = $this->getDoctrine()->getRepository(UserProfile::class);
             $userProfile = $user->getUserProfile();
+
             $connection = $this->getDoctrine()->getConnection();
             $connection->beginTransaction();
+
             $cartRepo->buyProductsInCart($user->getId());
             $userProfile->setCash($userProfile->getCash() - $cartBill);
             $em = $this->getDoctrine()->getManager();
             $em->persist($userProfile);
             $em->flush();
             $this->buyAction();
+
             $connection->commit();
+
             return $this->render('cart/buySuccess.html.twig', [
                 'cartBill' => $cartBill,
                 'user' => $user
@@ -206,28 +210,63 @@ class CartController extends Controller
             }
         }
     }
+
     /**
-     * Deletes a cart entity.
-     *
-     * @Route("/{id}", name="refuse_row")
+     * @Route("/{id}", name="return_refuse_row")
      * @Method("GET")
      * @Security("is_granted(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
-    public function refuseAction(Request $request, Cart $cart)
+    public function returnRefuseAction(Request $request, Cart $cart)
+    {
+        $isRefused = $cart->isRefused();
+        if($isRefused == 0) {
+            return $this->refuse($request, $cart);
+        } else {
+            return $this->return($request, $cart);
+        }
+    }
+
+    private function refuse(Request $request, Cart $cart)
     {
         $product = $cart->getProduct();
         $addQuantity = $cart->getQuantity();
         $product->setQuantity($product->getQuantity() + $addQuantity);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($product);
+
         $connection = $this->getDoctrine()->getConnection();
         $connection->beginTransaction();
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($product);
         $em->flush();
+
         $cartRepo = $this->getDoctrine()->getRepository(Cart::class);
         $cartRepo->refuseProduct($cart->getId());
+
         $connection->commit();
         return $this->redirectToRoute('cart_show');
     }
+
+    private function return(Request $request, Cart $cart)
+    {
+        $product = $cart->getProduct();
+        $addQuantity = $cart->getQuantity();
+        $product->setQuantity($product->getQuantity() - $addQuantity);
+
+        $connection = $this->getDoctrine()->getConnection();
+        $connection->beginTransaction();
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($product);
+        $em->flush();
+
+        $cartRepo = $this->getDoctrine()->getRepository(Cart::class);
+        $cartRepo->returnProduct($cart->getId());
+
+        $connection->commit();
+
+        return $this->redirectToRoute('cart_show');
+    }
+
     private function calculateCartBill()
     {
         $userId = $this->getUser()->getId();
@@ -243,6 +282,7 @@ class CartController extends Controller
         }
         return $cartBill;
     }
+
     private function calculateAddInUserCurrency($add)
     {
         $userCurrency = $this->getUser()->getUserProfile()->getCurrency();
