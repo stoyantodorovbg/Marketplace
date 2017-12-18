@@ -6,6 +6,7 @@ use AppBundle\Entity\Cart;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\Promotion;
+use AppBundle\Entity\UserPurchase;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -77,6 +78,15 @@ class ProductController extends Controller
             } else {
                 $product->setAvailability(0);
             }
+
+            $image = $product->getImage();
+            $imageName = md5(uniqid()).'.'.$image->guessExtension();
+            $image->move(
+                $this->getParameter('images_directory'),
+                $imageName
+            );
+            $product->setImage($imageName);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
@@ -150,6 +160,40 @@ class ProductController extends Controller
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
+    }
+
+    /**
+     * @Route("/removeFromSale/{id}", name="remove_from_sale")
+     * @Method("GET")
+     * @Security("is_granted(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
+     */
+    public function removeFromSale(Product $product)
+    {
+        $productOwner = $product->getUser();
+        $quantity = $product->getQuantity();
+        $purchaseValue = $product->getPrice();
+
+        $userPurchase = new UserPurchase();
+        $userPurchase->setUser($productOwner);
+        $userPurchase->setProduct($product);
+        $userPurchase->setQuantity($quantity);
+        $userPurchase->setValue($purchaseValue);
+        $userPurchase->setDateCreated(new \DateTime());
+
+        $em = $this->getDoctrine()->getManager();
+
+        $connection = $this->getDoctrine()->getConnection();
+        $connection->beginTransaction();
+
+        $em->persist($userPurchase);
+        $em->flush();
+
+        $em->remove($product);
+        $em->flush();
+
+        $connection->commit();
+
+        return $this->redirectToRoute('homepage');
     }
 
     /**

@@ -9,9 +9,11 @@
                     <div class="container">
                         <div class="jumbotron">
                             <h1>
-                                <span class="badge badge-warning">
-                                {{ product.name }}
-                                </span>
+                                <a href="{{ path('product_show', { 'id': product.id }) }}">
+                                    <span class="badge badge-warning">
+                                        {{ product.name }}
+                                    </span>
+                                </a>
                                 <span class="badge badge-primary">
                                     {{ product.price }} {{ product.currency }}
                                 </span>

@@ -10,6 +10,7 @@
         </h1>
     </span>
         <br/>
+        <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="" width="300" />
         <h1>
             <span class="badge badge-success">
                 {{ product.name }}
@@ -94,6 +95,11 @@ Inform yourself in a timely manner for our promotions.
             <a href="{{ path('product_edit', { 'id': product.id }) }}">
                 <button type="button" class="btn btn-danger">
                     Edit
+                </button>
+            </a>
+            <a href="{{ path('remove_from_sale', { 'id': product.id }) }}">
+                <button type="button" class="btn btn-danger">
+                    Remove from sale
                 </button>
             </a>
             <br/><br/>

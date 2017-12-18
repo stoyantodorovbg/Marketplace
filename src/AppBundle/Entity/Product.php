@@ -98,6 +98,15 @@ class Product
     private $model;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Image(
+     *     maxSize="200k",
+     *     mimeTypes={"image/png", "image/jpeg", "image/jpg"}
+     * )
+     */
+    public $image;
+
+    /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", inversedBy="products")
@@ -350,6 +359,22 @@ class Product
     public function getModel()
     {
         return $this->model;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
     }
 
     /**

@@ -15,6 +15,11 @@
         {% block header%}
             <header>
                 <ul class="navbar navbar-light list-unstyled" style="background-color: #e3f2fd;">
+                    {% if app.getUser() %}
+                        <h5 class="text-primary">
+                            Hello {{ app.getUser().getFirstName }} {{ app.getUser().getLastName }}!
+                        </h5>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link btn btn-primary" href="{{ path('category_index') }}">
                             <button type="button" class="btn btn-primary">

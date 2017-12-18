@@ -40,9 +40,15 @@
         <div class="form-group">
             {{ form_row(form.model) }}
         </div>
+        <label>Image:</label>
+        <div class="form-group">
+            {{ form_row(form.image) }}
+        </div>
         <input type="submit" class="btn btn-primary" value="Create" />
 
         {{ form_end(form) }}
+
+        <br/><br/>
 
         <a href="{{ path('product_index') }}">
             <button type="button" class="btn btn-success">
