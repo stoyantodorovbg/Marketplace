@@ -16,6 +16,10 @@
     <div class="form-group">
         {{ form_row(edit_form.currency) }}
     </div>
+    <label>Add profile image:</label>
+    <div class="form-group">
+        {{ form_row(edit_form.image) }}
+    </div>
     {{ form_row(edit_form._token) }}
     <input type="submit" class="btn btn-primary" value="Edit" />
     <a href="{{ path('userprofile_show') }}">

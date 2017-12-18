@@ -38,7 +38,9 @@
                 <span class="badge badge-primary">
                     Sold by: {{ product.getUser.getFirstName() }} {{ product.getUser.getLastName() }}
                 </span>
+                <img src="{{ asset('uploads/images/' ~ product.user.userProfile.image) }}" alt="" width="50" class="img-thumbnail"/>
             </a>
+
         </h2>
         <h3>
             <span class="badge badge-secondary">

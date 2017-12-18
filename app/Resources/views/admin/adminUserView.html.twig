@@ -3,14 +3,14 @@
 {% block body %}
 
 <div class="container body-content">
-
     <h1>
         <span class="btn btn-info btn-lg btn-block">
             User
         </span>
     </h1>
-
     <div class="jumbotron">
+        <img src="{{ asset('uploads/images/' ~ user.userProfile.image) }}" alt="" width="200" class="img-thumbnail"/>
+        <br/><br/>
         <h1>
             <span class="badge badge-primary">
                 Email: {{ user.email }}

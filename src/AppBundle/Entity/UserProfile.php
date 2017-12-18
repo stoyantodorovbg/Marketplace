@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * UserProfile
@@ -76,6 +77,16 @@ class UserProfile
      * @ORM\Column(name="rating", type="float", nullable=true)
      */
     private $rating;
+
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Image(
+     *     maxSize="600k",
+     *     mimeTypes={"image/png", "image/jpeg", "image/jpg"}
+     * )
+     */
+    public $image;
 
     /**
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", mappedBy="userProfile", cascade={"persist", "remove"})
@@ -300,7 +311,21 @@ class UserProfile
         $this->currency = $currency;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
 
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
 
     public function __toString()
     {

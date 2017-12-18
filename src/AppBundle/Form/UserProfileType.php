@@ -6,6 +6,7 @@ use Doctrine\DBAL\Types\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,7 +25,8 @@ class UserProfileType extends AbstractType
                 'choice_label' => 'name',
                 'placeholder' => 'choose currency',
                 'label' => ' '
-            ]);
+            ])
+            ->add('image', FileType::class, ['label' => ' ']);
     }
     
     /**

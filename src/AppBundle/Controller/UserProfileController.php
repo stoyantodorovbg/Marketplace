@@ -9,7 +9,9 @@ use AppBundle\Entity\UserPurchase;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Userprofile controller.
@@ -151,10 +153,29 @@ class UserProfileController extends Controller
         $user = $userRepo->find($userId);
         $userProfile = $user->getUserProfile();
 
+        $imageName = null;
+        if($userProfile->getImage() != null) {
+            $imageName = $userProfile->getImage();
+            $userProfile->setImage(new File($this->getParameter('images_directory').'/'.$userProfile->getImage()));
+        }
+
         $editForm = $this->createForm('AppBundle\Form\UserProfileType', $userProfile);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            if ($editForm->all()['image']->getNormData() == '') {
+                $userProfile->setImage($imageName
+                );
+            } else {
+                $image = $userProfile->getImage();
+                $imageName = md5(uniqid()).'.'.$image->guessExtension();
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $imageName
+                );
+                $userProfile->setImage($imageName);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('userprofile_show');
