@@ -181,6 +181,7 @@ class CartController extends Controller
                 $userProfileSeller = $productRepo->find($productId)->getUser()->getUserProfile();
                 $userProfileSeller->setCash($userProfileSeller->getCash() + $addTotal);
                 $userProfileSeller->setSalesCount($userProfileSeller->getSalesCount() + 1);
+                $userProfileSeller->setRating($userProfileSeller->getRating() + 0.1);
                 $userProfileSeller->setSalesValue($userProfileSeller->getSalesValue() + $purchaseValue);
                 if ($userProfileSeller->getIsSeller() == 0) {
                     $userProfileSeller->setIsSeller(1);
@@ -189,6 +190,7 @@ class CartController extends Controller
                 $em->flush();
                 $userProfileBuyer = $user->getUserProfile();
                 $userProfileBuyer->setPurchaseCount($userProfileBuyer->getPurchaseCount() + 1);
+                $userProfileBuyer->setRating($userProfileBuyer->getRating() + 0.2);
                 $userProfileBuyer->setPurchasesValue($userProfileBuyer->getPurchasesValue() + $purchaseValue);
                 $em->persist($userProfileBuyer);
                 $em->flush();

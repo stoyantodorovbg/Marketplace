@@ -40,6 +40,7 @@ class UserController extends Controller
 
             $userProfile = new UserProfile();
             $userProfile->setIsSeller(0);
+            $userProfile->setRating(1);
 
             $user->addRole($userRole);
             $user->addUserProfile($userProfile);

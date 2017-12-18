@@ -18,6 +18,7 @@
                     {% if app.getUser() %}
                         <h5 class="text-primary">
                             Hello {{ app.getUser().getFirstName }} {{ app.getUser().getLastName }}!
+                            <img src="{{ asset('uploads/images/' ~ app.GetUser().userProfile.image) }}" alt="" width="50" class="img-thumbnail"/>
                         </h5>
                     {% endif %}
                     <li class="nav-item">
