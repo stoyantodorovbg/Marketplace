@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -138,10 +139,17 @@ class ProductController extends Controller
      */
     public function editAction(Request $request, Product $product)
     {
+        $imageName = null;
+        if($product->getImage() != null) {
+            $imageName = $product->getImage();
+            $product->setImage(new File($this->getParameter('images_directory').'/'.$product->getImage()));
+        }
+
         $deleteForm = $this->createDeleteForm($product);
         $editForm = $this->createForm('AppBundle\Form\ProductType', $product);
         $editForm->handleRequest($request);
 
+        //dump($editForm->all()['image']->getNormData());exit;
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $quantity = $request->request->all()['appbundle_product']['quantity'];
@@ -150,9 +158,27 @@ class ProductController extends Controller
             } else {
                 $product->setAvailability(0);
             }
+//var_dump($product);exit;
+
+            if ($editForm->all()['image']->getNormData() == '') {
+                $product->setImage($imageName
+                   // new File($this->getParameter('images_directory').'/'.$imageName)
+                );
+            } else {
+                $image = $product->getImage();
+                $imageName = md5(uniqid()).'.'.$image->guessExtension();
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $imageName
+                );
+                $product->setImage($imageName);
+            }
+
+
+
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('product_edit', array('id' => $product->getId()));
+            return $this->redirectToRoute('product_show', array('id' => $product->getId()));
         }
 
         return $this->render('product/edit.html.twig', array(

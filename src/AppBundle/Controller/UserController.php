@@ -63,7 +63,7 @@ class UserController extends Controller
      */
     public function editAction(Request $request)
     {
-        $userId = $user = $this->getUser()->getId();
+        $userId = $this->getUser()->getId();
         $userRepo = $this->getDoctrine()->getRepository(User::class);
         $user = $userRepo->find($userId);
 
