@@ -10,7 +10,7 @@
         </h1>
     </span>
         <br/>
-        <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="" width="300" />
+        <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="" width="700" class="img-thumbnail"/>
         <h1>
             <span class="badge badge-success">
                 {{ product.name }}
@@ -28,8 +28,8 @@
         {% else %}
             <h3>
                <span class="badge badge-warning">
-                   In this moment we can't offer you any promotion for this product.
-Inform yourself in a timely manner for our promotions.
+                   <p>In this moment we can't offer you any promotion for this product.</p>
+                   <p>Inform yourself in a timely manner for our promotions.</p>
                </span>
             </h3>
         {% endif %}

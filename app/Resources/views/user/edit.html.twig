@@ -36,6 +36,7 @@
     <div class="form-group">
         {{ form_row(edit_form.address) }}
     </div>
+    {{ form_row(edit_form._token) }}
     <input type="submit" class="btn btn-danger" value="Edit" />
     <a href="{{ path('user_show') }}">
         <button type="button" class="btn btn-info">

@@ -149,8 +149,6 @@ class ProductController extends Controller
         $editForm = $this->createForm('AppBundle\Form\ProductType', $product);
         $editForm->handleRequest($request);
 
-        //dump($editForm->all()['image']->getNormData());exit;
-
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $quantity = $request->request->all()['appbundle_product']['quantity'];
             if (intval($quantity) > 0) {
@@ -158,7 +156,6 @@ class ProductController extends Controller
             } else {
                 $product->setAvailability(0);
             }
-//var_dump($product);exit;
 
             if ($editForm->all()['image']->getNormData() == '') {
                 $product->setImage($imageName

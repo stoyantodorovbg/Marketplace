@@ -20,9 +20,10 @@
         <div class="form-group">
             {{ form_row(form.parent) }}
         </div>
+        {{ form_row(form._token) }}
         <input type="submit" class="btn btn-primary" value="Create" />
         {{ form_end(form) }}
-
+        <br/><br/>
         <a href="{{ path('category_index') }}">
             <button type="button" class="btn btn-success">
                 Show the list

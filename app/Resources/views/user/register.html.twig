@@ -46,6 +46,7 @@
         <div class="form-group">
             {{ form_row(form.address) }}
         </div>
+        {{ form_row(form._token) }}
         <input type="submit" class="btn btn-danger" value="Register" />
         <a href="{{ path('homepage') }}">
             <button type="button" class="btn btn-info">

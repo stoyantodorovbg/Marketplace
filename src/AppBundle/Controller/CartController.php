@@ -123,7 +123,7 @@ class CartController extends Controller
         if (count($activePromotions) > 0) {
             $bestPromotion = $this->getBestPromotion($activePromotions);
             $reducedPrice = $this->calculateReduction($product, $bestPromotion->getpercentsDiscount());
-            $priceOrder = $reducedPrice * $productQuantity;
+            $priceOrder = $reducedPrice * $addQuantity;
         }
 
         $cart = new Cart();

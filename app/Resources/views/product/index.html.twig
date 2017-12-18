@@ -8,6 +8,9 @@
                 <div class="col-md-6">
                     <div class="container">
                         <div class="jumbotron">
+                            <a href="{{ path('product_show', { 'id': product.id }) }}">
+                                <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="" width="300" class="img-thumbnail" />
+                            </a>
                             <h1>
                                 <a href="{{ path('product_show', { 'id': product.id }) }}">
                                     <span class="badge badge-warning">
@@ -18,8 +21,11 @@
                                     {{ product.price }} {{ product.currency }}
                                 </span>
                             </h1>
-
-
+                            <h5>
+                                <span class="badge badge-warning">
+                                    <p>Check out the product for promotion</p>
+                                </span>
+                            </h5>
                             <br/><br/>
                              <a href="{{ path('product_show', { 'id': product.id }) }}">
                                  <button type="button" class="btn btn-success">
