@@ -6,6 +6,7 @@ use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserProfile;
 use AppBundle\Form\UserType;
+use AppBundle\Service\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -31,23 +32,8 @@ class UserController extends Controller
             $password = $this->get('security.password_encoder')
                 ->encodePassword($user, $user->GetPlainPassword());
 
-            $user->setPassword($password);
-
-            $roleRepository = $this->getDoctrine()->getRepository(Role::class);
-            $userRepository = $this->getDoctrine()->getRepository(User::class);
-
-            $userRole = $roleRepository->findOneBy(['name' => 'ROLE_USER']);
-
-            $userProfile = new UserProfile();
-            $userProfile->setIsSeller(0);
-            $userProfile->setRating(1);
-
-            $user->addRole($userRole);
-            $user->addUserProfile($userProfile);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            $userService = $this->get(UserService::class);
+            $userService->register($user, $form, $password);
 
             return $this->redirectToRoute("security_login");
         }
@@ -92,9 +78,7 @@ class UserController extends Controller
      */
     public function showAction()
     {
-        $userId = $user = $this->getUser()->getId();
-        $userRepo = $this->getDoctrine()->getRepository(User::class);
-        $user = $userRepo->find($userId);
+        $user = $this->getUser();
 
         return $this->render('user/show.html.twig', array(
             'user' => $user,

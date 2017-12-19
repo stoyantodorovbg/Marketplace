@@ -11,7 +11,7 @@ use AppBundle\Entity\UserPurchase;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\Extension\Validator\Constraints\Form;
 
-class ProductService
+class ProductService implements ProductServiceInterface
 {
     /**
      * @var EntityManager
@@ -60,7 +60,7 @@ class ProductService
         }
     }
 
-    public function findActivePromotions(Product $product, User $user)
+    public function findActivePromotions(Product $product, User $user):array
     {
         $promotionRepo = $this->entityManager->getRepository(Promotion::class);
         $productRepo = $this->entityManager->getRepository(Product::class);
@@ -106,7 +106,7 @@ class ProductService
         return $activePromotions;
     }
 
-    public function getBestPromotion(array $promotions)
+    public function getBestPromotion(array $promotions):array
     {
         $bestPromotion = $promotions[0];
         foreach ($promotions as $promotion) {
