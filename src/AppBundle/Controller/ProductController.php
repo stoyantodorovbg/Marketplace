@@ -2,16 +2,12 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Cart;
-use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
-use AppBundle\Entity\Promotion;
-use AppBundle\Entity\UserPurchase;
+use AppBundle\Service\ProductService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -112,13 +108,14 @@ class ProductController extends Controller
         $deleteForm = $this->createDeleteForm($product);
         $categories = $product->getCategories();
 
-        $activePromotions = $this->findActivePromotions($product);
+        $productService = $this->get(ProductService::class);
+        $activePromotions = $productService->findActivePromotions($product, $this->getUser());
 
         $bestPromotion = false;
         $reducedPrice = false;
         if (count($activePromotions) > 0) {
-            $bestPromotion = $this->getBestPromotion($activePromotions);
-            $reducedPrice = $this->calculateReduction($product, $bestPromotion->getpercentsDiscount());
+            $bestPromotion = $productService->getBestPromotion($activePromotions);
+            $reducedPrice = $productService->calculateReduction($product, $bestPromotion->getpercentsDiscount());
         }
 
 
@@ -169,9 +166,6 @@ class ProductController extends Controller
                 );
                 $product->setImage($imageName);
             }
-
-
-
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('product_show', array('id' => $product->getId()));
@@ -191,29 +185,8 @@ class ProductController extends Controller
      */
     public function removeFromSale(Product $product)
     {
-        $productOwner = $product->getUser();
-        $quantity = $product->getQuantity();
-        $purchaseValue = $product->getPrice();
-
-        $userPurchase = new UserPurchase();
-        $userPurchase->setUser($productOwner);
-        $userPurchase->setProduct($product);
-        $userPurchase->setQuantity($quantity);
-        $userPurchase->setValue($purchaseValue);
-        $userPurchase->setDateCreated(new \DateTime());
-
-        $em = $this->getDoctrine()->getManager();
-
-        $connection = $this->getDoctrine()->getConnection();
-        $connection->beginTransaction();
-
-        $em->persist($userPurchase);
-        $em->flush();
-
-        $em->remove($product);
-        $em->flush();
-
-        $connection->commit();
+        $productService = $this->get(ProductService::class);
+        $productService->removeFromSale($product);
 
         return $this->redirectToRoute('homepage');
     }
@@ -230,11 +203,8 @@ class ProductController extends Controller
         $form = $this->createDeleteForm($product);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($product);
-            $em->flush();
-        }
+        $productService = $this->get(ProductService::class);
+        $productService->delete($product, $form);
 
         return $this->redirectToRoute('product_index');
     }
@@ -253,69 +223,5 @@ class ProductController extends Controller
             ->setAction($this->generateUrl('product_delete', array('id' => $product->getId())))
             ->setMethod('DELETE')
             ->getForm();
-    }
-
-    private function findActivePromotions(Product $product)
-    {
-        $promotionRepo = $this->getDoctrine()->getRepository(Promotion::class);
-        $productRepo = $this->getDoctrine()->getRepository(Product::class);
-        $productsCategoriesIds = $productRepo->getCategoriesIds($product->getId());
-
-        $promotionsByDate = $promotionRepo->getActivePromotionByDate();
-        $activePromotions = [];
-
-        foreach($promotionsByDate as $promotion) {
-            $promotionId = $promotion->getId();
-            $promotionType = $promotion->getType();
-            switch ($promotionType) {
-                case 'certain_products':
-                    $promoProductsIds = $promotionRepo->getProductsIds($promotionId);
-                    if (in_array($product->getId(), $promoProductsIds)) {
-                        $activePromotions[] = $promotion;
-                    }
-                    break;
-                case 'all_products':
-                    $activePromotions[] = $promotion;
-                    break;
-                case 'certain_categories':
-                    $promoCategoriesIds = $promotionRepo->getCategoriesIds($promotionId);
-                    $isInCategory = false;
-                    foreach($productsCategoriesIds as $id) {
-                        if (in_array($id, $promoCategoriesIds)) {
-                            $isInCategory = true;
-                        }
-                    }
-                    if ($isInCategory) {
-                        $activePromotions[] = $promotion;
-                    }
-                    break;
-                case 'certain_users':
-                    $promoUsersIds = $promotionRepo->getUsersIds($promotionId);
-                    if (in_array($this->getUser()->getid(), $promoUsersIds)) {
-                        $activePromotions[] = $promotion;
-                    }
-                    break;
-            }
-        }
-
-        return $activePromotions;
-    }
-
-    private function getBestPromotion(array $promotions)
-    {
-        $bestPromotion = $promotions[0];
-        foreach ($promotions as $promotion) {
-            if ($promotion->getPercentsDiscount() > $bestPromotion->getPercentsDiscount()) {
-                $bestPromotion = $promotion;
-            }
-        }
-        return $bestPromotion;
-    }
-
-    private function calculateReduction(Product $product, int $percentsDiscount)
-    {
-        $productPrice = $product->getPrice();
-        $reducedPrice = $productPrice - (($productPrice * $percentsDiscount) / 100);
-        return number_format($reducedPrice, 2);
     }
 }

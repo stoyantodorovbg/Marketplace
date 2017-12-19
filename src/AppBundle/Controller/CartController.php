@@ -2,13 +2,10 @@
 namespace AppBundle\Controller;
 use AppBundle\Entity\Cart;
 use AppBundle\Entity\Product;
-use AppBundle\Entity\Promotion;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserProfile;
-use AppBundle\Entity\UserPurchase;
 use AppBundle\Service\CartService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
