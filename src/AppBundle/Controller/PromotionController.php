@@ -6,6 +6,7 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\User;
+use AppBundle\Service\PromotionService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -68,13 +69,8 @@ class PromotionController extends Controller
      */
     private function newForCertainProducts(Request $request)
     {
-        $userRepo = $this->getDoctrine()->getRepository(User::class);
-        $allUsers = $userRepo->findAll();
-
-        $promotion = new Promotion();
-        $promotion->setCreatedDate(new \DateTime());
-        $promotion->setUsers($allUsers);
-        $promotion->setType('certain_products');
+        $promotionService = $this->get(PromotionService::class);
+        $promotion = $promotionService->newForCertainProducts();
 
         $form = $this->createForm('AppBundle\Form\PromotionType', $promotion);
         $form->add('products', EntityType::class, [
@@ -107,16 +103,8 @@ class PromotionController extends Controller
      */
     private function newForAllProducts(Request $request)
     {
-        $userRepo = $this->getDoctrine()->getRepository(User::class);
-        $allUsers = $userRepo->findAll();
-        $productRepo = $this->getDoctrine()->getRepository(Product::class);
-        $allProducts = $productRepo->findAll();
-
-        $promotion = new Promotion();
-        $promotion->setCreatedDate(new \DateTime());
-        $promotion->setUsers($allUsers);
-        $promotion->setProducts($allProducts);
-        $promotion->setType('all_products');
+        $promotionService = $this->get(PromotionService::class);
+        $promotion = $promotionService->newForAllProducts();
 
         $form = $this->createForm('AppBundle\Form\PromotionType', $promotion);
 
@@ -142,13 +130,8 @@ class PromotionController extends Controller
      */
     private function newForCertainCategories(Request $request)
     {
-        $userRepo = $this->getDoctrine()->getRepository(User::class);
-        $allUsers = $userRepo->findAll();
-
-        $promotion = new Promotion();
-        $promotion->setCreatedDate(new \DateTime());
-        $promotion->setUsers($allUsers);
-        $promotion->setType('certain_categories');
+        $promotionService = $this->get(PromotionService::class);
+        $promotion = $promotionService->newForCertainCategories();
 
         $form = $this->createForm('AppBundle\Form\PromotionType', $promotion);
         $form->add('categories', EntityType::class, [
@@ -214,7 +197,8 @@ class PromotionController extends Controller
                 ->getDoctrine()
                 ->getRepository(Promotion::class)
                 ->findUserByPurchaseValue($minRating);
-            $users = $this->findUsersByUserProfiles($userProfiles);
+            $promotionService = $this->get(PromotionService::class);
+            $users = $promotionService->findUsersByUserProfiles($userProfiles);
             return $this->newForCertainUsers($request, $users);
 
         }
@@ -234,7 +218,8 @@ class PromotionController extends Controller
                 ->getDoctrine()
                 ->getRepository(Promotion::class)
                 ->findUserByPurchaseValue($minPurchasesValue);
-            $users = $this->findUsersByUserProfiles($userProfiles);
+            $promotionService = $this->get(PromotionService::class);
+            $users = $promotionService->findUsersByUserProfiles($userProfiles);
             return $this->newForCertainUsers($request, $users);
 
         }
@@ -254,7 +239,8 @@ class PromotionController extends Controller
                 ->getDoctrine()
                 ->getRepository(Promotion::class)
                 ->findUserByPurchaseCount($minPurchaseCount);
-            $users = $this->findUsersByUserProfiles($userProfiles);
+            $promotionService = $this->get(PromotionService::class);
+            $users = $promotionService->findUsersByUserProfiles($userProfiles);
             return $this->newForCertainUsers($request, $users);
 
         }
@@ -274,7 +260,10 @@ class PromotionController extends Controller
                 ->getDoctrine()
                 ->getRepository(Promotion::class)
                 ->findUserByCash($minCash);
-            $users = $this->findUsersByUserProfiles($userProfiles);
+
+            $promotionService = $this->get(PromotionService::class);
+            $users = $promotionService->findUsersByUserProfiles($userProfiles);
+
             return $this->newForCertainUsers($request, $users);
 
         }
@@ -300,18 +289,6 @@ class PromotionController extends Controller
         return $this->render('promotion/setRegistrationDate.html.twig');
     }
 
-    private function findUsersByUserProfiles($userProfiles) {
-        $users = [];
-        foreach ($userProfiles as $userProfile) {
-            $userProfileId = $userProfile->getId();
-            $userRepo = $this->getDoctrine()->getRepository(User::class);
-            $user = $userRepo->findOneBy(['userProfile' => $userProfile]);
-            $users[] = $user;
-        }
-
-        return $users;
-    }
-
     /**
      * @Route("/newForCertainUsers", name="new_for_certain_users")
      * @Method("GET")
@@ -319,10 +296,9 @@ class PromotionController extends Controller
      */
     private function newForCertainUsers(Request $request, $users)
     {
-        $promotion = new Promotion();
-        $promotion->setCreatedDate(new \DateTime());
-        $promotion->setUsers($users);
-        $promotion->setType('certain_users');
+        $promotionService = $this->get(PromotionService::class);
+        $promotion = $promotionService->newForCertainUsers($users);
+
         $form = $this->createForm('AppBundle\Form\PromotionType', $promotion);
         $form->handleRequest($request);
 

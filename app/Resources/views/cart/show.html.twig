@@ -25,7 +25,7 @@
             <br/>
             {% if addInCart.isInPromotion %}
                 <div class="badge badge-warning">
-                    We provide for you promotion price: {{ addInCart.getPrice() }} {{ addInCart.getProduct().getCurrency }}
+                    We provide for you promotion price: {{ addInCart.getPrice() }} {{ app.getUser().getUserProfile().getCurrency }}
                 </div>
             {% else %}
                 <div class="badge badge-success">

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface CartServiceInterface
 {
-    public function addProduct(Product $product, User $user, int $addQuantity, Currency $currency, float $priceOrder);
+    public function addProduct(Product $product, User $user, int $addQuantity, Currency $currency, $priceOrder);
 
     public function buyAction($user);
 
@@ -24,9 +24,9 @@ interface CartServiceInterface
 
     public function calculateAddInUserCurrency(Cart $add, User $user);
 
-    public function findActivePromotions(Product $product, User $user);
+    public function findActivePromotions(Product $product, User $user):array;
 
-    public function getBestPromotion(array $promotions);
+    public function getBestPromotion(array $promotions):Promotion;
 
     public function calculateReduction(Product $product, int $percentsDiscount);
 }

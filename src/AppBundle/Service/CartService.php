@@ -27,23 +27,28 @@ class CartService implements CartServiceInterface
         $this->entityManager = $entityManager;
     }
 
-    public function addProduct(Product $product, User $user, int $addQuantity, Currency $currency, float $priceOrder)
+    public function addProduct(Product $product, User $user, int $addQuantity, Currency $currency, $priceOrder)
     {
         $em = $this->entityManager;
 
         $activePromotions = $this->findActivePromotions($product, $user);
         $bestPromotion = false;
         $reducedPrice = false;
+        $productPrice = $product->getPrice();
         if (count($activePromotions) > 0) {
             $bestPromotion = $this->getBestPromotion($activePromotions);
-            $reducedPrice = $this->calculateReduction($product, $bestPromotion->getpercentsDiscount());
-            $priceOrder = $reducedPrice * $addQuantity;
+            $reducedPrice = $this->calculateReduction($product, $bestPromotion->getPercentsDiscount());
+            $addPrice = $reducedPrice * $addQuantity;
+        } else {
+            $addPrice = $productPrice * $addQuantity;
         }
+
+        $addPrice = $this->calculateReducedPriceInUserCurrency($product, $user, $priceOrder);
 
         $cart = new Cart();
         $cart->setUser($user);
         $cart->setProduct($product);
-        $cart->setPrice($priceOrder);
+        $cart->setPrice($addPrice);
         $cart->setCurrency($currency);
         $cart->setBought(0); // is not bought
         $cart->setRefused(0); // is not refused
@@ -57,6 +62,16 @@ class CartService implements CartServiceInterface
         $cart->setQuantity($addQuantity);
         $em->persist($cart);
         $em->flush();
+    }
+
+    private function calculateReducedPriceInUserCurrency(Product $product, User $user, $priceOrder)
+    {
+        $userCurrency = $user->getUserProfile()->getCurrency();
+        $priceAddInEuro = $priceOrder * $product->getCurrency()->getExchangeRateEUR();
+
+        $priceAddInUserCurrency = $priceAddInEuro / $userCurrency->getExchangeRateEUR();
+
+        return number_format($priceAddInUserCurrency, 2);
     }
 
     public function buyAction($user)
@@ -154,7 +169,6 @@ class CartService implements CartServiceInterface
 
     public function calculateCartBill(User $user)
     {
-        $this->entityManager->getRepository(Cart::class);
         $userId = $user->getId();
         $userCurrency = $user->getUserProfile()->getCurrency();
         $cartRepo = $this->entityManager->getRepository(Cart::class);
@@ -174,24 +188,14 @@ class CartService implements CartServiceInterface
     public function calculateAddInUserCurrency(Cart $add, User $user)
     {
         $userCurrency = $user->getUserProfile()->getCurrency();
-        $priceAddInEuro = 0;
-        if ($add->getCurrency()->getExchangeRateEUR() != 1) {
-            $priceAddInEuro = $add->getPrice() * $add->getCurrency()->getExchangeRateEUR();
-        } else {
-            $priceAddInEuro = $add->getPrice();
-        }
+        $priceAddInEuro = $add->getPrice() * $add->getCurrency()->getExchangeRateEUR();
 
-        $priceAddInUserCurrency = 0;
-        if ($userCurrency->getExchangeRateEUR() != 1) {
-            $priceAddInUserCurrency = $priceAddInEuro / $userCurrency->getExchangeRateEUR();
-        } else {
-            $priceAddInUserCurrency = $priceAddInEuro;
-        }
+        $priceAddInUserCurrency = $priceAddInEuro / $userCurrency->getExchangeRateEUR();
 
         return number_format($priceAddInUserCurrency, 2);
     }
 
-    public function findActivePromotions(Product $product, User $user)
+    public function findActivePromotions(Product $product, User $user):array
     {
         $promotionRepo = $this->entityManager->getRepository(Promotion::class);
         $productRepo = $this->entityManager->getRepository(Product::class);
@@ -237,7 +241,7 @@ class CartService implements CartServiceInterface
         return $activePromotions;
     }
 
-    public function getBestPromotion(array $promotions)
+    public function getBestPromotion(array $promotions):Promotion
     {
         $bestPromotion = $promotions[0];
         foreach ($promotions as $promotion) {

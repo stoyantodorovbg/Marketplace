@@ -159,7 +159,6 @@ class ProductController extends Controller
 
             if ($editForm->all()['image']->getNormData() == '') {
                 $product->setImage($imageName
-                   // new File($this->getParameter('images_directory').'/'.$imageName)
                 );
             } else {
                 $image = $product->getImage();
