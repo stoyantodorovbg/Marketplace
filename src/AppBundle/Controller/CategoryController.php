@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
+use AppBundle\Service\CategoryService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -45,11 +46,9 @@ class CategoryController extends Controller
         $form = $this->createForm('AppBundle\Form\CategoryType', $category);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($category);
-            $em->flush();
+        $categoryService = $this->get(CategoryService::class);
 
+        if ($categoryService->newAction($form, $category)) {
             return $this->redirectToRoute('category_show', array('id' => $category->getId()));
         }
 
@@ -68,17 +67,8 @@ class CategoryController extends Controller
     public function showAction(Category $category)
     {
         $deleteForm = $this->createDeleteForm($category);
-        $categoryRepo = $this->getDoctrine()->getRepository(Category::class);
-        $allCategories = false;
-        $categories = $categoryRepo->findAll();
-        foreach($categories as $cat) {
-            if ($cat->getParent() != null && $cat->getParent() == $category) {
-                $allCategories = true;
-            }
-        }
-        if ($allCategories) {
-            $allCategories = $categories;
-        }
+        $categoryService = $this->get(CategoryService::class);
+        $allCategories = $categoryService->showAction($category);
 
         return $this->render('category/show.html.twig', array(
             'category' => $category,
@@ -125,11 +115,8 @@ class CategoryController extends Controller
         $form = $this->createDeleteForm($category);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($category);
-            $em->flush();
-        }
+        $categoryService = $this->get(CategoryService::class);
+        $categoryService->deleteAction($form, $category);
 
         return $this->redirectToRoute('category_index');
     }
