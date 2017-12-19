@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Currency;
+use AppBundle\Service\CurrencyService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -45,11 +46,8 @@ class CurrencyController extends Controller
         $form = $this->createForm('AppBundle\Form\CurrencyType', $currency);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($currency);
-            $em->flush();
-
+        $currencyService = $this->get(CurrencyService::class);
+        if ($currencyService->newAction($form, $currency)) {
             return $this->redirectToRoute('currency_show', array('id' => $currency->getId()));
         }
 
@@ -113,11 +111,8 @@ class CurrencyController extends Controller
         $form = $this->createDeleteForm($currency);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($currency);
-            $em->flush();
-        }
+        $currencyService = $this->get(CurrencyService::class);
+        $currencyService->deleteAction($form, $currency);
 
         return $this->redirectToRoute('currency_index');
     }
