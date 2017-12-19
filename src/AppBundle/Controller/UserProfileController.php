@@ -6,6 +6,7 @@ use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserProfile;
 use AppBundle\Entity\UserPurchase;
+use AppBundle\Service\UserProfileService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -47,9 +48,8 @@ class UserProfileController extends Controller
      */
     public function showAction()
     {
-        $userId = $user = $this->getUser()->getId();
         $userRepo = $this->getDoctrine()->getRepository(User::class);
-        $user = $userRepo->find($userId);
+        $user = $this->getUser();
         $userProfile = $user->getUserProfile();
 
         return $this->render('userprofile/show.html.twig', array(
@@ -104,31 +104,14 @@ class UserProfileController extends Controller
     public function putPurchaseOnSale(Request $request, UserPurchase $userPurchase)
     {
         $user = $this->getUser();
-        $userCurrency = $user->getUserProfile()->getCurrency();
 
         $product = new Product();
         $form = $this->createForm('AppBundle\Form\ProductType', $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() ) {//&& $form->isValid()
-            $product->setUser($user);
-            $product->setCurrency($userCurrency);
-            $product->setQuantity($userPurchase->getQuantity());
-            $product->setUser($user);
-            $product->setCurrency($userCurrency);
-            $product->setAvailability(1);
-            $em = $this->getDoctrine()->getManager();
-
-            $connection = $this->getDoctrine()->getConnection();
-            $connection->beginTransaction();
-
-            $em->persist($product);
-            $em->flush();
-
-            $em->remove($userPurchase);
-            $em->flush();
-
-            $connection->commit();
+            $userProfileService = $this->get(UserProfileService::class);
+            $userProfileService->putPurchaseOnSale($product, $user, $userPurchase);
 
             return $this->redirectToRoute('product_show', array('id' => $product->getId()));
         }
@@ -148,7 +131,7 @@ class UserProfileController extends Controller
      */
     public function editAction(Request $request)
     {
-        $userId = $user = $this->getUser()->getId();
+        $userId = $this->getUser()->getId();
         $userRepo = $this->getDoctrine()->getRepository(User::class);
         $user = $userRepo->find($userId);
         $userProfile = $user->getUserProfile();

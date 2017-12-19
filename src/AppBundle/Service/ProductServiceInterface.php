@@ -6,7 +6,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\Extension\Validator\Constraints\Form;
 
 interface ProductServiceInterface
 {
@@ -16,7 +16,7 @@ interface ProductServiceInterface
 
     public function findActivePromotions(Product $product, User $user):array;
 
-    public function getBestPromotion(array $promotions):array;
+    public function getBestPromotion(array $promotions);
 
     public function calculateReduction(Product $product, int $percentsDiscount);
 

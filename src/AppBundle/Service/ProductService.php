@@ -106,7 +106,7 @@ class ProductService implements ProductServiceInterface
         return $activePromotions;
     }
 
-    public function getBestPromotion(array $promotions):array
+    public function getBestPromotion(array $promotions)
     {
         $bestPromotion = $promotions[0];
         foreach ($promotions as $promotion) {
