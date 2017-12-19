@@ -107,6 +107,15 @@ class Product
     public $image;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="priority", type="integer")
+     *
+     * @Assert\NotBlank()
+     */
+    private $priority;
+
+    /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", inversedBy="products")
@@ -375,6 +384,22 @@ class Product
     public function setImage($image)
     {
         $this->image = $image;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority(): int
+    {
+        return $this->priority;
+    }
+
+    /**
+     * @param int $priority
+     */
+    public function setPriority(int $priority)
+    {
+        $this->priority = $priority;
     }
 
     /**

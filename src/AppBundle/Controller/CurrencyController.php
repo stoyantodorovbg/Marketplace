@@ -65,11 +65,9 @@ class CurrencyController extends Controller
      */
     public function showAction(Currency $currency)
     {
-        $deleteForm = $this->createDeleteForm($currency);
 
         return $this->render('currency/show.html.twig', array(
             'currency' => $currency,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -82,7 +80,6 @@ class CurrencyController extends Controller
      */
     public function editAction(Request $request, Currency $currency)
     {
-        $deleteForm = $this->createDeleteForm($currency);
         $editForm = $this->createForm('AppBundle\Form\CurrencyType', $currency);
         $editForm->handleRequest($request);
 
@@ -94,43 +91,7 @@ class CurrencyController extends Controller
 
         return $this->render('currency/edit.html.twig', array(
             'currency' => $currency,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form' => $editForm->createView()
         ));
-    }
-
-    /**
-     * Deletes a currency entity.
-     *
-     * @Route("/{id}", name="currency_delete")
-     * @Method("DELETE")
-     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
-     */
-    public function deleteAction(Request $request, Currency $currency)
-    {
-        $form = $this->createDeleteForm($currency);
-        $form->handleRequest($request);
-
-        $currencyService = $this->get(CurrencyService::class);
-        $currencyService->deleteAction($form, $currency);
-
-        return $this->redirectToRoute('currency_index');
-    }
-
-    /**
-     * Creates a form to delete a currency entity.
-     *
-     * @param Currency $currency The currency entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
-     */
-    private function createDeleteForm(Currency $currency)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('currency_delete', array('id' => $currency->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
     }
 }

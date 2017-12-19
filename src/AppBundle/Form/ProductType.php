@@ -27,6 +27,7 @@ class ProductType extends AbstractType
             ->add('price', NumberType::class, ['label' => ' '])
             ->add('quantity', NumberType::class, ['label' => ' '])
             ->add('unit', TextType::class, ['label' => ' '])
+            ->add('priority', NumberType::class, ['label' => ' '])
             ->add('brand', TextType::class, [
                 'label' => ' ',
                 'required'   => false

@@ -24,4 +24,12 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         $categoriesIds = $query->execute();
         return $categoriesIds;
     }
+
+    public function findByPriority()
+    {
+        return $this->createQueryBuilder('product')
+            ->orderBy('product.priority','desc')
+            ->getQuery()
+            ->getResult();
+    }
 }

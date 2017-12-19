@@ -27,7 +27,8 @@ class ProductController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $products = $em->getRepository('AppBundle:Product')->findAll();
+        //$products = $em->getRepository('AppBundle:Product')->findAll();
+        $products = $em->getRepository('AppBundle:Product')->findByPriority();
 
         return $this->render('product/index.html.twig', array(
             'products' => $products,
@@ -64,6 +65,7 @@ class ProductController extends Controller
         $userCurrency = $user->getUserProfile()->getCurrency();
         $product = new Product();
         $product->setUser($user);
+        $product->setPriority(0);
         $product->setCurrency($userCurrency);
         $form = $this->createForm('AppBundle\Form\ProductType', $product);
         $form->handleRequest($request);

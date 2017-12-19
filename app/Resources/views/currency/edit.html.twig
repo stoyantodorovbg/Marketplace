@@ -16,9 +16,6 @@
     <div class="form-group">
         {{ form_row(edit_form.exchangeRateEUR) }}
     </div>
-    {{ form_row(edit_form._token) }}
-    <input type="submit" class="btn btn-primary" value="Edit" />
-    {{ form_end(edit_form) }}
 
     <a href="{{ path('currency_index') }}">
         <button type="button" class="btn btn-success">

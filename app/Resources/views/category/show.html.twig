@@ -2,7 +2,7 @@
 
 
 {% block body %}
-<div class="jumbotron">
+    <div class="container body-content">
     {% if allCategories %}
         <span class="btn btn-info btn-lg btn-block">
             <h1>Subcategories</h1>
@@ -29,17 +29,35 @@
     </h1>
     {% for product in category.getProducts %}
         {% if product.availability %}
-            <h3>
-                <a href="{{ path('product_show', { 'id': product.id }) }}">
-                <span class="badge badge-primary">
-                    {{ product.name}}
-                </span> </a>
-            </h3>
+        <div class="col-md-6">
+            <div class="container">
+                <div class="jumbotron">
+                    <a href="{{ path('product_show', { 'id': product.id }) }}">
+                        <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="" width="250" class="img-thumbnail" />
+                    </a>
+                    <h2>
+                        <a href="{{ path('product_show', { 'id': product.id }) }}">
+                            <span class="badge badge-primary">
+                                {{ product.name}}
+                            </span>
+                        </a>
+                        <span class="badge badge-primary">
+                            {{ product.price }} {{ product.currency }}
+                        </span>
+                    </h2>
+                    <h5>
+                        <span class="badge badge-warning">
+                            <p>Check out the product for promotion</p>
+                        </span>
+                    </h5>
+                </div>
+            </div>
+        </div>
         {% endif %}
     {% endfor %}
     <a href="{{ path('category_index') }}">
         <button type="button" class="btn btn-success">
-            Back to the list
+            Show all category
         </button>
     </a>
 
