@@ -4,10 +4,12 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Product;
+use AppBundle\Service\CommentService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Comment controller.
@@ -52,19 +54,8 @@ class CommentController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $connection = $this->getDoctrine()->getConnection();
-            $connection->beginTransaction();
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($comment);
-            $em->flush();
-
-            $userProfile = $user->getUserProfile();
-            $userProfile->setRating($userProfile->getRating() + 0.02);
-            $em->persist($userProfile);
-            $em->flush();
-
-            $connection->commit();
+            $commentService = $this->get(CommentService::class);
+            $commentService->newAction($user, $comment);
 
             return $this->redirectToRoute('product_show', array('id' => $product->getId()));
         }
@@ -116,20 +107,8 @@ class CommentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $connection = $this->getDoctrine()->getConnection();
-            $connection->beginTransaction();
-
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($comment);
-            $em->flush();
-
-            $userProfileAuthor = $this->getUser()->getUserProfile();
-            $userProfileAuthor->setRating($userProfileAuthor->getRating() - 0.1);
-            $em->remove($userProfileAuthor);
-            $em->flush();
-
-            $connection->commit();
+            $commentService = $this->get(Comment::class);
+            $commentService->deleteAction($comment, $this->getUser());
         }
 
         return $this->redirectToRoute('product_show', array('id' => $productId));
