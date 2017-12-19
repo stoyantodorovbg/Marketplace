@@ -37,18 +37,4 @@ class CartRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery();
         $query->execute();
     }
-
-    public function buyProductsInCart($userId)
-    {
-        $em = $this->getEntityManager();
-        $db = $em->createQueryBuilder();
-        $query = $db
-            ->update(Cart::class, 'c')
-            ->set('c.bought', '1')
-            ->where('c.user = ?1')
-            ->setParameter(1, $userId)
-            ->getQuery();
-        $query->execute();
-    }
-
 }
