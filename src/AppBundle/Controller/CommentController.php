@@ -107,7 +107,7 @@ class CommentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $commentService = $this->get(Comment::class);
+            $commentService = $this->get(CommentService::class);
             $commentService->deleteAction($comment, $this->getUser());
         }
 

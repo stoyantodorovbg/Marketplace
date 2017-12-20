@@ -36,6 +36,7 @@ class ProductService implements ProductServiceInterface
         $userPurchase->setQuantity($quantity);
         $userPurchase->setValue($purchaseValue);
         $userPurchase->setDateCreated(new \DateTime());
+        $product->setQuantity(0);
 
         $em = $this->entityManager;
 
@@ -45,13 +46,13 @@ class ProductService implements ProductServiceInterface
         $em->persist($userPurchase);
         $em->flush();
 
-        $em->remove($product);
+        $em->persist($product);
         $em->flush();
 
         $connection->commit();
     }
 
-    public function delete(Product $product, Form $form)
+    public function delete(Product $product, \Symfony\Component\Form\Form $form)
     {
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->entityManager;

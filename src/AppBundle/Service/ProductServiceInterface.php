@@ -12,7 +12,7 @@ interface ProductServiceInterface
 {
     public function removeFromSale(Product $product);
 
-    public function delete(Product $product, Form $form);
+    public function delete(Product $product, \Symfony\Component\Form\Form $form);
 
     public function findActivePromotions(Product $product, User $user):array;
 
