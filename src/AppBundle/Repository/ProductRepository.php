@@ -32,4 +32,13 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findByPriorityLimit(int $limit)
+    {
+        return $this->createQueryBuilder('product')
+            ->orderBy('product.priority','desc')
+            ->setMaxResults( $limit )
+            ->getQuery()
+            ->getResult();
+    }
 }

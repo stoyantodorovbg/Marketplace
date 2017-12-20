@@ -1,4 +1,52 @@
 {% extends ['base.html.twig'] %}
+{% block body %}
+<div class="container body-content">
+    <div class="row">
+    {% for product in topPriorityProducts %}
+        {% if product.quantity != 0 %}
+            <div class="col-md-6">
+                <div class="container">
+                    <div class="jumbotron">
+                        <a href="{{ path('product_show', { 'id': product.id }) }}">
+                            <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="" width="300" class="img-thumbnail" />
+                        </a>
+                        <h1>
+                            <a href="{{ path('product_show', { 'id': product.id }) }}">
+                                    <span class="badge badge-warning">
+                                        {{ product.name }}
+                                    </span>
+                            </a>
+                            <span class="badge badge-primary">
+                                    {{ product.price }} {{ product.currency }}
+                                </span>
+                        </h1>
+                        <h5>
+                                <span class="badge badge-warning">
+                                    <p>Check out the product for promotion</p>
+                                </span>
+                        </h5>
+                        <br/><br/>
+                        <a href="{{ path('product_show', { 'id': product.id }) }}">
+                            <button type="button" class="btn btn-success">
+                                Details
+                            </button>
+                        </a>
+                        {% if app.getUser() and (app.getUser().isAdmin() or app.getUser().isSuperAdmin()) %}
+                            <a href="{{ path('product_edit', { 'id': product.id }) }}">
+                                <button type="button" class="btn btn-danger">
+                                    Edit
+                                </button>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
 
 
 
