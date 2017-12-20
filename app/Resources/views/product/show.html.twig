@@ -36,7 +36,7 @@
         <h2>
             <a href="{{ path('userprofile_public_show') }}">
                 <span class="badge badge-primary">
-                    Sold by: {{ product.getUser.getFirstName() }} {{ product.getUser.getLastName() }}
+                    Sold by: {{ product.getUser.getFirstName() }} {{ product.getUser.getLastName() }} with rating {{ product.getUser.userProfile.rating }}
                 </span>
                 <img src="{{ asset('uploads/images/' ~ product.user.userProfile.image) }}" alt="" width="50" class="img-thumbnail"/>
             </a>
