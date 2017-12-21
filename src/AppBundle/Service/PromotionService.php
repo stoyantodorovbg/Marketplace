@@ -7,6 +7,7 @@ use AppBundle\Entity\Product;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Form;
 
 class PromotionService implements PromotionServiceInterface
@@ -85,5 +86,4 @@ class PromotionService implements PromotionServiceInterface
 
         return $promotion;
     }
-
 }

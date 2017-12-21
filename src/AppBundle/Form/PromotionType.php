@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -20,8 +21,8 @@ class PromotionType extends AbstractType
         $builder->add('name', TextType::class, ['label' => ' '])
             ->add('description', TextareaType::class, ['label' => ' '])
             ->add('percentsDiscount', NumberType::class, ['label' => ' '])
-            ->add('startDate', DateType::class, ['label' => ' '])
-            ->add('endDate', DateType::class, ['label' => ' ']);
+            ->add('startDate', DateTimeType::class, ['label' => ' '])
+            ->add('endDate', DateTimeType::class, ['label' => ' ']);
     }
     
     /**

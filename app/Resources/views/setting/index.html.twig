@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron">
+    <span class="btn btn-info btn-lg btn-block">
+        <h1>Settings list</h1>
+    </span>
+        <br/>
+
+        <div class="container body-content">
+            {% for setting in settings %}
+                <div class="row">
+                    <div class="container-fluid">
+                        <div class="col-md-6">
+                            <h1>
+                                <span class="badge badge-secondary">{{ setting.name }}</span>
+                            </h1>
+                            <a href="{{ path('setting_show', { 'id': setting.id }) }}">
+                                <button type="button" class="btn btn-success">
+                                    Details
+                                </button>
+                            </a>
+                                <a href="{{ path('setting_edit', { 'id': setting.id }) }}">
+                                    <button type="button" class="btn btn-danger">
+                                        Edit
+                                    </button>
+                                </a>
+                        </div>
+                    </div>
+                </div>
+                <br/><br/>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
