@@ -38,7 +38,7 @@ class CurrencyController extends Controller
      *
      * @Route("/new", name="currency_new")
      * @Method({"GET", "POST"})
-     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
+     * @Security("is_granted(['ROLE_SUPER_ADMIN'])")
      */
     public function newAction(Request $request)
     {
@@ -76,7 +76,7 @@ class CurrencyController extends Controller
      *
      * @Route("/{id}/edit", name="currency_edit")
      * @Method({"GET", "POST"})
-     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
+     * @Security("is_granted(['ROLE_SUPER_ADMIN'])")
      */
     public function editAction(Request $request, Currency $currency)
     {

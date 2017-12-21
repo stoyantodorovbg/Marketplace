@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ec6835a8-052b-4906-a521-69c99f0d7f67" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/base.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/base.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/currency/new.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/currency/new.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/product/show.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/product/show.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/CurrencyController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/CurrencyController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Service/CartService.php" afterPath="$PROJECT_DIR$/src/AppBundle/Service/CartService.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Service/UserService.php" afterPath="$PROJECT_DIR$/src/AppBundle/Service/UserService.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -18,66 +20,64 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="show.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/product/show.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="373">
-              <caret line="48" column="24" lean-forward="false" selection-start-line="48" selection-start-column="24" selection-end-line="48" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ContactController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ContactController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/ContactController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
+            <state relative-caret-position="220">
               <caret line="66" column="66" lean-forward="false" selection-start-line="66" selection-start-column="66" selection-end-line="66" selection-end-column="66" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="show.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/contact/show.html.twig">
+      <file leaf-file-name="User.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/User.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="756">
-              <caret line="28" column="10" lean-forward="false" selection-start-line="28" selection-start-column="10" selection-end-line="28" selection-end-column="10" />
-              <folding>
-                <element signature="e#12#26#0#Twig" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="show.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/category/show.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="806">
-              <caret line="59" column="29" lean-forward="false" selection-start-line="59" selection-start-column="29" selection-end-line="59" selection-end-column="29" />
+            <state relative-caret-position="270">
+              <caret line="103" column="57" lean-forward="false" selection-start-line="103" selection-start-column="57" selection-end-line="103" selection-end-column="72" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/category/index.html.twig">
+      <file leaf-file-name="UserController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/UserController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-243">
+            <state relative-caret-position="270">
+              <caret line="35" column="44" lean-forward="false" selection-start-line="35" selection-start-column="44" selection-end-line="35" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserService.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Service/UserService.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="351">
+              <caret line="39" column="52" lean-forward="false" selection-start-line="39" selection-start-column="52" selection-end-line="39" selection-end-column="52" />
+              <folding>
+                <element signature="e#39#69#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CartService.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Service/CartService.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="351">
+              <caret line="42" column="53" lean-forward="false" selection-start-line="42" selection-start-column="53" selection-end-line="42" selection-end-column="53" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CartController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CartController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1863">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="show.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/instruction/show.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="14" column="8" lean-forward="false" selection-start-line="14" selection-start-column="8" selection-end-line="17" selection-end-column="53" />
-              <folding>
-                <element signature="e#12#26#0#Twig" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -85,8 +85,8 @@
       <file leaf-file-name="base.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2">
-              <caret line="122" column="73" lean-forward="false" selection-start-line="122" selection-start-column="73" selection-end-line="122" selection-end-column="73" />
+            <state relative-caret-position="22">
+              <caret line="72" column="29" lean-forward="false" selection-start-line="72" selection-start-column="29" selection-end-line="72" selection-end-column="29" />
               <folding>
                 <element signature="n#style#0;n#ul#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#ul#1;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -95,11 +95,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="CurrencyController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CurrencyController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="671">
+              <caret line="40" column="30" lean-forward="false" selection-start-line="40" selection-start-column="30" selection-end-line="40" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="CategoryController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CategoryController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="297">
-              <caret line="40" column="5" lean-forward="true" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="66" />
+              <caret line="40" column="5" lean-forward="false" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="66" />
               <folding />
             </state>
           </provider>
@@ -110,18 +120,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="243">
               <caret line="9" column="34" lean-forward="false" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
-              <folding>
-                <element signature="e#12#26#0#Twig" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/instruction/index.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="81">
-              <caret line="3" column="4" lean-forward="false" selection-start-line="3" selection-start-column="4" selection-end-line="32" selection-end-column="10" />
               <folding>
                 <element signature="e#12#26#0#Twig" expanded="true" />
               </folding>
@@ -150,8 +148,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/AppBundle/Service/CommentServiceInterface.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Service/CommentService.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Service/CurrencyServiceInterface.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Service/CurrencyService.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/CategoryController.php" />
@@ -165,7 +161,6 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Repository/CategoryRepository.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Category.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Product.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/CurrencyController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/CommentController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Service/ProductServiceInterface.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Service/ProductService.php" />
@@ -199,8 +194,11 @@
         <option value="$PROJECT_DIR$/app/Resources/views/contact/show.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/product/show.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/contact/index.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/base.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/ContactController.php" />
+        <option value="$PROJECT_DIR$/app/Resources/views/base.html.twig" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/CurrencyController.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Service/UserService.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Service/CartService.php" />
       </list>
     </option>
   </component>
@@ -439,12 +437,12 @@
       <workItem from="1513013260346" duration="20100000" />
       <workItem from="1513070123915" duration="70730000" />
       <workItem from="1513234805021" duration="129814000" />
-      <workItem from="1513589563315" duration="97061000" />
+      <workItem from="1513589563315" duration="99994000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="490932000" />
+    <option name="totallyTimeSpent" value="493865000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1" y="1" width="1364" height="766" extended-state="0" />
@@ -501,32 +499,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/default/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="4" column="41" lean-forward="false" selection-start-line="4" selection-start-column="41" selection-end-line="4" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/PromotionController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1543">
-          <caret line="69" column="64" lean-forward="false" selection-start-line="69" selection-start-column="64" selection-end-line="69" selection-end-column="64" />
-          <folding>
-            <element signature="e#40#71#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Service/PromotionService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="87" column="5" lean-forward="false" selection-start-line="87" selection-start-column="5" selection-end-line="87" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/CartRepository.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-410">
@@ -628,7 +600,7 @@
         <state relative-caret-position="302">
           <caret line="19" column="51" lean-forward="false" selection-start-line="19" selection-start-column="51" selection-end-line="19" selection-end-column="51" />
           <folding>
-            <element signature="e#40#69#0#PHP" expanded="true" />
+            <element signature="e#40#69#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -671,14 +643,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="46" column="21" lean-forward="false" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Service/CartService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1836">
-          <caret line="27" column="5" lean-forward="false" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -733,14 +697,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CurrencyController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="78" column="5" lean-forward="false" selection-start-line="78" selection-start-column="5" selection-end-line="78" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/SettingController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="486">
@@ -774,14 +730,6 @@
           <folding>
             <element signature="e#36#68#0#PHP" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="103" column="57" lean-forward="false" selection-start-line="103" selection-start-column="57" selection-end-line="103" selection-end-column="72" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -927,10 +875,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CategoryController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="40" column="5" lean-forward="false" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2">
-          <caret line="122" column="73" lean-forward="false" selection-start-line="122" selection-start-column="73" selection-end-line="122" selection-end-column="73" />
+        <state relative-caret-position="22">
+          <caret line="72" column="29" lean-forward="false" selection-start-line="72" selection-start-column="29" selection-end-line="72" selection-end-column="29" />
           <folding>
             <element signature="n#style#0;n#ul#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#ul#1;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -938,18 +894,60 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CategoryController.php">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CurrencyController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="40" column="5" lean-forward="true" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="66" />
+        <state relative-caret-position="671">
+          <caret line="40" column="30" lean-forward="false" selection-start-line="40" selection-start-column="30" selection-end-line="40" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/ContactController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
+        <state relative-caret-position="220">
           <caret line="66" column="66" lean-forward="false" selection-start-line="66" selection-start-column="66" selection-end-line="66" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="103" column="57" lean-forward="false" selection-start-line="103" selection-start-column="57" selection-end-line="103" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="35" column="44" lean-forward="false" selection-start-line="35" selection-start-column="44" selection-end-line="35" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Service/UserService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="39" column="52" lean-forward="false" selection-start-line="39" selection-start-column="52" selection-end-line="39" selection-end-column="52" />
+          <folding>
+            <element signature="e#39#69#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CartController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1863">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Service/CartService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="42" column="53" lean-forward="false" selection-start-line="42" selection-start-column="53" selection-end-line="42" selection-end-column="53" />
           <folding />
         </state>
       </provider>

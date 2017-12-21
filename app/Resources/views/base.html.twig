@@ -74,7 +74,7 @@
 
                     {% endif %}
                     <li class="nav-item">
-                        <a class="nav-link btn btn-success" href="{{ path('instruction_edit', { 'id': 1 }) }}">
+                        <a class="nav-link btn btn-success" href="{{ path('instruction_show', { 'id': 1 }) }}">
                             <button type="button" class="btn btn-success">
                                 How to use Marketplace
                             </button>
@@ -132,6 +132,13 @@
                             </h5>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link btn btn-success" href="{{ path('instruction_show', { 'id': 2 }) }}">
+                                <button type="button" class="btn btn-success">
+                                    Instructions
+                                </button>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link btn btn-primary" href="{{ path('category_new') }}">
                                 <button type="button" class="btn btn-primary">
                                     Add category
@@ -142,13 +149,6 @@
                             <a class="nav-link btn btn-primary" href="{{ path('product_new') }}">
                                 <button type="button" class="btn btn-primary">
                                     Add product
-                                </button>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-primary" href="{{ path('currency_new') }}">
-                                <button type="button" class="btn btn-primary">
-                                    Add currency
                                 </button>
                             </a>
                         </li>
@@ -207,6 +207,13 @@
                             <a class="nav-link btn btn-success" href="{{ path('admin_all_users_view') }}">
                                 <button type="button" class="btn btn-success">
                                     View users
+                                </button>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-danger" href="{{ path('currency_new') }}">
+                                <button type="button" class="btn btn-danger">
+                                    Add currency
                                 </button>
                             </a>
                         </li>

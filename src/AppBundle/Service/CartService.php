@@ -43,7 +43,7 @@ class CartService implements CartServiceInterface
             $addPrice = $productPrice * $addQuantity;
         }
 
-        $addPrice = $this->calculateReducedPriceInUserCurrency($product, $user, $priceOrder);
+        $addPrice = $this->calculateReducedPriceInUserCurrency($product, $user, $addPrice);
 
         $cart = new Cart();
         $cart->setUser($user);

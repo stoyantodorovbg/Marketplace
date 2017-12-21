@@ -4,6 +4,7 @@
 namespace AppBundle\Service;
 
 
+use AppBundle\Entity\Currency;
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserProfile;
@@ -25,6 +26,9 @@ class UserService implements UserServiceInterface
     public function register(User $user, Form $form, $password)
     {
 
+        $currencyRepo = $this->entityManager->getRepository(Currency::class);
+        $defaultCurrency = $currencyRepo->find(1);
+
         $user->setPassword($password);
 
         $roleRepository = $this->entityManager->getRepository(Role::class);
@@ -33,6 +37,7 @@ class UserService implements UserServiceInterface
         $userRole = $roleRepository->findOneBy(['name' => 'ROLE_USER']);
 
         $userProfile = new UserProfile();
+        $userProfile->setCurrency($defaultCurrency);
         $userProfile->setIsSeller(0);
         $userProfile->setRating(1);
 
