@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron">
+    <span class="btn btn-info btn-lg btn-block">
+        <h1>Send contact message</h1>
+    </span>
+        <br/>
+
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        <label>Email:</label>
+        <div class="form-group">
+            {{ form_row(form.email) }}
+        </div>
+        <label>Phone:</label>
+        <div class="form-group">
+            {{ form_row(form.phone) }}
+        </div>
+        <label>Content:</label>
+        <div class="form-group">
+            {{ form_row(form.content) }}
+        </div>
+        {{ form_row(form._token) }}
+        <input type="submit" class="btn btn-primary" value="Send" />
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
