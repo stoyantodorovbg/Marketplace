@@ -34,7 +34,7 @@
             </h3>
         {% endif %}
         <h2>
-            <a href="{{ path('userprofile_public_show') }}">
+            <a href="{{ path('userprofile_public_show', { 'id': product.getUser.getUserProfile.id }) }}">
                 <span class="badge badge-primary">
                     Sold by: {{ product.getUser.getFirstName() }} {{ product.getUser.getLastName() }} with rating {{ product.getUser.userProfile.rating }}
                 </span>

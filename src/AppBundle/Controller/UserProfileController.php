@@ -60,16 +60,16 @@ class UserProfileController extends Controller
     /**
      * Finds and displays a userProfile entity.
      *
-     * @Route("/publicShow", name="userprofile_public_show")
+     * @Route("/publicShow{id}", name="userprofile_public_show")
      * @Method("GET")
      * @Security("is_granted(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
-    public function publicShowAction()
+    public function publicShowAction(UserProfile $userProfile)
     {
-        $user = $this->getUser();
-        $userProfile = $user->getUserProfile();
+        $userProfileRepo = $this->getDoctrine()->getRepository(UserProfile::class);
+        $userProfile = $userProfileRepo->find($userProfile->getId());
 
-        $userPurchases = $user->getPurchases();
+        $userPurchases = $userProfile->getUser()->getPurchases();
 
         return $this->render('userprofile/public_show.html.twig', array(
             'userProfile' => $userProfile,

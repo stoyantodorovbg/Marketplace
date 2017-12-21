@@ -50,7 +50,7 @@ class ContactController extends Controller
             $em->persist($contact);
             $em->flush();
 
-            return $this->redirectToRoute('contact_show', array('id' => $contact->getId()));
+            return $this->redirectToRoute('homepage');
         }
 
         return $this->render('contact/new.html.twig', array(
