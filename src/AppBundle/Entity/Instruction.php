@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Setting
+ * Instruction
  *
- * @ORM\Table(name="settings")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\SettingRepository")
+ * @ORM\Table(name="instructions")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\InstructionRepository")
  */
-class Setting
+class Instruction
 {
     /**
      * @var int
@@ -32,11 +32,14 @@ class Setting
     private $name;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="quantity", type="integer", nullable=true)
+     * @ORM\Column(name="instruction", type="string", length=10000)
+     *
+     * @Assert\NotBlank()
      */
-    private $quantity;
+    private $instruction;
+
 
     /**
      * Get id
@@ -53,7 +56,7 @@ class Setting
      *
      * @param string $name
      *
-     * @return Setting
+     * @return Instruction
      */
     public function setName($name)
     {
@@ -73,27 +76,27 @@ class Setting
     }
 
     /**
-     * Set quantity
+     * Set instruction
      *
-     * @param integer $quantity
+     * @param string $instruction
      *
-     * @return Setting
+     * @return Instruction
      */
-    public function setQuantity($quantity)
+    public function setInstruction($instruction)
     {
-        $this->quantity = $quantity + 1;
+        $this->instruction = $instruction;
 
         return $this;
     }
 
     /**
-     * Get quantity
+     * Get instruction
      *
-     * @return int
+     * @return string
      */
-    public function getQuantity()
+    public function getInstruction()
     {
-        return $this->quantity;
+        return $this->instruction;
     }
 }
 

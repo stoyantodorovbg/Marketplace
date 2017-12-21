@@ -74,24 +74,11 @@
 
                     {% endif %}
                     <li class="nav-item">
-                        <div class="dropdown nav-link btn btn-success">
-                            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Info
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <h4>
-                                    <a class="dropdown-item text-success" href="#">
-                                        How to use Marketplace
-                                    </a>
-                                    <a class="dropdown-item text-success" href="#">
-                                        About
-                                    </a>
-                                    <a class="dropdown-item text-success" href="#">
-                                        Contact
-                                    </a>
-                                    </h4>
-                                </div>
+                        <a class="nav-link btn btn-success" href="{{ path('instruction_edit', { 'id': 1 }) }}">
+                            <button type="button" class="btn btn-success">
+                                How to use Marketplace
                             </button>
-                        </div>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link btn btn-success" href="{{ path('promotion_index')}}">
@@ -189,6 +176,13 @@
                             </h5>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link btn btn-success" href="{{ path('instruction_index') }}">
+                                <button type="button" class="btn btn-success">
+                                    View instructions
+                                </button>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link btn btn-success" href="{{ path('setting_index') }}">
                                 <button type="button" class="btn btn-success">
                                     View settings
@@ -206,6 +200,13 @@
                             <a class="nav-link btn btn-danger" href="{{ path('setting_new') }}">
                                 <button type="button" class="btn btn-danger">
                                     Add setting
+                                </button>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-danger" href="{{ path('instruction_new') }}">
+                                <button type="button" class="btn btn-danger">
+                                    Add instruction
                                 </button>
                             </a>
                         </li>

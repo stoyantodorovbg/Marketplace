@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Setting;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +20,7 @@ class SettingController extends Controller
      *
      * @Route("/", name="setting_index")
      * @Method("GET")
+     * @Security("is_granted(['ROLE_SUPER_ADMIN'])")
      */
     public function indexAction()
     {
@@ -36,6 +38,7 @@ class SettingController extends Controller
      *
      * @Route("/new", name="setting_new")
      * @Method({"GET", "POST"})
+     * @Security("is_granted(['ROLE_SUPER_ADMIN'])")
      */
     public function newAction(Request $request)
     {
@@ -62,6 +65,7 @@ class SettingController extends Controller
      *
      * @Route("/{id}", name="setting_show")
      * @Method("GET")
+     * @Security("is_granted(['ROLE_SUPER_ADMIN'])")
      */
     public function showAction(Setting $setting)
     {
@@ -78,6 +82,7 @@ class SettingController extends Controller
      *
      * @Route("/{id}/edit", name="setting_edit")
      * @Method({"GET", "POST"})
+     * @Security("is_granted(['ROLE_SUPER_ADMIN'])")
      */
     public function editAction(Request $request, Setting $setting)
     {
@@ -103,6 +108,7 @@ class SettingController extends Controller
      *
      * @Route("/{id}", name="setting_delete")
      * @Method("DELETE")
+     * @Security("is_granted(['ROLE_SUPER_ADMIN'])")
      */
     public function deleteAction(Request $request, Setting $setting)
     {

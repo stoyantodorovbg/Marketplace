@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron">
+    <span class="btn btn-info btn-lg btn-block">
+        <h1>Add instruction</h1>
+    </span>
+        <br/>
+
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        <label>Name:</label>
+        <div class="form-group">
+            {{ form_row(form.name) }}
+        </div>
+        <label>Instruction:</label>
+        <div class="form-group">
+            {{ form_row(form.instruction) }}
+        </div>
+        {{ form_row(form._token) }}
+        <input type="submit" class="btn btn-primary" value="Create" />
+        {{ form_end(form) }}
+        <br/><br/>
+        <a href="{{ path('instruction_index') }}">
+            <button type="button" class="btn btn-success">
+                Show all settings
+            </button>
+        </a>
+    </div>
+{% endblock %}
