@@ -57,13 +57,17 @@
             </span>
         </h2>
         {% if product.availability %}
+        <h2>
             <span class="badge badge-secondary">
-                Availability: {{ product.quantity }}
+                Availability: {{ product.quantity }} {{ product.unit }}
             </span>
-            {% else %}
+        </h2>
+        {% else %}
+            <h2>
                 <span class="badge badge-secondary">
                     Now there is not availability of this product.
                 </span>
+            </h2>
         {% endif %}
         <h4>
             {% if product.brand != null %}

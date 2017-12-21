@@ -106,8 +106,10 @@ class UserProfileController extends Controller
         $user = $this->getUser();
 
         $product = new Product();
+        $product->setPriority(0);
         $form = $this->createForm('AppBundle\Form\ProductType', $product);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() ) {//&& $form->isValid()
             $userProfileService = $this->get(UserProfileService::class);

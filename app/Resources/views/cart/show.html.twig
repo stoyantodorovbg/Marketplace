@@ -29,7 +29,7 @@
                 </div>
             {% else %}
                 <div class="badge badge-success">
-                    Value: {{ addInCart.getPrice() }} {{ addInCart.getProduct().getCurrency }}
+                    Value: {{ addInCart.getPrice() }} {{ app.getUser().getUserProfile().getCurrency }}
                 </div>
             {% endif %}
             <br/>

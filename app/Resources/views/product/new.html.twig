@@ -32,10 +32,12 @@
         <div class="form-group">
             {{ form_row(form.unit) }}
         </div>
+        {% if app.getUser() and (app.getUser().isAdmin() or app.getUser().isSuperAdmin())  %}
         <label>Priority:</label>
         <div class="form-group">
             {{ form_row(form.priority) }}
         </div>
+        {% endif %}
         <label>Brand:</label>
         <div class="form-group">
             {{ form_row(form.brand) }}

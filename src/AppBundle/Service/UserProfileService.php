@@ -27,6 +27,7 @@ class UserProfileService implements UserProfileServiceInterface
         $product->setUser($user);
         $product->setCurrency($userCurrency);
         $product->setQuantity($userPurchase->getQuantity());
+        $product->setImage($userPurchase->getProduct()->getImage());
         $product->setUser($user);
         $product->setCurrency($userCurrency);
         $product->setAvailability(1);

@@ -397,8 +397,11 @@ class Product
     /**
      * @param int $priority
      */
-    public function setPriority(int $priority)
+    public function setPriority( $priority)
     {
+        if ($priority == null) {
+            $priority = 0;
+        }
         $this->priority = $priority;
     }
 
