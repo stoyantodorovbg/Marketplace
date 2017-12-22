@@ -193,7 +193,7 @@ class PromotionController extends Controller
             $userProfiles = $this
                 ->getDoctrine()
                 ->getRepository(Promotion::class)
-                ->findUserByPurchaseValue($minRating);
+                ->findUserByRating($minRating);
             $promotionService = $this->get(PromotionService::class);
             $users = $promotionService->findUsersByUserProfiles($userProfiles);
             return $this->newForCertainUsers($request, $users);
@@ -318,7 +318,7 @@ class PromotionController extends Controller
      *
      * @Route("/{id}", name="promotion_show")
      * @Method("GET")
-     * @Security("is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
+     * @Security("is_granted(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])")
      */
     public function showAction(Promotion $promotion)
     {

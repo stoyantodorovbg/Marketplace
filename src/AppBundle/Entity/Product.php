@@ -103,7 +103,6 @@ class Product
      *     maxSize="700k",
      *     mimeTypes={"image/png", "image/jpeg", "image/jpg"}
      * )
-     * @Assert\NotBlank()
      */
     public $image;
 

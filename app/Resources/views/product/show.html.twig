@@ -112,10 +112,7 @@
                     Remove from sale
                 </button>
             </a>
-            <br/><br/>
-            {{ form_start(delete_form) }}
-            <input type="submit" class="btn btn-danger" value="Delete">
-            {{ form_end(delete_form) }}
+            <br/>
         {% endif %}
     </div>
         <h2>
@@ -134,9 +131,13 @@
                             </span>
                         </h5>
                         <h5>
-                            <span class="badge badge-info">
-                                 {{ comment.content }}
-                            </span>
+                        <tbody>
+                            <tr>
+                                <td class="badge badge-info">
+                                     {{ comment.content }}
+                                </td>
+                            </tr>
+                        </tbody>
                         </h5>
                         {% if app.getUser() and (app.getUser().isAdmin() or app.getUser().isSuperAdmin())  %}
                             <a href="{{ path('comment_edit', { 'id': comment.id }) }}">

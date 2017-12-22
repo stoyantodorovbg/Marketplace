@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Product;
+use AppBundle\Entity\UserProfile;
 use AppBundle\Service\CommentService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -75,12 +76,23 @@ class CommentController extends Controller
      */
     public function editAction(Request $request, Comment $comment)
     {
+        $userProfile = $comment->getUser()->getUserProfile();
+        $userProfile->setRating($userProfile->getRating() - 0.1);
         $deleteForm = $this->createDeleteForm($comment);
         $editForm = $this->createForm('AppBundle\Form\CommentType', $comment);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $connection = $this->getDoctrine()->getConnection();
+            $connection->beginTransaction();
+
             $this->getDoctrine()->getManager()->flush();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($userProfile);
+            $em->flush();
+
+            $connection->commit();
 
             return $this->redirectToRoute('product_show', array('id' => $comment->getProduct()->getId()));
         }

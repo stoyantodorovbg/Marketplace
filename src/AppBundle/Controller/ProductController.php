@@ -167,7 +167,9 @@ class ProductController extends Controller
                 );
                 $product->setImage($imageName);
             }
-            $this->getDoctrine()->getManager()->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($product);
+            $em->flush();
 
             return $this->redirectToRoute('product_show', array('id' => $product->getId()));
         }

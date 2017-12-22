@@ -32,6 +32,24 @@ class PromotionService implements PromotionServiceInterface
         $promotion->setUsers($allUsers);
         $promotion->setType('certain_products');
 
+
+        return $promotion;
+    }
+
+    public function newForAllProducts():Promotion
+    {
+        $userRepo = $this->entityManager->getRepository(User::class);
+        $allUsers = $userRepo->findAll();
+
+        $productRepo = $this->entityManager->getRepository(Product::class);
+        $allProducts = $productRepo->findAll();
+
+        $promotion = new Promotion();
+        $promotion->setCreatedDate(new \DateTime());
+        $promotion->setUsers($allUsers);
+        $promotion->setProducts($allProducts);
+        $promotion->setType('all_products');
+
         return $promotion;
     }
 
@@ -79,9 +97,13 @@ class PromotionService implements PromotionServiceInterface
 
     public function newForCertainUsers($users):Promotion
     {
+        $productsRepo = $this->entityManager->getRepository(Product::class);
+        $products = $productsRepo->findAll();
+
         $promotion = new Promotion();
         $promotion->setCreatedDate(new \DateTime());
         $promotion->setUsers($users);
+        $promotion->setProducts($products);
         $promotion->setType('certain_users');
 
         return $promotion;

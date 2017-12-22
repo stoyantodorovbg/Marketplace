@@ -182,7 +182,7 @@ class CartService implements CartServiceInterface
             }
         }
 
-        return $cartBill;
+        return number_format($cartBill, 2);
     }
 
     public function calculateAddInUserCurrency(Cart $add, User $user)
@@ -248,7 +248,7 @@ class CartService implements CartServiceInterface
             if ($promotion->getPercentsDiscount() > $bestPromotion->getPercentsDiscount()) {
                 $bestPromotion = $promotion;
             }
-        }
+        };
         return $bestPromotion;
     }
 
