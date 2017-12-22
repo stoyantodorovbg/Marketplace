@@ -33,10 +33,16 @@ class UserProfileService implements UserProfileServiceInterface
         $product->setAvailability(1);
         $em = $this->entityManager;
 
+        $userProfile = $user->getUserProfile();
+        $userProfile->setIsSeller(1);
+
         $connection = $this->entityManager->getConnection();
         $connection->beginTransaction();
 
         $em->persist($product);
+        $em->flush();
+
+        $em->persist($userProfile);
         $em->flush();
 
         $em->remove($userPurchase);

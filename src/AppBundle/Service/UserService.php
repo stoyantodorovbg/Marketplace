@@ -38,6 +38,7 @@ class UserService implements UserServiceInterface
 
         $userProfile = new UserProfile();
         $userProfile->setCurrency($defaultCurrency);
+        $userProfile->setCash(1000);
         $userProfile->setIsSeller(0);
         $userProfile->setRating(1);
 

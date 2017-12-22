@@ -63,6 +63,9 @@
                 <div class="col-md-6">
                     <div class="container">
                         <div class="jumbotron">
+                            <a href="{{ path('product_show', { 'id': purchase.product.id }) }}">
+                                <img src="{{ asset('uploads/images/' ~ purchase.product.image) }}" alt="" width="300" class="img-thumbnail" />
+                            </a>
                             <h3>
                                 <span class="badge badge-info">
                                     {{ purchase.product.name }}

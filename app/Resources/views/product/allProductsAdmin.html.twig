@@ -7,8 +7,15 @@
                 <div class="col-md-6">
                     <div class="container">
                         <div class="jumbotron">
-                            <h1><span class="badge badge-warning">{{ product.name }}</span>
-                                <span class="badge badge-primary">{{ product.price }} {{ product.currency }}</span>
+                            <a href="{{ path('product_show', { 'id': product.id }) }}">
+                                <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="" width="300" class="img-thumbnail" />
+                            </a>
+                            <h1><span class="badge badge-warning">
+                                    {{ product.name }}
+                                </span>
+                                <span class="badge badge-primary">
+                                    {{ product.price }} {{ product.currency }}
+                                </span>
                             </h1>
                             <br/><br/>
                             <a href="{{ path('product_show', { 'id': product.id }) }}">

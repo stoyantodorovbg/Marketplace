@@ -100,9 +100,10 @@ class Product
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Image(
-     *     maxSize="500k",
+     *     maxSize="700k",
      *     mimeTypes={"image/png", "image/jpeg", "image/jpg"}
      * )
+     * @Assert\NotBlank()
      */
     public $image;
 
